@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap URL will be finalized after the canonical domain is known
+# Sitemap: https://YOUR-DOMAIN-HERE/sitemap.xml

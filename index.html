@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Abolfazl Azad — Electrical Engineering | Digital Systems</title>
+  <meta name="description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran focused on digital systems, RTL design, FPGA development, and computer architecture." />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- TODO: Replace YOUR-DOMAIN-HERE with actual domain -->
+  <link rel="canonical" href="https://YOUR-DOMAIN-HERE/" />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Abolfazl Azad — Electrical Engineering | Digital Systems" />
+  <meta property="og:description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran focused on digital systems, RTL design, FPGA development, and computer architecture." />
+  <meta property="og:url" content="https://YOUR-DOMAIN-HERE/" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Abolfazl Azad — Electrical Engineering" />
+  <meta name="twitter:description" content="Portfolio of Abolfazl Azad focused on digital systems, RTL design, and computer architecture." />
+
+  <!-- Icons -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#050706" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Abolfazl Azad",
+    "jobTitle": "Electrical Engineering Student",
+    "url": "https://YOUR-DOMAIN-HERE/",
+    "sameAs": [
+      "https://github.com/Abolfazl-Azad",
+      "https://www.linkedin.com/in/abolfazl-azad/"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <script>document.documentElement.classList.add('js-enabled');</script>
+  <canvas id="binary-bg" aria-hidden="true"></canvas>
+  <canvas id="circuit-bg" aria-hidden="true"></canvas>
+  <div class="page-shell">
+    <header class="site-header" id="main-header">
+      <a class="brand" href="#top" aria-label="Abolfazl Azad Home">AA.</a>
+      
+      <button class="mobile-menu-toggle mono" id="mobile-menu-btn" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        MENU
+      </button>
+
+      <nav class="top-nav" id="primary-nav" aria-label="Primary navigation">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#research" class="nav-link">Research</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#notes" class="nav-link">Notes</a>
+        <a href="pages/cv.html" class="nav-link">CV</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-pad">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow mono">ELECTRICAL ENGINEERING / DIGITAL SYSTEMS</p>
+            <h1><span class="name-line">Abolfazl Azad</span><span class="name-spaced">A B O L F A Z L&nbsp;&nbsp; A Z A D</span></h1>
+            <p class="hero-role">Electrical Engineering Student<br>University of Tehran</p>
+            <div class="hero-tags mono" aria-label="Areas of interest">
+              <span>DIGITAL SYSTEMS</span><span>RTL</span><span>FPGA</span><span>COMPUTER ARCHITECTURE</span>
+            </div>
+            <div class="social-row">
+              <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+            </div>
+          </div>
+          <div class="hero-monitor" aria-hidden="true">
+            <div class="monitor-header mono">
+              <span>TIMING MONITOR</span>
+              <div class="monitor-specs">
+                <span>CLK 100 MHz</span>
+                <span class="sep">/</span>
+                <span>BUS 32 bit</span>
+                <span class="sep">/</span>
+                <span>MODE RTL</span>
+              </div>
+            </div>
+            
+            <div class="monitor-display">
+              <svg class="timing-svg" viewBox="0 0 440 210" preserveAspectRatio="xMidYMid meet">
+                <!-- Grid Lines (CSS handled or embedded) -->
+                <g class="timing-grid-lines">
+                  <line x1="60" y1="0" x2="60" y2="210" />
+                  <line x1="100" y1="0" x2="100" y2="210" />
+                  <line x1="140" y1="0" x2="140" y2="210" />
+                  <line x1="180" y1="0" x2="180" y2="210" />
+                  <line x1="220" y1="0" x2="220" y2="210" />
+                  <line x1="260" y1="0" x2="260" y2="210" />
+                  <line x1="300" y1="0" x2="300" y2="210" />
+                  <line x1="340" y1="0" x2="340" y2="210" />
+                  <line x1="380" y1="0" x2="380" y2="210" />
+                  <line x1="420" y1="0" x2="420" y2="210" />
+                </g>
+
+                <!-- Labels -->
+                <text x="50" y="27" class="signal-label mono" text-anchor="end">CLK</text>
+                <text x="50" y="67" class="signal-label mono" text-anchor="end">DATA</text>
+                <text x="50" y="107" class="signal-label mono" text-anchor="end">EN</text>
+                <text x="50" y="147" class="signal-label mono" text-anchor="end">VALID</text>
+                <text x="50" y="187" class="signal-label mono" text-anchor="end">READY</text>
+
+                <!-- Waveforms -->
+                <path class="timing-wave clk-wave" d="M 60,30 L 80,30 L 80,15 L 100,15 L 100,30 L 120,30 L 120,15 L 140,15 L 140,30 L 160,30 L 160,15 L 180,15 L 180,30 L 200,30 L 200,15 L 220,15 L 220,30 L 240,30 L 240,15 L 260,15 L 260,30 L 280,30 L 280,15 L 300,15 L 300,30 L 320,30 L 320,15 L 340,15 L 340,30 L 360,30 L 360,15 L 380,15 L 380,30 L 400,30 L 400,15 L 420,15 L 420,30" />
+                
+                <path class="timing-wave data-wave" d="M 60,70 L 120,70 L 120,55 L 200,55 L 200,70 L 280,70 L 280,55 L 360,55 L 360,70 L 420,70" />
+                
+                <path class="timing-wave en-wave" d="M 60,110 L 160,110 L 160,95 L 320,95 L 320,110 L 420,110" />
+                
+                <path class="timing-wave valid-wave" d="M 60,150 L 120,150 L 120,135 L 280,135 L 280,150 L 420,150" />
+                
+                <path class="timing-wave ready-wave" d="M 60,190 L 200,190 L 200,175 L 360,175 L 360,190 L 420,190" />
+
+                <!-- Scan Line -->
+                <line class="timing-scanline" x1="60" y1="0" x2="60" y2="210" />
+                
+                <!-- Moving Packets -->
+                <path class="signal-packet packet-1" d="M 60,70 L 120,70 L 120,55 L 200,55 L 200,70 L 280,70 L 280,55 L 360,55 L 360,70 L 420,70" />
+                <path class="signal-packet packet-2" d="M 60,150 L 120,150 L 120,135 L 280,135 L 280,150 L 420,150" />
+              </svg>
+            </div>
+
+            <div class="monitor-footer mono">
+              <span>STATUS</span>
+              <span class="status-indicator"><span class="status-dot"></span> RUNNING</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section id="about" class="content-section">
+        <div class="section-label reveal">A B O U T</div>
+        <div class="section-content two-col">
+          <div class="reveal">
+            <h2>Electrical Engineering student at the University of Tehran, with a secondary focus in Computer Engineering, working across digital systems, RTL design, FPGA development, computer architecture, and hardware accelerators.</h2>
+          </div>
+          <div class="body-copy reveal">
+            <p>I am building technical experience through academic coursework, independent projects, and engineering work. My primary interests include digital systems, low-power RTL design, hardware accelerators, and the ASIC design flow.</p>
+            <p>I actively work with hardware description languages like Verilog and SystemVerilog, and I am exploring advanced topics such as RISC-V processor architecture and hardware/software co-design.</p>
+            <div id="about-keywords-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="focus-areas" class="content-section compact-section">
+        <div class="section-label reveal">C U R R E N T &nbsp; F O C U S</div>
+        <div class="section-content current-grid" id="focus-areas-list"></div>
+      </section>
+
+      <section id="education" class="content-section">
+        <div class="section-label reveal">E D U C A T I O N</div>
+        <div class="section-content timeline" id="education-list"></div>
+      </section>
+
+      <section id="current" class="content-section compact-section">
+        <div class="section-label reveal">C U R R E N T</div>
+        <div class="section-content current-grid" id="current-focus-list"></div>
+      </section>
+
+      <section id="experience" class="content-section">
+        <div class="section-label reveal">E X P E R I E N C E</div>
+        <div class="section-content timeline" id="experience-list"></div>
+      </section>
+
+      <section id="research" class="content-section">
+        <div class="section-label reveal">R E S E A R C H</div>
+        <div class="section-content research-grid" id="research-list"></div>
+      </section>
+
+      <section id="projects" class="content-section">
+        <div class="section-label reveal">P R O J E C T S</div>
+        <div class="section-content project-grid" id="project-list"></div>
+      </section>
+
+      <section id="skills" class="content-section">
+        <div class="section-label reveal">S K I L L S</div>
+        <div class="section-content">
+          
+          <div class="workflow-visual reveal" aria-hidden="true">
+            <div class="workflow-title mono">HARDWARE WORKFLOW</div>
+            <svg viewBox="0 0 800 60" class="workflow-svg">
+              <path d="M 50 30 H 750" stroke="currentColor" stroke-width="1" stroke-dasharray="2 4" />
+              <circle cx="50" cy="30" r="4" fill="currentColor" />
+              <text x="50" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">RTL</text>
+              <circle cx="225" cy="30" r="4" fill="currentColor" />
+              <text x="225" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">SIMULATION</text>
+              <circle cx="400" cy="30" r="4" fill="currentColor" />
+              <text x="400" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">SYNTHESIS</text>
+              <circle cx="575" cy="30" r="4" fill="currentColor" />
+              <text x="575" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">PHYSICAL DESIGN</text>
+              <circle cx="750" cy="30" r="4" fill="currentColor" />
+              <text x="750" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">SYSTEM INTEGRATION</text>
+              
+              <!-- animated signal -->
+              <path d="M 50 30 H 750" stroke="var(--accent)" stroke-width="2" class="workflow-signal" />
+            </svg>
+          </div>
+
+          <div class="skills-matrix" id="skills-list"></div>
+        </div>
+      </section>
+
+      <section id="notes" class="content-section">
+        <div class="section-label reveal">N O T E S</div>
+        <div class="section-content">
+          <p class="body-copy reveal">Technical notes, project write-ups, and engineering observations.</p>
+          <div class="notes-journal" id="notes-list"></div>
+        </div>
+      </section>
+
+      <section id="contact" class="content-section">
+        <div class="section-label">C O N T A C T</div>
+        <div class="section-content contact-grid">
+          <div class="contact-item">
+            <span class="mono muted">EMAIL</span>
+            <a href="mailto:abolfazlazad321@gmail.com">abolfazlazad321@gmail.com ↗</a>
+          </div>
+          <div class="contact-item">
+            <span class="mono muted">GITHUB</span>
+            <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">Abolfazl-Azad ↗</a>
+          </div>
+          <div class="contact-item">
+            <span class="mono muted">LINKEDIN</span>
+            <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">Abolfazl Azad ↗</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div>
+          <p class="eyebrow mono">MORE DETAILS</p>
+          <h2>Curriculum Vitae</h2>
+          <p class="muted">Education, experience, projects, skills, and selected technical work.</p>
+        </div>
+        <a class="button-link" href="pages/cv.html">View CV ↗</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <h3>ABOLFAZL AZAD</h3>
+        <p>Electrical Engineering<br>Digital Systems &middot; RTL &middot; FPGA</p>
+      </div>
+      <div class="footer-links mono">
+        <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:abolfazlazad321@gmail.com">Email</a>
+      </div>
+      <div class="footer-bottom">
+        <span id="copyright-year">© Abolfazl Azad</span>
+        <span class="mono end-trace" aria-hidden="true">END OF TRACE <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor"><path d="M0 5h15l5-5" stroke-width="1.5"/></svg></span>
+      </div>
+    </footer>
+  </div>
+  
+  <a href="#top" id="back-to-top" class="back-to-top mono" aria-label="Back to top">
+    ↑
+  </a>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
