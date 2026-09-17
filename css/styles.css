@@ -80,7 +80,7 @@ a:hover { color: var(--accent); }
   padding: 15px 0;
   border-bottom: 1px solid var(--line);
 }
-.brand { font-family: "DM Mono", monospace; font-size: 1.25rem; font-weight: 500; color: var(--accent); text-decoration: none; }
+.brand { display: flex; align-items: center; color: var(--accent); text-decoration: none; }
 .top-nav { display: flex; gap: 24px; font-size: .82rem; }
 .top-nav a { 
   color: var(--muted); 
@@ -697,4 +697,140 @@ html.js-enabled .reveal.is-visible { opacity: 1; transform: none; }
   .reveal { opacity: 1; transform: none; }
   .timing-scanline, .signal-packet { display: none !important; }
   .status-dot { opacity: 1 !important; transform: none !important; }
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+   ========================================================= */
+@media (hover: hover) and (pointer: fine) {
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none !important;
+  }
+
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99999;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  /* Crosshair center — small green square with glow */
+  .custom-cursor-dot {
+    width: 4px;
+    height: 4px;
+    margin: -2px 0 0 -2px;
+    background-color: var(--accent);
+    border-radius: 0;
+    box-shadow:
+      0 0 6px rgba(56, 255, 139, 0.6),
+      0 0 12px rgba(56, 255, 139, 0.2);
+  }
+
+  /* Crosshair arms — drawn with box-shadow trick for 4 lines */
+  .custom-cursor-dot::before,
+  .custom-cursor-dot::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(56, 255, 139, 0.7);
+  }
+  /* Vertical crosshair arms */
+  .custom-cursor-dot::before {
+    width: 1px;
+    height: 14px;
+    top: -5px;
+    left: 1.5px;
+  }
+  /* Horizontal crosshair arms */
+  .custom-cursor-dot::after {
+    width: 14px;
+    height: 1px;
+    top: 1.5px;
+    left: -5px;
+  }
+
+  /* Outer ring — squared corners for circuit/IC feel */
+  .custom-cursor-ring {
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border: 1px solid rgba(56, 255, 139, 0.35);
+    border-radius: 2px;
+    transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease,
+                border-color 0.25s ease, border-radius 0.25s ease,
+                background-color 0.25s ease, box-shadow 0.25s ease,
+                opacity 0.3s ease;
+  }
+
+  /* Corner accents — tiny L-brackets at corners */
+  .custom-cursor-ring::before,
+  .custom-cursor-ring::after {
+    content: "";
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-color: rgba(56, 255, 139, 0.6);
+    border-style: solid;
+    transition: border-color 0.25s ease, width 0.2s ease, height 0.2s ease;
+  }
+  .custom-cursor-ring::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .custom-cursor-ring::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+
+  /* Hover state — expand + glow + rounded feel */
+  .custom-cursor-ring.is-hovering {
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-color: rgba(56, 255, 139, 0.7);
+    border-radius: 4px;
+    background-color: rgba(56, 255, 139, 0.04);
+    box-shadow:
+      0 0 12px rgba(56, 255, 139, 0.12),
+      inset 0 0 8px rgba(56, 255, 139, 0.03);
+  }
+  .custom-cursor-ring.is-hovering::before,
+  .custom-cursor-ring.is-hovering::after {
+    width: 7px;
+    height: 7px;
+    border-color: rgba(56, 255, 139, 0.9);
+  }
+
+  /* Click state — shrink + flash */
+  .custom-cursor-ring.is-clicking {
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border-color: var(--accent);
+    border-radius: 1px;
+    box-shadow: 0 0 16px rgba(56, 255, 139, 0.35);
+  }
+
+  /* Cursor trail particles container */
+  .cursor-trail-particle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 99998;
+    width: 2px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 0;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
 }
