@@ -4,23 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Abolfazl Azad — Electrical Engineering | Digital Systems</title>
-  <meta name="description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran focused on digital systems, RTL design, FPGA development, and computer architecture." />
+  <title>Abolfazl Azad | Electrical Engineering Student — Digital Systems, RTL & FPGA</title>
+  <meta name="description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran specializing in digital systems, RTL design, FPGA, and computer architecture." />
+  <meta name="author" content="Abolfazl Azad" />
   <meta name="robots" content="index, follow" />
   
-  <!-- TODO: Replace YOUR-DOMAIN-HERE with actual domain -->
-  <link rel="canonical" href="https://YOUR-DOMAIN-HERE/" />
+
+  <link rel="canonical" href="https://abolfazlazad.ir/" />
   
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Abolfazl Azad — Electrical Engineering | Digital Systems" />
-  <meta property="og:description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran focused on digital systems, RTL design, FPGA development, and computer architecture." />
-  <meta property="og:url" content="https://YOUR-DOMAIN-HERE/" />
+  <meta property="og:site_name" content="Abolfazl Azad Portfolio" />
+  <meta property="og:title" content="Abolfazl Azad | Electrical Engineering Student" />
+  <meta property="og:description" content="Portfolio of Abolfazl Azad, an Electrical Engineering student at the University of Tehran specializing in digital systems, RTL design, FPGA, and computer architecture." />
+  <meta property="og:url" content="https://abolfazlazad.ir/" />
   
   <!-- Twitter -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Abolfazl Azad — Electrical Engineering" />
-  <meta name="twitter:description" content="Portfolio of Abolfazl Azad focused on digital systems, RTL design, and computer architecture." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Abolfazl Azad | Electrical Engineering Student" />
+  <meta name="twitter:description" content="Portfolio of Abolfazl Azad, specializing in digital systems, RTL design, FPGA, and computer architecture." />
+  <meta name="twitter:url" content="https://abolfazlazad.ir/" />
 
   <!-- Icons -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -35,13 +38,53 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Abolfazl Azad",
-    "jobTitle": "Electrical Engineering Student",
-    "url": "https://YOUR-DOMAIN-HERE/",
-    "sameAs": [
-      "https://github.com/Abolfazl-Azad",
-      "https://www.linkedin.com/in/abolfazl-azad/"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://abolfazlazad.ir/#website",
+        "url": "https://abolfazlazad.ir/",
+        "name": "Abolfazl Azad Portfolio",
+        "author": {
+          "@id": "https://abolfazlazad.ir/#person"
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://abolfazlazad.ir/#webpage",
+        "url": "https://abolfazlazad.ir/",
+        "name": "Abolfazl Azad | Electrical Engineering Student — Digital Systems, RTL & FPGA",
+        "isPartOf": {
+          "@id": "https://abolfazlazad.ir/#website"
+        },
+        "about": {
+          "@id": "https://abolfazlazad.ir/#person"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://abolfazlazad.ir/#person",
+        "name": "Abolfazl Azad",
+        "jobTitle": "Electrical Engineering Student",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "University of Tehran"
+        },
+        "url": "https://abolfazlazad.ir/",
+        "sameAs": [
+          "https://github.com/Abolfazl-Azad",
+          "https://www.linkedin.com/in/abolfazl-azad/"
+        ],
+        "knowsAbout": [
+          "Digital Systems",
+          "RTL Design",
+          "FPGA",
+          "Computer Architecture",
+          "RISC-V",
+          "ASIC Design",
+          "Embedded Systems",
+          "Hardware Acceleration"
+        ]
+      }
     ]
   }
   </script>
@@ -91,7 +134,7 @@
         <div class="hero-grid">
           <div class="hero-copy">
             <p class="eyebrow mono">ELECTRICAL ENGINEERING / DIGITAL SYSTEMS</p>
-            <h1><span class="name-line">Abolfazl Azad</span><span class="name-spaced">A B O L F A Z L&nbsp;&nbsp; A Z A D</span></h1>
+            <h1><span class="name-line">Abolfazl Azad</span><span class="name-spaced" aria-hidden="true">A B O L F A Z L&nbsp;&nbsp; A Z A D</span></h1>
             <p class="hero-role">Electrical Engineering Student<br>University of Tehran</p>
             <div class="hero-tags mono" aria-label="Areas of interest">
               <span>DIGITAL SYSTEMS</span><span>RTL</span><span>FPGA</span><span>COMPUTER ARCHITECTURE</span>
@@ -185,9 +228,19 @@
         <div class="section-content current-grid" id="focus-areas-list"></div>
       </section>
 
+      <section id="research-interests" class="content-section">
+        <div class="section-label reveal">R E S E A R C H &nbsp; I N T E R E S T S</div>
+        <div class="section-content" id="research-interests-content"></div>
+      </section>
+
       <section id="education" class="content-section">
         <div class="section-label reveal">E D U C A T I O N</div>
         <div class="section-content timeline" id="education-list"></div>
+      </section>
+
+      <section id="coursework" class="content-section compact-section">
+        <div class="section-label reveal">S E L E C T E D &nbsp; C O U R S E W O R K</div>
+        <div class="section-content coursework-grid" id="coursework-list"></div>
       </section>
 
       <section id="current" class="content-section compact-section">

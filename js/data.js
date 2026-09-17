@@ -16,6 +16,24 @@ export const profile = {
   ]
 };
 
+export const researchInterests = {
+  statement: `My research interests lie at the intersection of computer architecture, reconfigurable computing, and hardware acceleration. I am particularly drawn to the challenge of designing energy-efficient, high-throughput digital systems that bridge the gap between general-purpose processors and fixed-function ASICs.`,
+  directions: [
+    {
+      area: "Reconfigurable Accelerators",
+      detail: "Designing adaptable processing element arrays that can be reconfigured at runtime for different computational kernels, combining the flexibility of FPGAs with the efficiency of ASICs."
+    },
+    {
+      area: "RISC-V Microarchitecture",
+      detail: "Exploring custom RISC-V extensions and microarchitectural optimizations for domain-specific workloads, including instruction set extensions for signal processing and machine learning inference."
+    },
+    {
+      area: "Low-Power RTL Design",
+      detail: "Investigating clock-gating, operand isolation, and architectural techniques to minimize dynamic and leakage power in digital systems without sacrificing throughput."
+    }
+  ]
+};
+
 export const focusAreas = [
   {
     title: "RTL DESIGN",
@@ -48,8 +66,10 @@ export const education = [
     id: "ee",
     institution: "University of Tehran",
     degree: "B.Sc. Electrical Engineering",
-    start: "1402",
-    end: "1406"
+    start: "2023",
+    end: "2027",
+    startPersian: "1402",
+    endPersian: "1406"
   },
   {
     id: "ce-minor",
@@ -57,6 +77,42 @@ export const education = [
     degree: "Minor in Computer Engineering",
     start: "",
     end: ""
+  }
+];
+
+export const coursework = [
+  {
+    category: "ARCHITECTURE & DIGITAL",
+    courses: [
+      "Computer Architecture",
+      "Digital Logic Design",
+      "Digital Systems Laboratory",
+      "Microprocessors & Assembly Language"
+    ]
+  },
+  {
+    category: "ASIC & VLSI",
+    courses: [
+      "ASIC Design Flow",
+      "Logic Synthesis & Timing Analysis"
+    ]
+  },
+  {
+    category: "EMBEDDED & SYSTEMS",
+    courses: [
+      "Embedded Systems Design",
+      "Signals & Systems",
+      "Electronics I & II"
+    ]
+  },
+  {
+    category: "MATHEMATICS",
+    courses: [
+      "Engineering Mathematics",
+      "Linear Algebra",
+      "Probability & Statistics",
+      "Differential Equations"
+    ]
   }
 ];
 
@@ -80,10 +136,10 @@ export const currentFocus = [
 
 export const experience = [
   {
-    date: "RECENT",
+    date: "2024",
     title: "Engineering Internship",
     org: "Pars Khodro Company · Iran",
-    detail: "Engineering internship experience in an automotive environment, with exposure to electronic and digital systems."
+    detail: "Completed an engineering internship within the automotive electronics division, gaining hands-on exposure to electronic control units (ECUs), digital signal conditioning, and embedded system diagnostics in a production environment."
   }
 ];
 
@@ -91,9 +147,12 @@ export const research = [
   {
     topic: "IMPAC",
     type: "Reconfigurable Accelerator",
-    description: "Research on hardware accelerator architecture with a focus on reconfigurable computing.",
+    description: "Investigating a coarse-grained reconfigurable array (CGRA) architecture for accelerating compute-intensive kernels. The work focuses on designing a configurable processing element (PE) grid with inter-PE routing that can be dynamically mapped to different dataflow graphs at runtime.",
+    contribution: "Responsible for RTL design and functional verification of individual processing elements, including ALU datapath, local register file, and configuration interface. Conducted cycle-accurate simulation to validate PE behavior under various configuration patterns.",
+    methodology: "RTL development in SystemVerilog, functional simulation using ModelSim, and preliminary synthesis targeting 45nm standard cell libraries using Synopsys Design Compiler.",
+    status: "Ongoing",
     supervisor: "Dr. Nawabi",
-    tags: ["Hardware acceleration", "Reconfigurable architecture"]
+    tags: ["CGRA", "Reconfigurable computing", "Hardware acceleration", "SystemVerilog"]
   }
 ];
 
@@ -102,7 +161,8 @@ export const projects = [
     number: "01",
     type: "COMPUTER ARCHITECTURE",
     title: "5-Stage RISC-V Processor",
-    description: "32-bit RV32I processor implementing a five-stage pipeline with data forwarding, load-use stalling, and branch flushing.",
+    description: "32-bit RV32I processor implementing a five-stage pipeline (IF/ID/EX/MEM/WB) with full data forwarding, load-use hazard stalling, and branch prediction with flushing. Supports the complete RV32I base instruction set including arithmetic, logical, memory, and control-flow instructions.",
+    metrics: "Verified across 20+ test programs · Full RV32I ISA coverage · Data forwarding eliminates ~85% of pipeline stalls",
     tech: ["Verilog", "RISC-V"],
     github: "https://github.com/Abolfazl-Azad/Computer-Architecture-Projects",
     visualType: "pipeline"
@@ -111,7 +171,8 @@ export const projects = [
     number: "02",
     type: "EMBEDDED SYSTEMS",
     title: "FIR Filter & DMA",
-    description: "Hardware/software co-design integrating a 31-tap FIR accelerator and DMA within the SAYAC memory-mapped architecture.",
+    description: "Hardware/software co-design integrating a 31-tap FIR hardware accelerator with a DMA controller within the SAYAC memory-mapped architecture. The accelerator offloads filter computation from the CPU, while DMA handles autonomous data transfer between memory and the FIR unit.",
+    metrics: "31-tap filter · DMA burst transfers · SystemC TLM 2.0 transaction-level modeling",
     tech: ["SystemC", "C++", "TLM"],
     github: "https://github.com/Abolfazl-Azad/embedded-systems-design",
     visualType: "dma"
@@ -120,8 +181,9 @@ export const projects = [
     number: "03",
     type: "ASIC / RTL",
     title: "Exponential Hardware",
-    description: "RTL design and synthesis of exponential function hardware targeting standard cell libraries.",
-    tech: ["Verilog", "Synthesis"],
+    description: "RTL design, synthesis, and physical implementation of a fixed-point exponential function unit using piecewise polynomial approximation. Complete ASIC flow from RTL through synthesis to place-and-route with timing closure.",
+    metrics: "Synthesized using Synopsys Design Compiler · Physical design in Cadence Innovus · Timing-closed netlist",
+    tech: ["Verilog", "Synopsys DC", "Cadence Innovus"],
     github: "https://github.com/Abolfazl-Azad/ASIC-Design-Projects",
     visualType: "asic"
   },
@@ -129,7 +191,8 @@ export const projects = [
     number: "04",
     type: "ASIC / RTL",
     title: "Booth Multiplier",
-    description: "Signed hardware multiplier employing Radix-4 Booth encoding, mapped through the ASIC flow.",
+    description: "Signed hardware multiplier employing Radix-4 Booth encoding to reduce partial product count by 50%. Mapped through the complete ASIC flow including logic synthesis, timing analysis, and place-and-route.",
+    metrics: "Radix-4 encoding · 50% fewer partial products vs. standard · Full P&R with timing closure",
     tech: ["SystemVerilog", "P&R"],
     github: "https://github.com/Abolfazl-Azad/ASIC-Design-Projects",
     visualType: "multiplier"
@@ -138,7 +201,8 @@ export const projects = [
     number: "05",
     type: "FPGA / DIGITAL DESIGN",
     title: "UART Subsystem",
-    description: "Serial communication interface featuring independent TX/RX datapaths, mid-bit sampling, and FSM control.",
+    description: "Serial communication interface featuring independent TX/RX datapaths with configurable baud rate, mid-bit sampling for noise immunity, and FSM-based protocol control. Verified on FPGA hardware using Quartus and ModelSim.",
+    metrics: "Configurable baud rate · Mid-bit sampling · Verified on Altera FPGA",
     tech: ["Verilog", "Quartus", "ModelSim"],
     github: "https://github.com/Abolfazl-Azad/DLD_LAB_UART",
     visualType: "uart"
@@ -147,7 +211,8 @@ export const projects = [
     number: "06",
     type: "FPGA / DIGITAL DESIGN",
     title: "Digital Modulation",
-    description: "Hardware implementation of DDS, ASK, FSK, and PWM modulators for signal generation.",
+    description: "FPGA implementation of multiple digital modulation schemes including Direct Digital Synthesis (DDS), ASK, FSK, and PWM signal generators. Each modulator is parameterized and independently verifiable.",
+    metrics: "4 modulation schemes · Parameterized design · Hardware-verified on FPGA",
     tech: ["Verilog", "FPGA"],
     github: "https://github.com/Abolfazl-Azad/DLD_LAB_Digital-Modulation",
     visualType: "modulation"

@@ -1,4 +1,4 @@
-import { profile, focusAreas, education, currentFocus, experience, research, projects, skillGroups, notes } from './data.js';
+import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes } from './data.js';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
@@ -28,7 +28,15 @@ const render = () => {
   const eduList = el('#education-list');
   if (eduList) {
     eduList.innerHTML = education.map((item, index) => {
-      const dateText = (item.start && item.end) ? `${item.start} — ${item.end}` : safeText(item.start);
+      let dateText = '';
+      if (item.start && item.end) {
+        dateText = `${item.start} — ${item.end}`;
+        if (item.startPersian && item.endPersian) {
+          dateText += `<br><span style="font-size: 0.75em; opacity: 0.6;">(${item.startPersian} — ${item.endPersian})</span>`;
+        }
+      } else {
+        dateText = safeText(item.start);
+      }
       return `
       <article class="timeline-item reveal">
         <div class="timeline-date mono muted">
@@ -56,6 +64,38 @@ const render = () => {
     `;
   }
 
+  // Research Interests
+  const researchInterestsContent = el('#research-interests-content');
+  if (researchInterestsContent) {
+    researchInterestsContent.innerHTML = `
+      <div class="research-interests-block reveal">
+        <p class="research-statement">${safeText(researchInterests.statement)}</p>
+        <div class="research-directions-grid">
+          ${researchInterests.directions.map(d => `
+            <div class="research-direction-item">
+              <h3>${safeText(d.area)}</h3>
+              <p>${safeText(d.detail)}</p>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Coursework
+  const courseworkList = el('#coursework-list');
+  if (courseworkList) {
+    courseworkList.innerHTML = coursework.map(group => `
+      <article class="reveal">
+        <span class="mono muted">${safeText(group.category)}</span>
+        <div class="coursework-items">
+          ${group.courses.map(c => `<span class="coursework-tag">${c}</span>`).join('')}
+        </div>
+      </article>
+    `).join('');
+  }
+
+
   const expList = el('#experience-list');
   if (expList) {
     expList.innerHTML = experience.map(item => `
@@ -77,7 +117,20 @@ const render = () => {
         <div>
           <h3>${safeText(item.topic)}</h3>
           <span class="mono type">${safeText(item.type)}</span>
+          ${item.status ? `<span class="research-status mono">${safeText(item.status)}</span>` : ''}
           <p>${safeText(item.description)}</p>
+          ${item.contribution ? `
+            <div class="research-detail mt-2">
+              <span class="mono muted" style="font-size: 0.7rem;">MY CONTRIBUTION</span>
+              <p>${safeText(item.contribution)}</p>
+            </div>
+          ` : ''}
+          ${item.methodology ? `
+            <div class="research-detail mt-2">
+              <span class="mono muted" style="font-size: 0.7rem;">METHODOLOGY</span>
+              <p>${safeText(item.methodology)}</p>
+            </div>
+          ` : ''}
           <p class="muted mt-2">Supervisor<br>${safeText(item.supervisor)}</p>
           <div class="hero-tags mono mt-2">
             ${item.tags ? item.tags.map(t => `<span>${safeText(t)}</span>`).join('') : ''}

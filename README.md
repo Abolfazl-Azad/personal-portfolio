@@ -12,4 +12,4 @@ This site is statically generated and hosted via **Cloudflare Pages**.
 
 The custom domain will be connected directly through Cloudflare Pages.
 
-*Note: Once the final domain is chosen, `YOUR-DOMAIN-HERE` must be updated in `index.html`, `pages/cv.html`, and `sitemap.xml` for correct SEO canonicalization.*
+*Note: The canonical domain `abolfazlazad.ir` has been properly configured for SEO canonicalization.*
