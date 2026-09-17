@@ -108,15 +108,130 @@ const render = () => {
     `).join('');
   }
 
-  const getProjectSvg = (type) => {
+const getProjectDiagram = (type) => {
+    const base = `
+      fill="none"
+      viewBox="0 0 500 76"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+    `;
+
+    const arrow = (x1, x2) => `
+      <line x1="${x1}" y1="38" x2="${x2 - 7}" y2="38" stroke="currentColor" stroke-width="1"/>
+      <path d="M${x2 - 7} 34 L${x2} 38 L${x2 - 7} 42"
+            stroke="currentColor" stroke-width="1" fill="none"/>
+    `;
+
+    const box = (x, width, label, highlight = false) => `
+      <rect x="${x}" y="23" width="${width}" height="30" rx="2"
+            fill="${highlight ? 'rgba(56,255,139,.05)' : 'none'}"
+            stroke="${highlight ? 'var(--accent)' : 'currentColor'}"
+            stroke-width="1"/>
+      <text x="${x + width / 2}" y="38"
+            fill="${highlight ? 'var(--accent)' : 'currentColor'}"
+            font-family="monospace"
+            font-size="11"
+            text-anchor="middle"
+            dominant-baseline="middle">${label}</text>
+    `;
+
     switch (type) {
-      case 'pipeline': return `<svg viewBox="0 0 200 40" class="tech-svg"><path d="M10 20h180M40 10v20M80 10v20M120 10v20M160 10v20" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2" /><text x="25" y="24" font-size="10" text-anchor="middle" fill="currentColor">IF</text><text x="60" y="24" font-size="10" text-anchor="middle" fill="currentColor">ID</text><text x="100" y="24" font-size="10" text-anchor="middle" fill="currentColor">EX</text><text x="140" y="24" font-size="10" text-anchor="middle" fill="currentColor">MEM</text><text x="175" y="24" font-size="10" text-anchor="middle" fill="currentColor">WB</text></svg>`;
-      case 'dma': return `<svg viewBox="0 0 200 40" class="tech-svg"><path d="M10 20h30l5-5l5 10l5-10l5 10l5-5h30" stroke="currentColor" stroke-width="1.5"/><rect x="40" y="10" width="55" height="20" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><text x="67" y="24" font-size="10" text-anchor="middle" fill="currentColor">FIR</text><path d="M95 20h25M117 17l3 3l-3 3" stroke="currentColor" stroke-width="1.5"/><rect x="120" y="10" width="30" height="20" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><text x="135" y="24" font-size="10" text-anchor="middle" fill="currentColor">DMA</text><path d="M150 20h25M172 17l3 3l-3 3" stroke="currentColor" stroke-width="1.5"/><rect x="175" y="10" width="15" height="20" stroke="currentColor" fill="none" stroke-width="1.5"/></svg>`;
-      case 'asic': return `<svg viewBox="0 0 200 40" class="tech-svg"><path d="M10 20h170" stroke="currentColor" stroke-width="1.5"/><circle cx="20" cy="20" r="3" fill="currentColor"/><text x="20" y="10" font-size="8" text-anchor="middle" fill="currentColor">RTL</text><circle cx="70" cy="20" r="3" fill="currentColor"/><text x="70" y="10" font-size="8" text-anchor="middle" fill="currentColor">SYNTH</text><circle cx="120" cy="20" r="3" fill="currentColor"/><text x="120" y="10" font-size="8" text-anchor="middle" fill="currentColor">P&R</text><circle cx="170" cy="20" r="3" fill="currentColor"/><text x="170" y="10" font-size="8" text-anchor="middle" fill="currentColor">GDS</text></svg>`;
-      case 'uart': return `<svg viewBox="0 0 200 40" class="tech-svg"><rect x="10" y="10" width="30" height="20" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><text x="25" y="24" font-size="10" text-anchor="middle" fill="currentColor">TX</text><path d="M40 20h110M147 17l3 3l-3 3" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 2"/><rect x="150" y="10" width="30" height="20" rx="2" stroke="currentColor" fill="none" stroke-width="1.5"/><text x="165" y="24" font-size="10" text-anchor="middle" fill="currentColor">RX</text></svg>`;
-      case 'modulation': return `<svg viewBox="0 0 200 40" class="tech-svg"><path d="M10 20h10v-10h10v20h10v-20h10v10h10" stroke="currentColor" stroke-width="1.5"/><path d="M80 20 Q 90 5, 100 20 T 120 20 T 140 20 T 160 20" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M170 20h10v-10h5v20h5v-20h5v10h5" stroke="currentColor" stroke-width="1.5"/></svg>`;
-      case 'multiplier': return `<svg viewBox="0 0 200 40" class="tech-svg"><rect x="40" y="10" width="40" height="20" stroke="currentColor" fill="none" stroke-width="1.5"/><rect x="120" y="10" width="40" height="20" stroke="currentColor" fill="none" stroke-width="1.5"/><text x="100" y="24" font-size="12" text-anchor="middle" fill="currentColor">×</text><path d="M10 20h30M80 20h40M160 20h30M187 17l3 3l-3 3" stroke="currentColor" stroke-width="1.5"/></svg>`;
-      default: return '';
+      case 'pipeline':
+        return `
+          <svg ${base} aria-label="Five-stage RISC-V pipeline">
+            ${box(8, 70, 'IF')}
+            ${arrow(78, 108)}
+            ${box(108, 70, 'ID')}
+            ${arrow(178, 208)}
+            ${box(208, 70, 'EX')}
+            ${arrow(278, 308)}
+            ${box(308, 70, 'MEM')}
+            ${arrow(378, 408)}
+            ${box(408, 70, 'WB')}
+          </svg>
+        `;
+
+      case 'dma':
+        return `
+          <svg ${base} aria-label="FIR filter and DMA flow">
+            ${box(85, 90, 'FIR')}
+            ${arrow(175, 205)}
+            ${box(205, 90, 'DMA')}
+            ${arrow(295, 325)}
+            ${box(325, 90, 'MEM')}
+          </svg>
+        `;
+
+      case 'asic':
+        return `
+          <svg ${base} aria-label="ASIC design flow">
+            ${box(8, 90, 'RTL')}
+            ${arrow(98, 128)}
+            ${box(128, 90, 'SYNTH')}
+            ${arrow(218, 248)}
+            ${box(248, 90, 'P&amp;R')}
+            ${arrow(338, 368)}
+            ${box(368, 90, 'GDS')}
+          </svg>
+        `;
+
+      case 'uart':
+        return `
+          <svg ${base} aria-label="UART communication flow">
+            ${box(85, 90, 'TX')}
+            ${arrow(175, 205)}
+            ${box(205, 90, 'UART', true)}
+            ${arrow(295, 325)}
+            ${box(325, 90, 'RX')}
+          </svg>
+        `;
+
+      case 'modulation':
+        return `
+          <svg ${base} aria-label="Digital modulation flow">
+            ${box(55, 110, 'DATA')}
+            ${arrow(165, 195)}
+            ${box(195, 110, 'DDS/MOD', true)}
+            ${arrow(305, 335)}
+            ${box(335, 110, 'SIGNAL')}
+          </svg>
+        `;
+
+      case 'multiplier':
+        return `
+          <svg
+            width="100%"
+            height="92"
+            viewBox="0 0 240 120"
+            preserveAspectRatio="xMidYMid meet"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-label="Booth multiplier flow"
+          >
+            <rect x="55" y="4" width="130" height="28" rx="2" stroke="currentColor"/>
+            <rect x="55" y="46" width="130" height="28" rx="2"
+                  stroke="var(--accent)" fill="rgba(56,255,139,.05)"/>
+            <rect x="55" y="88" width="130" height="28" rx="2" stroke="currentColor"/>
+
+            <line x1="120" y1="32" x2="120" y2="46" stroke="currentColor"/>
+            <path d="M116 42 L120 46 L124 42" stroke="currentColor"/>
+
+            <line x1="120" y1="74" x2="120" y2="88" stroke="currentColor"/>
+            <path d="M116 84 L120 88 L124 84" stroke="currentColor"/>
+
+            <g font-family="monospace" font-size="9"
+               text-anchor="middle" dominant-baseline="middle">
+              <text x="120" y="18" fill="currentColor">MULTIPLICAND</text>
+              <text x="120" y="60" fill="var(--accent)">BOOTH</text>
+              <text x="120" y="102" fill="currentColor">PRODUCT</text>
+            </g>
+          </svg>
+        `;
+
+      default:
+        return '';
     }
   };
 
@@ -129,12 +244,12 @@ const render = () => {
           <h3>${safeText(item.title)}</h3>
           <div class="project-type mono">${safeText(item.type)}</div>
           <p>${safeText(item.description)}</p>
-          <div class="project-meta mono">
-            ${item.tech ? item.tech.map(t => `<span>${safeText(t)}</span>`).join('') : ''}
+          <div class="project-meta">
+            ${item.tech.map(t => `<span>${safeText(t)}</span>`).join('')}
           </div>
         </div>
-        <div class="project-visual">
-          ${getProjectSvg(item.visualType)}
+        <div class="project-visual" aria-hidden="true">
+          ${getProjectDiagram(item.visualType)}
         </div>
         <div class="project-link-icon">↗</div>
       </a>
@@ -182,7 +297,7 @@ const render = () => {
             [READ NOTE ↗]
           </a>
         </div>
-        ${note.visualType ? `<div class="note-visual" aria-hidden="true">${getProjectSvg(note.visualType)}</div>` : ''}
+        ${note.visualType ? `<div class="note-visual" aria-hidden="true">${getProjectDiagram(note.visualType)}</div>` : ''}
       </div>
     `).join('');
   }

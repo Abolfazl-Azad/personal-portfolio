@@ -388,17 +388,67 @@ a:hover { color: var(--accent); }
 .project-meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: .7rem; color: #8ba192; }
 .project-meta span { background: rgba(56,255,139,.05); padding: 4px 8px; border-radius: 2px; }
 .project-visual {
-  height: 60px;
+  min-height: 90px;
+  height: auto;
+  padding: 16px 0;
   border-bottom: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--muted);
-  transition: color .3s ease;
+  transition: color .3s ease, border-color .3s ease;
   overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
 }
 .project-card:hover .project-visual { color: var(--accent); border-bottom-color: rgba(56,255,139,.3); }
-.tech-svg { width: 100%; height: 100%; max-width: 200px; display: block; }
+
+/* Project mini-diagrams — SVG based for deterministic rendering */
+.project-visual {
+  min-height: 90px;
+  height: 90px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: color .3s ease, border-color .3s ease;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.project-card:hover .project-visual {
+  color: var(--accent);
+  border-bottom-color: rgba(56,255,139,.3);
+}
+
+.project-visual > svg {
+  display: block;
+  width: 100%;
+  height: 76px;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.project-visual .project-diagram-wrapper,
+.project-visual .project-diagram-box,
+.project-visual .project-diagram-arrow {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .project-visual {
+    height: 84px;
+    min-height: 84px;
+  }
+
+  .project-visual > svg {
+    height: 70px;
+  }
+}
+
 .project-link-icon { position: absolute; top: 24px; right: 0; font-family: monospace; font-size: .8rem; color: var(--muted); transition: transform .3s ease, color .3s ease; }
 .project-card:hover .project-link-icon { color: var(--accent); transform: translate(3px, -3px); }
 .view-all-projects { margin-top: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
