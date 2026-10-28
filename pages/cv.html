@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abolfazl Azad | Curriculum Vitae — Electrical Engineering & Digital Systems</title>
-  <meta name="description" content="Professional CV and technical resume of Abolfazl Azad, an Electrical Engineering student specializing in digital systems, RTL design, and computer architecture." />
+  <title>Abolfazl Azad | Curriculum Vitae — RTL Design &amp; Hardware Acceleration</title>
+  <meta name="description" content="Professional CV of Abolfazl Azad, Electrical Engineering B.Sc. candidate at the University of Tehran specializing in RTL design, hardware acceleration, low-power digital systems, compute-in-memory, and computer architecture." />
   <meta name="author" content="Abolfazl Azad" />
   <meta name="robots" content="index, follow" />
   
@@ -14,13 +14,13 @@
   <meta property="og:type" content="profile" />
   <meta property="og:site_name" content="Abolfazl Azad Portfolio" />
   <meta property="og:title" content="Abolfazl Azad | Curriculum Vitae" />
-  <meta property="og:description" content="Professional CV and technical resume of Abolfazl Azad, an Electrical Engineering student specializing in digital systems, RTL design, and computer architecture." />
+  <meta property="og:description" content="Professional CV of Abolfazl Azad, Electrical Engineering B.Sc. candidate at the University of Tehran specializing in RTL design and hardware acceleration." />
   <meta property="og:url" content="https://abolfazlazad.ir/pages/cv.html" />
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Abolfazl Azad | Curriculum Vitae" />
-  <meta name="twitter:description" content="Professional CV and technical resume of Abolfazl Azad, specializing in digital systems and RTL design." />
+  <meta name="twitter:description" content="Professional CV of Abolfazl Azad, specializing in RTL design, hardware acceleration, and digital systems." />
   <meta name="twitter:url" content="https://abolfazlazad.ir/pages/cv.html" />
   
   <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
@@ -72,58 +72,87 @@
         <div>
           <p class="eyebrow mono">CURRICULUM VITAE</p>
           <h1>Abolfazl Azad</h1>
-          <p class="cv-subtitle">Electrical Engineering Student</p>
-          <p class="cv-subtitle">University of Tehran</p>
+          <p class="cv-subtitle">ELECTRICAL ENGINEERING B.Sc. CANDIDATE | RTL DESIGN | HARDWARE ACCELERATION</p>
+          <p class="cv-subtitle" style="font-size: 1rem; color: #8ba192;">University of Tehran &middot; Tehran, Iran</p>
           <div class="cv-contact-info mono">
-            <a href="mailto:abolfazlazad321@gmail.com">abolfazlazad321@gmail.com</a> &middot;
+            <a href="mailto:abolfazlazad@ut.ac.ir">abolfazlazad@ut.ac.ir</a> &middot;
+            <a href="https://abolfazlazad.ir/">Website</a> &middot;
             <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub</a> &middot;
             <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
         </div>
         <div class="cv-actions no-print">
-          <button class="button-link" onclick="window.print()">DOWNLOAD / PRINT CV ↓</button>
+          <a class="button-link" href="../assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf">DOWNLOAD CV (PDF) ↓</a>
+          <button class="button-link cv-print-btn" onclick="window.print()">PRINT ⎙</button>
         </div>
       </div>
 
       <section class="cv-section">
-        <div class="section-label">P R O F I L E</div>
+        <div class="section-label">PROFILE</div>
         <div>
-          <p class="cv-profile-text">Electrical Engineering student at the University of Tehran working across digital systems, RTL design, FPGA development, and computer architecture. Current work includes processor design, hardware accelerators, ASIC-oriented flows, and embedded hardware/software integration.</p>
+          <p class="cv-profile-text">Electrical Engineering B.Sc. candidate at the University of Tehran focused on digital systems, RTL design, and computer architecture. Project experience includes SystemVerilog-based matrix-multiplication accelerator design and verification, SystemC-based FIR accelerator integration, and open-source RISC-V SoC verification. Supervised research spans low-power RTL optimization, hardware-aware weight quantization, and NeuroSim-based memristor/CIM characterization. Seeking research experience in energy-efficient digital design, hardware accelerators, RISC-V systems, and AI hardware.</p>
         </div>
       </section>
 
       <section class="cv-section">
-        <div class="section-label">E D U C A T I O N</div>
+        <div class="section-label">EDUCATION</div>
         <div id="cv-education"></div>
       </section>
 
       <section class="cv-section">
-        <div class="section-label">EXPERIENCE</div>
-        <div id="cv-experience"></div>
+        <div class="section-label">RESEARCH INTERESTS</div>
+        <div>
+          <p class="cv-profile-text">Low-power RTL and switching-activity reduction; hardware accelerators and datapath/control design; computer architecture and RISC-V; hardware/software co-design; compute-in-memory (CIM); memristor-based neural networks and low-bit weight quantization.</p>
+        </div>
       </section>
 
       <section class="cv-section">
-        <div class="section-label">RESEARCH</div>
+        <div class="section-label">RESEARCH EXPERIENCE</div>
         <div id="cv-research"></div>
       </section>
 
       <section class="cv-section">
-        <div class="section-label">SELECTED PROJECTS</div>
-        <div id="cv-projects"></div>
+        <div class="section-label">OPEN SOURCE</div>
+        <div id="cv-opensource"></div>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-label">INDUSTRY EXPERIENCE</div>
+        <div id="cv-experience"></div>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-label">TEACHING EXPERIENCE</div>
+        <div id="cv-teaching"></div>
       </section>
 
       <section class="cv-section">
         <div class="section-label">TECHNICAL SKILLS</div>
         <div class="cv-skills-grid" id="cv-skills"></div>
       </section>
+
+      <section class="cv-section">
+        <div class="section-label">LANGUAGES</div>
+        <div id="cv-languages"></div>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-label">SELECTED COURSEWORK</div>
+        <div id="cv-coursework"></div>
+      </section>
+
+      <section class="cv-section">
+        <div class="section-label">SELECTED PROJECTS</div>
+        <div id="cv-projects"></div>
+      </section>
     </main>
 
     <footer class="site-footer print-footer mono" aria-label="Site footer">
-      <div class="copyright">Abolfazl Azad</div>
+      <div class="copyright">Abolfazl Azad &middot; Electrical Engineering B.Sc. Candidate</div>
       <div class="footer-links">
         <a href="https://github.com/Abolfazl-Azad">GitHub</a>
         <a href="https://www.linkedin.com/in/abolfazl-azad/">LinkedIn</a>
-        <a href="mailto:abolfazlazad321@gmail.com">Email</a>
+        <a href="mailto:abolfazlazad@ut.ac.ir">abolfazlazad@ut.ac.ir</a>
       </div>
     </footer>
   </div>

@@ -1,7 +1,90 @@
-import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes } from './data.js';
+import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience } from './data.js';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
+
+const getResearchDiagram = (type) => {
+  const base = `viewBox="0 0 140 160" fill="none" stroke="currentColor" stroke-width="1.4" style="color: var(--accent); width: 100%; height: auto;"`;
+  switch (type) {
+    case 'impac':
+      return `
+        <svg ${base} aria-label="Matrix-Multiplication PE grid diagram">
+          <text x="70" y="14" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">INPUT DATA</text>
+          <path d="M70 18 v8 M67 23 l3 3 l3 -3" />
+          <text x="70" y="38" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">CONFIG</text>
+          <path d="M70 42 v8 M67 47 l3 3 l3 -3" />
+          <rect x="25" y="55" width="90" height="66" stroke="currentColor" fill="rgba(56,255,139,0.05)" rx="2"/>
+          <path d="M25 77 h90 M25 99 h90 M55 55 v66 M85 55 v66" stroke-dasharray="2 2" />
+          <text x="40" y="69" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="70" y="69" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="100" y="69" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="40" y="91" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="70" y="91" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="100" y="91" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="40" y="113" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="70" y="113" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <text x="100" y="113" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
+          <path d="M70 123 v8 M67 128 l3 3 l3 -3" />
+          <text x="70" y="145" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">OUTPUT STREAM</text>
+        </svg>
+      `;
+    case 'lowpower':
+      return `
+        <svg ${base} aria-label="Operand isolation and low power datapath">
+          <text x="70" y="14" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">OPERAND IN</text>
+          <path d="M50 18 v14 M90 18 v14" />
+          <rect x="35" y="34" width="70" height="26" stroke="currentColor" fill="rgba(56,255,139,0.06)" rx="2"/>
+          <text x="70" y="50" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">ISOLATION</text>
+          <text x="70" y="70" font-family="monospace" font-size="7" text-anchor="middle" fill="var(--accent)" stroke="none">CTRL GATING</text>
+          <path d="M70 60 v12 M67 68 l3 4 l3 -4" />
+          <polygon points="40,78 100,78 88,108 52,108" stroke="currentColor" fill="rgba(56,255,139,0.04)" />
+          <text x="70" y="96" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">ADD / SUB</text>
+          <path d="M70 108 v14 M67 118 l3 4 l3 -4" />
+          <text x="70" y="134" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">LOW-POWER OUT</text>
+          <text x="70" y="148" font-family="monospace" font-size="7" text-anchor="middle" fill="#8ba192" stroke="none">-SWITCHING</text>
+        </svg>
+      `;
+    case 'quant':
+      return `
+        <svg ${base} aria-label="3-bit weight quantization and clustering">
+          <text x="70" y="14" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">FP32 WEIGHTS</text>
+          <path d="M70 18 v12 M67 26 l3 4 l3 -4" />
+          <rect x="25" y="32" width="90" height="30" stroke="currentColor" fill="rgba(56,255,139,0.06)" rx="2"/>
+          <text x="70" y="46" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">CLUSTERING / QAT</text>
+          <text x="70" y="56" font-family="monospace" font-size="7" text-anchor="middle" fill="#8ba192" stroke="none">Hardware-Aware</text>
+          <path d="M70 62 v12 M67 70 l3 4 l3 -4" />
+          <rect x="30" y="76" width="80" height="28" stroke="currentColor" fill="rgba(56,255,139,0.04)" rx="2"/>
+          <text x="70" y="90" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">3-BIT MAPPING</text>
+          <text x="70" y="99" font-family="monospace" font-size="7" text-anchor="middle" fill="var(--accent)" stroke="none">8 DISCRETE STATES</text>
+          <path d="M70 104 v12 M67 112 l3 4 l3 -4" />
+          <text x="70" y="132" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">MEMRISTOR ARRAY</text>
+          <text x="70" y="146" font-family="monospace" font-size="7" text-anchor="middle" fill="#8ba192" stroke="none">ACCURACY RETAINED</text>
+        </svg>
+      `;
+    case 'cim':
+      return `
+        <svg ${base} aria-label="NeuroSim 128x128 RRAM subarray and ADC">
+          <text x="70" y="14" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor" stroke="none">VGG8 / CIFAR-10</text>
+          <path d="M70 18 v8 M67 23 l3 3 l3 -3" />
+          <rect x="25" y="28" width="90" height="54" stroke="currentColor" fill="rgba(56,255,139,0.05)" rx="2"/>
+          <text x="70" y="42" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">128x128 SUBARRAY</text>
+          <path d="M35 50 h70 M35 58 h70 M35 66 h70 M35 74 h70" stroke="currentColor" stroke-dasharray="2 3" opacity="0.6"/>
+          <circle cx="50" cy="50" r="2" fill="var(--accent)"/>
+          <circle cx="70" cy="58" r="2" fill="var(--accent)"/>
+          <circle cx="90" cy="66" r="2" fill="var(--accent)"/>
+          <circle cx="60" cy="74" r="2" fill="var(--accent)"/>
+          <path d="M70 82 v10 M67 89 l3 3 l3 -3" />
+          <rect x="35" y="96" width="70" height="22" stroke="currentColor" fill="rgba(56,255,139,0.07)" rx="2"/>
+          <text x="70" y="110" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">5-BIT ADC</text>
+          <path d="M70 118 v10 M67 124 l3 4 l3 -4" />
+          <text x="70" y="138" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">NEUROSIM CIM</text>
+          <text x="70" y="150" font-family="monospace" font-size="7" text-anchor="middle" fill="#8ba192" stroke="none">AREA / ENERGY EST</text>
+        </svg>
+      `;
+    default:
+      return '';
+  }
+};
 
 const render = () => {
   const focusAreasList = el('#focus-areas-list');
@@ -45,7 +128,9 @@ const render = () => {
         </div>
         <div>
           <h3>${safeText(item.institution)}</h3>
-          <p>${safeText(item.degree)}</p>
+          <p><strong>${safeText(item.degree)}</strong></p>
+          ${item.focus ? `<p class="muted" style="margin: 3px 0;">${safeText(item.focus)}</p>` : ''}
+          ${item.gpa ? `<p class="mono" style="color: var(--accent); font-size: 0.85rem; margin-top: 4px;">${safeText(item.gpa)}</p>` : ''}
         </div>
       </article>
       `;
@@ -87,7 +172,7 @@ const render = () => {
   if (courseworkList) {
     courseworkList.innerHTML = coursework.map(group => `
       <article class="reveal">
-        <span class="mono muted">${safeText(group.category)}</span>
+        <span class="mono muted" style="font-size: 0.72rem; letter-spacing: 0.1em;">${safeText(group.category)}</span>
         <div class="coursework-items">
           ${group.courses.map(c => `<span class="coursework-tag">${c}</span>`).join('')}
         </div>
@@ -95,21 +180,49 @@ const render = () => {
     `).join('');
   }
 
-
+  // Experience (Industry + Teaching)
   const expList = el('#experience-list');
   if (expList) {
-    expList.innerHTML = experience.map(item => `
-      <article class="timeline-item reveal">
-        <div class="mono muted">${safeText(item.date)}</div>
-        <div>
-          <h3>${safeText(item.title)}</h3>
-          <p>${safeText(item.org)}</p>
-          <p class="mt-2">${safeText(item.detail)}</p>
-        </div>
-      </article>
-    `).join('');
+    const industryHtml = `
+      <div class="experience-subheading reveal">INDUSTRY EXPERIENCE</div>
+      ${industryExperience.map(item => `
+        <article class="timeline-item reveal">
+          <div class="timeline-date mono muted">
+            ${safeText(item.date)}<br>
+            <span style="font-size: 0.75em; opacity: 0.7;">${safeText(item.location)}</span>
+          </div>
+          <div>
+            <h3>${safeText(item.company)} — ${safeText(item.role)}</h3>
+            <p class="mono muted" style="font-size: 0.8rem; margin: 4px 0 10px;">${safeText(item.division)}</p>
+            <ul class="timeline-bullets">
+              ${item.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+        </article>
+      `).join('')}
+    `;
+
+    const teachingHtml = `
+      <div class="experience-subheading reveal" style="margin-top: 36px;">TEACHING EXPERIENCE</div>
+      ${teachingExperience.map(item => `
+        <article class="timeline-item reveal">
+          <div class="timeline-date mono muted">
+            ${safeText(item.date)}<br>
+            <span style="font-size: 0.75em; opacity: 0.7;">${safeText(item.term)}</span>
+          </div>
+          <div>
+            <h3>${safeText(item.role)}</h3>
+            <p class="muted">${safeText(item.institution)}</p>
+            <p class="mono muted" style="font-size: 0.8rem; margin-top: 4px;">Supervised by ${safeText(item.supervisor)}</p>
+          </div>
+        </article>
+      `).join('')}
+    `;
+
+    expList.innerHTML = industryHtml + teachingHtml;
   }
 
+  // Research
   const resList = el('#research-list');
   if (resList) {
     resList.innerHTML = research.map(item => `
@@ -118,44 +231,37 @@ const render = () => {
           <h3>${safeText(item.topic)}</h3>
           <span class="mono type">${safeText(item.type)}</span>
           ${item.status ? `<span class="research-status mono">${safeText(item.status)}</span>` : ''}
-          <p>${safeText(item.description)}</p>
-          ${item.contribution ? `
-            <div class="research-detail mt-2">
-              <span class="mono muted" style="font-size: 0.7rem;">MY CONTRIBUTION</span>
-              <p>${safeText(item.contribution)}</p>
-            </div>
-          ` : ''}
-          ${item.methodology ? `
-            <div class="research-detail mt-2">
-              <span class="mono muted" style="font-size: 0.7rem;">METHODOLOGY</span>
-              <p>${safeText(item.methodology)}</p>
-            </div>
-          ` : ''}
-          <p class="muted mt-2">Supervisor<br>${safeText(item.supervisor)}</p>
+          <p class="mt-2">${safeText(item.description)}</p>
+          <p class="muted mt-2" style="font-size: 0.88rem;"><strong>Supervisor:</strong> ${safeText(item.supervisor)} &middot; ${safeText(item.institution)}</p>
           <div class="hero-tags mono mt-2">
             ${item.tags ? item.tags.map(t => `<span>${safeText(t)}</span>`).join('') : ''}
           </div>
         </div>
-        <div class="research-svg">
-          <svg viewBox="0 0 120 160" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent); width: 100%; height: auto;">
-            <text x="60" y="15" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor" stroke="none">INPUT</text>
-            <path d="M60 20 v10 M57 26 l3 4 l3 -4" />
-            <text x="60" y="45" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor" stroke="none">CONFIG</text>
-            <path d="M60 50 v10 M57 56 l3 4 l3 -4" />
-            <rect x="20" y="65" width="80" height="60" stroke="currentColor" fill="rgba(56,255,139,0.05)" />
-            <path d="M20 85 h80 M20 105 h80 M46.6 65 v60 M73.3 65 v60" stroke-dasharray="2 2" />
-            <text x="33" y="79" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="60" y="79" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="86" y="79" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="33" y="99" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="60" y="99" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="86" y="99" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="33" y="119" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="60" y="119" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <text x="86" y="119" font-family="monospace" font-size="8" text-anchor="middle" fill="currentColor" stroke="none">PE</text>
-            <path d="M60 125 v10 M57 131 l3 4 l3 -4" />
-            <text x="60" y="150" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor" stroke="none">OUTPUT</text>
-          </svg>
+        <div class="research-svg" aria-hidden="true">
+          ${getResearchDiagram(item.diagramType)}
+        </div>
+      </article>
+    `).join('');
+  }
+
+  // Open Source Contributions
+  const openSourceList = el('#opensource-list');
+  if (openSourceList) {
+    openSourceList.innerHTML = openSource.map(item => `
+      <article class="opensource-card reveal">
+        <div>
+          <div class="opensource-header">
+            <span class="mono opensource-badge">${safeText(item.project)}</span>
+            <a href="${safeText(item.url)}" target="_blank" rel="noopener noreferrer" class="pr-link mono">${safeText(item.pr)} ↗</a>
+          </div>
+          <h3>${safeText(item.title)}</h3>
+          <p>${safeText(item.description)}</p>
+        </div>
+        <div class="opensource-impact mono">
+          <div>✓ ${safeText(item.impact)}</div>
+          <div class="hero-tags mono mt-2">
+            ${item.tags.map(t => `<span>${safeText(t)}</span>`).join('')}
+          </div>
         </div>
       </article>
     `).join('');

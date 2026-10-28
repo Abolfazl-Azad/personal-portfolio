@@ -1,4 +1,4 @@
-import { education, experience, research, projects, skillGroups } from './data.js';
+import { profile, education, experience, research, projects, skillGroups, openSource, industryExperience, teachingExperience, coursework, languages } from './data.js';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
@@ -13,25 +13,13 @@ const renderCV = () => {
           <div class="timeline-date mono muted">${dateText}</div>
           <div>
             <h2>${safeText(item.institution)}</h2>
-            <p>${safeText(item.degree)}</p>
+            <p><strong>${safeText(item.degree)}</strong></p>
+            ${item.focus ? `<p class="muted" style="margin-top: 2px;">${safeText(item.focus)}</p>` : ''}
+            ${item.gpa ? `<p class="mono" style="color: var(--accent); font-size: 0.85rem; margin-top: 4px;">${safeText(item.gpa)}</p>` : ''}
           </div>
         </div>
       `;
     }).join('');
-  }
-
-  const expList = el('#cv-experience');
-  if (expList) {
-    expList.innerHTML = experience.map(item => `
-        <div class="cv-item">
-          <div class="timeline-date mono muted">${safeText(item.date)}</div>
-          <div>
-            <h2>${safeText(item.title)}</h2>
-            <p>${safeText(item.org)}</p>
-            <p class="cv-desc">${safeText(item.detail)}</p>
-          </div>
-        </div>
-    `).join('');
   }
 
   const resList = el('#cv-research');
@@ -41,25 +29,51 @@ const renderCV = () => {
           <div class="timeline-date mono muted">${safeText(item.type)}</div>
           <div>
             <h2>${safeText(item.topic)}</h2>
-            <p>${safeText(item.description)}</p>
-            ${item.supervisor ? `<p class="muted cv-desc">Supervisor: ${safeText(item.supervisor)}</p>` : ''}
+            <p class="muted" style="font-size: 0.88rem; margin: 2px 0 6px;">Supervised by ${safeText(item.supervisor)} &middot; ${safeText(item.institution)}</p>
+            <p class="cv-desc">${safeText(item.description)}</p>
           </div>
         </div>
     `).join('');
   }
 
-  const projList = el('#cv-projects');
-  if (projList) {
-    // Select curated subset: first 5 projects
-    const selected = projects.slice(0, 5);
-    
-    projList.innerHTML = selected.map(item => `
-        <div class="cv-item cv-project-item">
-          <div class="timeline-date mono muted">${safeText(item.number)}</div>
+  const openSourceList = el('#cv-opensource');
+  if (openSourceList) {
+    openSourceList.innerHTML = openSource.map(item => `
+        <div class="cv-item">
+          <div class="timeline-date mono muted">${safeText(item.project)}</div>
           <div>
-            <h2>${safeText(item.title)} <a href="${item.github ? safeText(item.github) : '#'}" target="_blank" rel="noopener noreferrer" class="cv-project-link mono">GitHub ↗</a></h2>
+            <h2>${safeText(item.title)} <a href="${safeText(item.url)}" target="_blank" rel="noopener noreferrer" class="cv-project-link mono">${safeText(item.pr)} ↗</a></h2>
             <p class="cv-desc">${safeText(item.description)}</p>
-            <p class="mono muted cv-tech">${item.tech ? item.tech.map(t => safeText(t)).join(' &middot; ') : ''}</p>
+            <p class="mono cv-tech" style="color: var(--accent);">✓ ${safeText(item.impact)}</p>
+          </div>
+        </div>
+    `).join('');
+  }
+
+  const expList = el('#cv-experience');
+  if (expList) {
+    expList.innerHTML = industryExperience.map(item => `
+        <div class="cv-item">
+          <div class="timeline-date mono muted">${safeText(item.date)}</div>
+          <div>
+            <h2>${safeText(item.company)} — ${safeText(item.role)}</h2>
+            <p class="muted">${safeText(item.division)} | ${safeText(item.location)}</p>
+            <ul class="timeline-bullets" style="margin-top: 8px;">
+              ${item.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+    `).join('');
+  }
+
+  const teachingList = el('#cv-teaching');
+  if (teachingList) {
+    teachingList.innerHTML = teachingExperience.map(item => `
+        <div class="cv-item">
+          <div class="timeline-date mono muted">${safeText(item.date)}</div>
+          <div>
+            <h2>${safeText(item.role)}</h2>
+            <p class="muted">${safeText(item.institution)} &middot; Supervised by ${safeText(item.supervisor)} (${safeText(item.term)})</p>
           </div>
         </div>
     `).join('');
@@ -71,6 +85,40 @@ const renderCV = () => {
         <div class="cv-skill-group">
           <h3 class="mono">${safeText(group.title)}</h3>
           <p>${group.skills.map(skill => safeText(skill)).join(' &middot; ')}</p>
+        </div>
+    `).join('');
+  }
+
+  const languagesList = el('#cv-languages');
+  if (languagesList) {
+    languagesList.innerHTML = `
+      <div class="cv-skill-group">
+        <p>${languages.map(l => `<strong>${safeText(l.language)}:</strong> ${safeText(l.proficiency)}`).join(' &nbsp;&middot;&nbsp; ')}</p>
+      </div>
+    `;
+  }
+
+  const courseworkList = el('#cv-coursework');
+  if (courseworkList) {
+    courseworkList.innerHTML = coursework.map(group => `
+      <div class="cv-skill-group" style="margin-bottom: 12px;">
+        <h3 class="mono">${safeText(group.category)}</h3>
+        <p>${group.courses.map(c => safeText(c)).join(' &middot; ')}</p>
+      </div>
+    `).join('');
+  }
+
+  const projList = el('#cv-projects');
+  if (projList) {
+    const selected = projects.slice(0, 5);
+    projList.innerHTML = selected.map(item => `
+        <div class="cv-item cv-project-item">
+          <div class="timeline-date mono muted">${safeText(item.number)}</div>
+          <div>
+            <h2>${safeText(item.title)} <a href="${item.github ? safeText(item.github) : '#'}" target="_blank" rel="noopener noreferrer" class="cv-project-link mono">GitHub ↗</a></h2>
+            <p class="cv-desc">${safeText(item.description)}</p>
+            <p class="mono muted cv-tech">${item.tech ? item.tech.map(t => safeText(t)).join(' &middot; ') : ''}</p>
+          </div>
         </div>
     `).join('');
   }

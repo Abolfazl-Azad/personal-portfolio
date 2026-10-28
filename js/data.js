@@ -1,63 +1,76 @@
 export const profile = {
   name: "Abolfazl Azad",
-  title: "Electrical Engineering Student",
+  title: "Electrical Engineering B.Sc. Candidate | RTL Design | Hardware Acceleration",
   university: "University of Tehran",
+  location: "Tehran, Iran",
+  email: "abolfazlazad@ut.ac.ir",
+  secondaryEmail: "abolfazlazad321@gmail.com",
+  website: "https://abolfazlazad.ir/",
   github: "https://github.com/Abolfazl-Azad",
   linkedin: "https://www.linkedin.com/in/abolfazl-azad/",
+  headline: "Electrical Engineering B.Sc. candidate at the University of Tehran focused on digital systems, RTL design, and computer architecture.",
+  bio: "Electrical Engineering B.Sc. candidate at the University of Tehran focused on digital systems, RTL design, and computer architecture. Project experience includes SystemVerilog-based matrix-multiplication accelerator design and verification, SystemC-based FIR accelerator integration, and open-source RISC-V SoC verification. Supervised research spans low-power RTL optimization, hardware-aware weight quantization, and NeuroSim-based memristor/CIM characterization. Seeking research experience in energy-efficient digital design, hardware accelerators, RISC-V systems, and AI hardware.",
   aboutKeywords: [
     "Digital Systems",
     "RTL Design",
-    "FPGA",
-    "RISC-V",
+    "Hardware Acceleration",
     "Computer Architecture",
-    "ASIC / Physical Design",
-    "Embedded Systems",
-    "Hardware Acceleration"
+    "RISC-V / NEORV32",
+    "Low-Power RTL",
+    "Compute-in-Memory (CIM)",
+    "Memristor / NeuroSim",
+    "SystemVerilog",
+    "FPGA & ASIC Flow"
   ]
 };
 
 export const researchInterests = {
-  statement: `My research interests lie at the intersection of computer architecture, reconfigurable computing, and hardware acceleration. I am particularly drawn to the challenge of designing energy-efficient, high-throughput digital systems that bridge the gap between general-purpose processors and fixed-function ASICs.`,
+  statement: "Low-power RTL and switching-activity reduction; hardware accelerators and datapath/control design; computer architecture and RISC-V; hardware/software co-design; compute-in-memory (CIM); memristor-based neural networks and low-bit weight quantization.",
+  seeking: "Seeking research experience in energy-efficient digital design, hardware accelerators, RISC-V systems, and AI hardware.",
   directions: [
     {
-      area: "Reconfigurable Accelerators",
-      detail: "Designing adaptable processing element arrays that can be reconfigured at runtime for different computational kernels, combining the flexibility of FPGAs with the efficiency of ASICs."
+      area: "Low-Power RTL & Switching-Activity Reduction",
+      detail: "Investigating operation-aware operand isolation in add/sub datapaths and pre-multiplexer isolation variants to reduce unnecessary switching. Evaluating functional simulation and synthesis/timing tradeoffs."
     },
     {
-      area: "RISC-V Microarchitecture",
-      detail: "Exploring custom RISC-V extensions and microarchitectural optimizations for domain-specific workloads, including instruction set extensions for signal processing and machine learning inference."
+      area: "Hardware Accelerators & Datapath/Control Design",
+      detail: "Designing processing-element datapaths, control logic, and I/O integration for matrix-multiplication hardware accelerators (iMPAC), validated through comprehensive SystemVerilog testbenches."
     },
     {
-      area: "Low-Power RTL Design",
-      detail: "Investigating clock-gating, operand isolation, and architectural techniques to minimize dynamic and leakage power in digital systems without sacrificing throughput."
+      area: "Compute-in-Memory (CIM) & Memristor NNs",
+      detail: "NeuroSim-based RRAM inference simulation (128 × 128 subarray, 5-bit ADC, VGG8/CIFAR-10 baseline) and hardware-aware 3-bit weight quantization and QAT."
+    },
+    {
+      area: "Computer Architecture & RISC-V Systems",
+      detail: "5-stage pipelined RV32I microarchitecture, hardware/software co-design with SystemC/DMA, and open-source verification on NEORV32 SoC."
     }
   ]
 };
 
 export const focusAreas = [
   {
-    title: "RTL DESIGN",
-    description: "Designing synthesizable digital systems using Verilog and SystemVerilog."
+    title: "RTL & ACCELERATOR DESIGN",
+    description: "Designing processing-element datapaths, control logic, and matrix accelerators using SystemVerilog."
   },
   {
-    title: "FPGA",
-    description: "Implementing logic, debugging, and testing designs on physical hardware."
+    title: "LOW-POWER DIGITAL DESIGN",
+    description: "Switching-activity reduction, operand isolation, and synthesis/timing optimization for energy efficiency."
   },
   {
-    title: "COMPUTER ARCHITECTURE",
-    description: "Exploring processor microarchitecture, pipelining, and hardware acceleration."
+    title: "COMPUTE-IN-MEMORY & CIM",
+    description: "RRAM crossbar inference characterization using NeuroSim and hardware-aware 3-bit weight quantization."
   },
   {
-    title: "RISC-V",
-    description: "Building single-cycle and pipelined RISC-V processor implementations."
+    title: "RISC-V & ARCHITECTURE",
+    description: "Pipelined microarchitectures, open-source verification on NEORV32, and hardware/software co-design."
   },
   {
-    title: "ASIC DESIGN",
-    description: "Understanding logic synthesis, timing analysis, and physical design flow."
+    title: "ASIC & FPGA FLOWS",
+    description: "Synthesis with Synopsys Design Compiler, physical design with Cadence Innovus, and FPGA prototyping."
   },
   {
-    title: "EMBEDDED SYSTEMS",
-    description: "Studying hardware/software co-design and system integration."
+    title: "SYSTEM-LEVEL INTEGRATION",
+    description: "Transaction-level modeling with SystemC, DMA integration, memory-mapped interfaces, and firmware."
   }
 ];
 
@@ -65,95 +78,253 @@ export const education = [
   {
     id: "ee",
     institution: "University of Tehran",
-    degree: "B.Sc. Electrical Engineering",
+    location: "Tehran, Iran",
+    degree: "B.Sc. candidate in Electrical Engineering",
+    focus: "Focus: Digital Systems",
+    gpa: "Cumulative GPA: 17.11/20",
     start: "2023",
-    end: "2027",
+    end: "2028 (expected)",
     startPersian: "1402",
-    endPersian: "1406"
+    endPersian: "1407"
   },
   {
     id: "ce-minor",
     institution: "University of Tehran",
-    degree: "Minor in Computer Engineering",
-    start: "",
-    end: ""
+    location: "Tehran, Iran",
+    degree: "Minor candidate in Computer Engineering",
+    focus: "Focus: Computer Systems & Software",
+    gpa: "",
+    start: "2023",
+    end: "Present",
+    startPersian: "1402",
+    endPersian: "Present"
   }
 ];
 
 export const coursework = [
   {
-    category: "ARCHITECTURE & DIGITAL",
+    category: "ELECTRICAL ENGINEERING",
     courses: [
+      "Digital Electronics",
+      "Digital Systems I",
       "Computer Architecture",
-      "Digital Logic Design",
-      "Digital Systems Laboratory",
-      "Microprocessors & Assembly Language"
+      "Object-Oriented Programming",
+      "ASIC Design",
+      "Electronic System-Level (ESL) Design",
+      "FPGA-Based Embedded Systems"
     ]
   },
   {
-    category: "ASIC & VLSI",
+    category: "COMPUTER ENGINEERING MINOR",
     courses: [
-      "ASIC Design Flow",
-      "Logic Synthesis & Timing Analysis"
-    ]
-  },
-  {
-    category: "EMBEDDED & SYSTEMS",
-    courses: [
-      "Embedded Systems Design",
-      "Signals & Systems",
-      "Electronics I & II"
-    ]
-  },
-  {
-    category: "MATHEMATICS",
-    courses: [
-      "Engineering Mathematics",
-      "Linear Algebra",
-      "Probability & Statistics",
-      "Differential Equations"
+      "Advanced Programming",
+      "Data Structures and Algorithms",
+      "Operating Systems"
     ]
   }
 ];
 
 export const currentFocus = [
   {
-    status: "STUDYING",
-    title: "Electrical Engineering",
-    description: "University of Tehran"
+    status: "SUPERVISED RESEARCH",
+    title: "iMPAC Low-Power RTL & Accelerator Optimization",
+    description: "University of Tehran under Prof. Zainalabedin Navabi — operand isolation & switching-activity reduction."
   },
   {
-    status: "BUILDING",
-    title: "Digital hardware and RTL systems",
-    description: "Developing robust digital logic circuits and accelerators."
+    status: "SUPERVISED RESEARCH",
+    title: "Memristor Weight Quantization & NeuroSim CIM",
+    description: "University of Tehran under Dr. Shaghayegh Vahdat — 3-bit QAT & RRAM inference characterization."
   },
   {
-    status: "EXPLORING",
-    title: "FPGA · RISC-V · ASIC Design · Computer Architecture",
-    description: "Deepening knowledge in hardware description and microarchitecture."
-  }
-];
-
-export const experience = [
-  {
-    date: "2024",
-    title: "Engineering Internship",
-    org: "Pars Khodro Company · Iran",
-    detail: "Completed an engineering internship within the automotive electronics division, gaining hands-on exposure to electronic control units (ECUs), digital signal conditioning, and embedded system diagnostics in a production environment."
+    status: "OPEN SOURCE",
+    title: "RISC-V SoC Verification (NEORV32)",
+    description: "Upstream open-source contributions to processor_check and floating_point_test in NEORV32."
   }
 ];
 
 export const research = [
   {
-    topic: "IMPAC",
-    type: "Reconfigurable Accelerator",
-    description: "Investigating a coarse-grained reconfigurable array (CGRA) architecture for accelerating compute-intensive kernels. The work focuses on designing a configurable processing element (PE) grid with inter-PE routing that can be dynamically mapped to different dataflow graphs at runtime.",
-    contribution: "Responsible for RTL design and functional verification of individual processing elements, including ALU datapath, local register file, and configuration interface. Conducted cycle-accurate simulation to validate PE behavior under various configuration patterns.",
-    methodology: "RTL development in SystemVerilog, functional simulation using ModelSim, and preliminary synthesis targeting 45nm standard cell libraries using Synopsys Design Compiler.",
-    status: "Ongoing",
-    supervisor: "Dr. Nawabi",
-    tags: ["CGRA", "Reconfigurable computing", "Hardware acceleration", "SystemVerilog"]
+    id: "impac",
+    topic: "Matrix-Multiplication Hardware Accelerator (iMPAC)",
+    type: "Hardware Accelerator / RTL",
+    supervisor: "Prof. Zainalabedin Navabi",
+    institution: "University of Tehran",
+    description: "RTL implementation and verification. Contributed across processing-element datapaths, control logic, and I/O integration; used a SystemVerilog testbench and simulation flow to validate functionality.",
+    contribution: "Contributed across processing-element datapaths, control logic, and I/O integration; used a SystemVerilog testbench and simulation flow to validate functionality.",
+    methodology: "SystemVerilog RTL design, QuestaSim/ModelSim simulation, testbench-based verification.",
+    status: "Completed / Active",
+    tags: ["SystemVerilog", "RTL Design", "PE Datapath", "Hardware Acceleration", "Simulation"],
+    diagramType: "impac"
+  },
+  {
+    id: "impac-lowpower",
+    topic: "Low-Power RTL Optimization for iMPAC",
+    type: "Low-Power RTL / Synthesis",
+    supervisor: "Prof. Zainalabedin Navabi",
+    institution: "University of Tehran",
+    description: "Switching-activity reduction. Investigating operation-aware operand isolation in the add/sub datapath and pre-multiplexer isolation variants to reduce unnecessary switching. Functional simulation and synthesis/timing comparisons are ongoing; quantitative power and area gains remain under evaluation.",
+    contribution: "Investigating operation-aware operand isolation in the add/sub datapath and pre-multiplexer isolation variants to reduce unnecessary switching. Functional simulation and synthesis/timing comparisons are ongoing; quantitative power and area gains remain under evaluation.",
+    methodology: "Functional simulation, RTL synthesis, and timing/power analysis across architectural variants.",
+    status: "Ongoing Work",
+    tags: ["Low-Power RTL", "Operand Isolation", "Switching Reduction", "Synthesis", "Timing"],
+    diagramType: "lowpower"
+  },
+  {
+    id: "weight-quant",
+    topic: "Weight Quantization for Memristor-Based Neural Networks",
+    type: "Hardware-Aware AI / CIM",
+    supervisor: "Dr. Shaghayegh Vahdat",
+    institution: "University of Tehran",
+    description: "Hardware-aware quantization. Investigating weight-mapping and clustering-based strategies to retain model accuracy at a fixed 3-bit representation. Planned evaluation compares quantization baselines and considers fine-tuning and quantization-aware training (QAT); this is ongoing work, not a published result.",
+    contribution: "Investigating weight-mapping and clustering-based strategies to retain model accuracy at a fixed 3-bit representation. Planned evaluation compares quantization baselines and considers fine-tuning and quantization-aware training (QAT); this is ongoing work, not a published result.",
+    methodology: "PyTorch-based quantization workflows, clustering algorithms, baseline comparison, and QAT evaluation.",
+    status: "Ongoing Work",
+    tags: ["3-bit Quantization", "QAT", "Memristor", "PyTorch", "AI Hardware"],
+    diagramType: "quant"
+  },
+  {
+    id: "neurosim-cim",
+    topic: "NeuroSim-Based Compute-in-Memory Inference Characterization",
+    type: "Compute-in-Memory / Simulation",
+    supervisor: "Dr. Shaghayegh Vahdat",
+    institution: "University of Tehran",
+    description: "RRAM-oriented simulation. Set up an inference simulation path with a 128 × 128 subarray, 5-bit ADC, and VGG8/CIFAR-10 baseline. Exploring how circuit assumptions and quantization choices affect estimated area, energy, and latency; results are simulation estimates, not silicon measurements.",
+    contribution: "Set up an inference simulation path with a 128 × 128 subarray, 5-bit ADC, and VGG8/CIFAR-10 baseline. Exploring how circuit assumptions and quantization choices affect estimated area, energy, and latency; results are simulation estimates, not silicon measurements.",
+    methodology: "NeuroSim simulation framework, 128 × 128 RRAM subarray modeling, 5-bit ADC configuration, VGG8/CIFAR-10 benchmark.",
+    status: "Ongoing Work",
+    tags: ["NeuroSim", "Compute-in-Memory", "RRAM Crossbar", "VGG8 / CIFAR-10", "Inference Modeling"],
+    diagramType: "cim"
   }
+];
+
+export const openSource = [
+  {
+    project: "NEORV32",
+    repo: "stnolting/neorv32",
+    title: "GPIO input loopback verification",
+    pr: "PR #1643",
+    url: "https://github.com/stnolting/neorv32/pull/1643",
+    description: "Added a repeatable input pattern and masked input checks to processor_check; included in upstream release notes.",
+    impact: "Included in upstream release notes",
+    tags: ["RISC-V", "NEORV32", "SoC Verification", "GPIO", "VHDL"]
+  },
+  {
+    project: "NEORV32",
+    repo: "stnolting/neorv32",
+    title: "Floating-point test correction",
+    pr: "PR #1644",
+    url: "https://github.com/stnolting/neorv32/pull/1644",
+    description: "Fixed unreachable special values and signaling-NaN handling in the floating_point_test software test.",
+    impact: "Upstream test suite reliability & sNaN compliance",
+    tags: ["RISC-V", "NEORV32", "FPU Verification", "C", "IEEE-754"]
+  }
+];
+
+export const industryExperience = [
+  {
+    company: "Pars Khodro",
+    role: "Electrical Engineering Intern",
+    date: "Jul–Sep 2026",
+    division: "Digital Motor Control & Embedded Systems",
+    location: "Iran",
+    highlights: [
+      "Traction-inverter analysis. Examined TI TIDM-02017 and digital motor-control topics including C2000/CLA, ADC, ePWM, FOC, SVPWM, and MTPA.",
+      "Digital control chain. Studied the path from sensing and signal processing through PWM generation and gate-driver control."
+    ]
+  }
+];
+
+// Backwards-compatibility alias
+export const experience = [
+  {
+    date: "Jul–Sep 2026",
+    title: "Electrical Engineering Intern",
+    org: "Pars Khodro · Digital Motor Control & Embedded Systems | Iran",
+    detail: "Traction-inverter analysis: Examined TI TIDM-02017 and digital motor-control topics including C2000/CLA, ADC, ePWM, FOC, SVPWM, and MTPA. Digital control chain: Studied the path from sensing and signal processing through PWM generation and gate-driver control.",
+    highlights: [
+      "Traction-inverter analysis. Examined TI TIDM-02017 and digital motor-control topics including C2000/CLA, ADC, ePWM, FOC, SVPWM, and MTPA.",
+      "Digital control chain. Studied the path from sensing and signal processing through PWM generation and gate-driver control."
+    ]
+  }
+];
+
+export const teachingExperience = [
+  {
+    institution: "University of Tehran",
+    location: "Tehran, Iran",
+    role: "Laboratory Teaching Assistant — Digital Systems I",
+    date: "Oct 2026–Present",
+    supervisor: "Dr. Zainalabedin Navabi",
+    term: "Fall 2026"
+  },
+  {
+    institution: "University of Tehran",
+    location: "Tehran, Iran",
+    role: "Teaching Assistant — Computer Architecture (Digital Systems II)",
+    date: "Sep 2026",
+    supervisor: "Dr. Saeed Safari",
+    term: "Fall 2026"
+  },
+  {
+    institution: "University of Tehran",
+    location: "Tehran, Iran",
+    role: "Teaching Assistant — Signals and Systems",
+    date: "Jan 2026–Present",
+    supervisor: "Dr. Saeed Akhavan",
+    term: "Spring & Fall 2026"
+  },
+  {
+    institution: "University of Tehran",
+    location: "Tehran, Iran",
+    role: "Teaching Assistant — Digital Systems I",
+    date: "Jan–Aug 2026",
+    supervisor: "Dr. Zainalabedin Navabi",
+    term: "Spring 2026"
+  }
+];
+
+export const skillGroups = [
+  {
+    number: "01",
+    title: "HDL & RTL",
+    description: "RTL design, FSMs, datapath/control design, and testbench-based verification.",
+    skills: ["Verilog", "SystemVerilog", "VHDL", "RTL Design", "FSMs", "Datapath / Control Design", "Testbench Verification"]
+  },
+  {
+    number: "02",
+    title: "SIMULATION & FPGA",
+    description: "Simulation/debugging and FPGA-oriented workflows.",
+    skills: ["QuestaSim / ModelSim", "Quartus", "Xilinx Vivado", "GHDL", "Verilator", "FPGA Workflows"]
+  },
+  {
+    number: "03",
+    title: "SYNTHESIS & PHYSICAL DESIGN",
+    description: "RTL synthesis and physical-design tools.",
+    skills: ["Synopsys Design Compiler", "Cadence Innovus", "RTL Synthesis", "Timing Analysis", "Place & Route"]
+  },
+  {
+    number: "04",
+    title: "SYSTEMS & ARCHITECTURE",
+    description: "Memory-mapped I/O, interrupts, DMA, and system-bus integration.",
+    skills: ["SystemC", "C / C++", "RISC-V / NEORV32", "Memory-Mapped I/O", "Interrupts", "DMA", "System-Bus Integration"]
+  },
+  {
+    number: "05",
+    title: "RESEARCH & SOFTWARE",
+    description: "Memristor/CIM modelling and quantization research in progress.",
+    skills: ["Python", "PyTorch", "NeuroSim", "Memristor / CIM Modelling", "Quantization / QAT"]
+  },
+  {
+    number: "06",
+    title: "DEVELOPMENT ENVIRONMENT",
+    description: "Command-line build and simulation workflows.",
+    skills: ["Git / GitHub", "Linux / WSL", "Shell / Build Workflows"]
+  }
+];
+
+export const languages = [
+  { language: "Persian", proficiency: "Native" },
+  { language: "English", proficiency: "Fluent" }
 ];
 
 export const projects = [
@@ -218,46 +389,6 @@ export const projects = [
     visualType: "modulation"
   }
 ];
-
-export const skillGroups = [
-  {
-    number: "01",
-    title: "RTL & HDL",
-    description: "Designing synthesizable digital logic and control/datapath structures.",
-    skills: ["Verilog", "SystemVerilog", "RTL Design", "FSM", "Datapath"]
-  },
-  {
-    number: "02",
-    title: "COMPUTER ARCHITECTURE",
-    description: "Processor microarchitecture, RISC-V, pipelining, hazards and data movement.",
-    skills: ["RISC-V", "RV32I", "CPU Design", "Pipeline", "Hazard Handling", "Forwarding"]
-  },
-  {
-    number: "03",
-    title: "FPGA & DIGITAL SYSTEMS",
-    description: "Digital modulation, serial communication, and FPGA-based prototyping.",
-    skills: ["FPGA", "Quartus", "ModelSim", "UART", "DDS", "ASK / FSK", "PWM"]
-  },
-  {
-    number: "04",
-    title: "ASIC & PHYSICAL DESIGN",
-    description: "Exploring RTL synthesis, timing analysis and physical design flows.",
-    skills: ["Synthesis", "Synopsys Design Compiler", "Timing Analysis", "Cadence Innovus", "Place & Route"]
-  },
-  {
-    number: "05",
-    title: "EMBEDDED & HW/SW",
-    description: "System-level integration using SystemC, DMA, memory-mapped interfaces and TLM.",
-    skills: ["C", "C++", "SystemC", "SAYAC", "DMA", "Memory-Mapped I/O", "TLM"]
-  },
-  {
-    number: "06",
-    title: "TOOLS & WORKFLOW",
-    description: "Source control, scripting, and development environments.",
-    skills: ["Git", "Linux", "Python", "MATLAB"]
-  }
-];
-
 
 export const notes = [
   {
