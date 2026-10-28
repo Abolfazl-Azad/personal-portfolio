@@ -1,4 +1,4 @@
-import { profile, education, experience, research, projects, skillGroups, openSource, industryExperience, teachingExperience, coursework, languages } from './data.js';
+import { profile, education, experience, research, projects, skillGroups, openSource, industryExperience, teachingExperience, coursework, languages } from './data.js?v=10';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
