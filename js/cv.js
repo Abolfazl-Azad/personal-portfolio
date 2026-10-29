@@ -1,4 +1,4 @@
-import { profile, education, experience, research, projects, skillGroups, openSource, industryExperience, teachingExperience, coursework, languages } from './data.js?v=10';
+import { profile, education, experience, research, projects, skillGroups, openSource, industryExperience, teachingExperience, coursework, languages } from './data.js?v=11';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
@@ -42,7 +42,7 @@ const renderCV = () => {
         <div class="cv-item">
           <div class="timeline-date mono muted">${safeText(item.project)}</div>
           <div>
-            <h2>${safeText(item.title)} <a href="${safeText(item.url)}" target="_blank" rel="noopener noreferrer" class="cv-project-link mono">${safeText(item.pr)} ↗</a></h2>
+            <h2>${safeText(item.title)} ${item.merged ? `<span class="merged-badge mono" style="font-size: 0.65rem; vertical-align: middle; margin-left: 6px;">MERGED UPSTREAM ✓</span>` : ''} <a href="${safeText(item.url)}" target="_blank" rel="noopener noreferrer" class="cv-project-link mono">${safeText(item.pr)} ↗</a></h2>
             <p class="cv-desc">${safeText(item.description)}</p>
             <p class="mono cv-tech" style="color: var(--accent);">✓ ${safeText(item.impact)}</p>
           </div>

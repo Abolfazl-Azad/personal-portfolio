@@ -1,4 +1,4 @@
-import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience } from './data.js?v=10';
+import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience } from './data.js?v=11';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
@@ -236,12 +236,57 @@ const render = () => {
           <div class="hero-tags mono mt-2">
             ${item.tags ? item.tags.map(t => `<span>${safeText(t)}</span>`).join('') : ''}
           </div>
+          ${item.deepDive ? `
+            <button type="button" class="research-details-toggle mono" data-id="${item.id}" aria-expanded="false">
+              [+ ARCHITECTURE &amp; SPECS]
+            </button>
+            <div class="research-drawer" id="drawer-${item.id}" hidden>
+              <div class="research-drawer-inner">
+                <div class="drawer-field">
+                  <span class="mono drawer-label">ARCHITECTURE / RTL:</span>
+                  <p>${safeText(item.deepDive.architecture)}</p>
+                </div>
+                <div class="drawer-field">
+                  <span class="mono drawer-label">KEY METRICS:</span>
+                  <p>${safeText(item.deepDive.metrics)}</p>
+                </div>
+                <div class="drawer-specs-grid mono">
+                  ${item.deepDive.specs ? item.deepDive.specs.map(s => `
+                    <div class="drawer-spec-item">
+                      <span class="spec-k">${safeText(s.key)}:</span>
+                      <span class="spec-v">${safeText(s.val)}</span>
+                    </div>
+                  `).join('') : ''}
+                </div>
+              </div>
+            </div>
+          ` : ''}
         </div>
         <div class="research-svg" aria-hidden="true">
           ${getResearchDiagram(item.diagramType)}
         </div>
       </article>
     `).join('');
+
+    resList.addEventListener('click', (e) => {
+      const toggle = e.target.closest('.research-details-toggle');
+      if (!toggle) return;
+      const id = toggle.getAttribute('data-id');
+      const drawer = document.getElementById(`drawer-${id}`);
+      if (!drawer) return;
+      const isHidden = drawer.hasAttribute('hidden');
+      if (isHidden) {
+        drawer.removeAttribute('hidden');
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.textContent = '[- HIDE ARCHITECTURE & SPECS]';
+        toggle.classList.add('is-open');
+      } else {
+        drawer.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.textContent = '[+ ARCHITECTURE & SPECS]';
+        toggle.classList.remove('is-open');
+      }
+    });
   }
 
   // Open Source Contributions
@@ -252,6 +297,7 @@ const render = () => {
         <div>
           <div class="opensource-header">
             <span class="mono opensource-badge">${safeText(item.project)}</span>
+            ${item.merged ? `<span class="merged-badge mono">MERGED UPSTREAM ✓</span>` : ''}
             <a href="${safeText(item.url)}" target="_blank" rel="noopener noreferrer" class="pr-link mono">${safeText(item.pr)} ↗</a>
           </div>
           <h3>${safeText(item.title)}</h3>
@@ -397,7 +443,7 @@ const getProjectDiagram = (type) => {
   const projList = el('#project-list');
   if (projList) {
     projList.innerHTML = projects.map(item => `
-      <a href="${item.github ? item.github : '#'}" target="_blank" rel="noopener noreferrer" class="project-card reveal">
+      <a href="${item.github ? item.github : '#'}" target="_blank" rel="noopener noreferrer" class="project-card reveal" data-category="${safeText(item.category)}">
         <div class="project-num mono">${safeText(item.number)}</div>
         <div class="project-content">
           <h3>${safeText(item.title)}</h3>
@@ -420,6 +466,28 @@ const getProjectDiagram = (type) => {
         <a class="button-link" href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">VIEW ALL PROJECTS ON GITHUB ↗</a>
       </div>
     `);
+
+    // Project Category Filtering
+    const filterBar = el('.project-filter-bar');
+    if (filterBar) {
+      filterBar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.filter-chip');
+        if (!chip) return;
+        const filter = chip.getAttribute('data-filter');
+        filterBar.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('is-active'));
+        chip.classList.add('is-active');
+
+        const cards = projList.querySelectorAll('.project-card');
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
   }
 
   const skillsList = el('#skills-list');
@@ -760,6 +828,308 @@ emailLinks.forEach(link => {
     }
   });
 });
+
+/* =========================================================
+   WAVEFORM SWITCHER (HERO TIMING MONITOR)
+   ========================================================= */
+const WAVEFORM_MODES = {
+  rtl: {
+    specs: { clk: 'CLK 100 MHz', bus: 'BUS 32 bit', mode: 'MODE RTL BUS' },
+    labels: ['CLK', 'DATA', 'EN', 'VALID', 'READY'],
+    waves: [
+      { cls: 'clk-wave', d: 'M 60,30 L 80,30 L 80,15 L 100,15 L 100,30 L 120,30 L 120,15 L 140,15 L 140,30 L 160,30 L 160,15 L 180,15 L 180,30 L 200,30 L 200,15 L 220,15 L 220,30 L 240,30 L 240,15 L 260,15 L 260,30 L 280,30 L 280,15 L 300,15 L 300,30 L 320,30 L 320,15 L 340,15 L 340,30 L 360,30 L 360,15 L 380,15 L 380,30 L 400,30 L 400,15 L 420,15 L 420,30' },
+      { cls: 'data-wave', d: 'M 60,70 L 120,70 L 120,55 L 200,55 L 200,70 L 280,70 L 280,55 L 360,55 L 360,70 L 420,70' },
+      { cls: 'en-wave', d: 'M 60,110 L 160,110 L 160,95 L 320,95 L 320,110 L 420,110' },
+      { cls: 'valid-wave', d: 'M 60,150 L 120,150 L 120,135 L 280,135 L 280,150 L 420,150' },
+      { cls: 'ready-wave', d: 'M 60,190 L 200,190 L 200,175 L 360,175 L 360,190 L 420,190' }
+    ],
+    packets: [
+      { cls: 'packet-1', d: 'M 60,70 L 120,70 L 120,55 L 200,55 L 200,70 L 280,70 L 280,55 L 360,55 L 360,70 L 420,70' },
+      { cls: 'packet-2', d: 'M 60,150 L 120,150 L 120,135 L 280,135 L 280,150 L 420,150' }
+    ]
+  },
+  riscv: {
+    specs: { clk: 'CORE RV32I', bus: 'PIPE 5-STAGE', mode: 'HAZARD FWD' },
+    labels: ['CLK', 'FETCH', 'DECODE', 'EXEC', 'COMMIT'],
+    waves: [
+      { cls: 'clk-wave', d: 'M 60,30 L 80,30 L 80,15 L 100,15 L 100,30 L 120,30 L 120,15 L 140,15 L 140,30 L 160,30 L 160,15 L 180,15 L 180,30 L 200,30 L 200,15 L 220,15 L 220,30 L 240,30 L 240,15 L 260,15 L 260,30 L 280,30 L 280,15 L 300,15 L 300,30 L 320,30 L 320,15 L 340,15 L 340,30 L 360,30 L 360,15 L 380,15 L 380,30 L 400,30 L 400,15 L 420,15 L 420,30' },
+      { cls: 'data-wave', d: 'M 60,70 L 100,70 L 100,55 L 180,55 L 180,70 L 220,70 L 220,55 L 300,55 L 300,70 L 420,70' },
+      { cls: 'en-wave', d: 'M 60,110 L 140,110 L 140,95 L 220,95 L 220,110 L 260,110 L 260,95 L 340,95 L 340,110 L 420,110' },
+      { cls: 'valid-wave', d: 'M 60,150 L 180,150 L 180,135 L 260,135 L 260,150 L 300,150 L 300,135 L 380,135 L 380,150 L 420,150' },
+      { cls: 'ready-wave', d: 'M 60,190 L 260,190 L 260,175 L 340,175 L 340,190 L 380,190 L 380,175 L 420,175' }
+    ],
+    packets: [
+      { cls: 'packet-1', d: 'M 60,70 L 100,70 L 100,55 L 180,55 L 180,70 L 220,70 L 220,55 L 300,55 L 300,70 L 420,70' },
+      { cls: 'packet-2', d: 'M 60,190 L 260,190 L 260,175 L 340,175 L 340,190 L 380,190 L 380,175 L 420,175' }
+    ]
+  },
+  uart: {
+    specs: { clk: 'BAUD 115200', bus: 'FRAME 8N1', mode: 'FIFO 16B' },
+    labels: ['BAUD', 'TXD', 'RXD', 'START', 'STOP'],
+    waves: [
+      { cls: 'clk-wave', d: 'M 60,30 L 80,30 L 80,15 L 100,15 L 100,30 L 120,30 L 120,15 L 140,15 L 140,30 L 160,30 L 160,15 L 180,15 L 180,30 L 200,30 L 200,15 L 220,15 L 220,30 L 240,30 L 240,15 L 260,15 L 260,30 L 280,30 L 280,15 L 300,15 L 300,30 L 320,30 L 320,15 L 340,15 L 340,30 L 360,30 L 360,15 L 380,15 L 380,30 L 400,30 L 400,15 L 420,15 L 420,30' },
+      { cls: 'data-wave', d: 'M 60,55 L 100,55 L 100,70 L 140,70 L 140,55 L 180,55 L 180,70 L 220,70 L 260,70 L 260,55 L 340,55 L 340,70 L 380,70 L 380,55 L 420,55' },
+      { cls: 'en-wave', d: 'M 60,95 L 120,95 L 120,110 L 160,110 L 160,95 L 200,95 L 200,110 L 240,110 L 280,110 L 280,95 L 360,95 L 360,110 L 400,110 L 400,95 L 420,95' },
+      { cls: 'valid-wave', d: 'M 60,150 L 100,150 L 100,135 L 140,135 L 140,150 L 420,150' },
+      { cls: 'ready-wave', d: 'M 60,190 L 380,190 L 380,175 L 420,175' }
+    ],
+    packets: [
+      { cls: 'packet-1', d: 'M 60,55 L 100,55 L 100,70 L 140,70 L 140,55 L 180,55 L 180,70 L 220,70 L 260,70 L 260,55 L 340,55 L 340,70 L 380,70 L 380,55 L 420,55' },
+      { cls: 'packet-2', d: 'M 60,95 L 120,95 L 120,110 L 160,110 L 160,95 L 200,95 L 200,110 L 240,110 L 280,110 L 280,95 L 360,95 L 360,110 L 400,110 L 400,95 L 420,95' }
+    ]
+  }
+};
+
+const setWaveformMode = (modeKey) => {
+  const data = WAVEFORM_MODES[modeKey];
+  if (!data) return;
+
+  document.querySelectorAll('.monitor-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === modeKey);
+  });
+
+  const clkEl = el('#mon-spec-clk');
+  const busEl = el('#mon-spec-bus');
+  const modeEl = el('#mon-spec-mode');
+  if (clkEl) clkEl.textContent = data.specs.clk;
+  if (busEl) busEl.textContent = data.specs.bus;
+  if (modeEl) modeEl.textContent = data.specs.mode;
+
+  const display = el('.monitor-display');
+  if (display) {
+    const yOffsets = [27, 67, 107, 147, 187];
+    const labelsSvg = data.labels.map((lbl, i) =>
+      `<text x="50" y="${yOffsets[i]}" class="signal-label mono" text-anchor="end">${lbl}</text>`
+    ).join('');
+
+    const wavesSvg = data.waves.map(w =>
+      `<path class="timing-wave ${w.cls}" d="${w.d}" />`
+    ).join('');
+
+    const packetsSvg = data.packets.map(p =>
+      `<path class="signal-packet ${p.cls}" d="${p.d}" />`
+    ).join('');
+
+    display.innerHTML = `
+      <svg class="timing-svg" viewBox="0 0 440 210" preserveAspectRatio="xMidYMid meet">
+        <g class="timing-grid-lines">
+          <line x1="60" y1="0" x2="60" y2="210" />
+          <line x1="100" y1="0" x2="100" y2="210" />
+          <line x1="140" y1="0" x2="140" y2="210" />
+          <line x1="180" y1="0" x2="180" y2="210" />
+          <line x1="220" y1="0" x2="220" y2="210" />
+          <line x1="260" y1="0" x2="260" y2="210" />
+          <line x1="300" y1="0" x2="300" y2="210" />
+          <line x1="340" y1="0" x2="340" y2="210" />
+          <line x1="380" y1="0" x2="380" y2="210" />
+          <line x1="420" y1="0" x2="420" y2="210" />
+        </g>
+        ${labelsSvg}
+        ${wavesSvg}
+        <line class="timing-scanline" x1="60" y1="0" x2="60" y2="210" />
+        ${packetsSvg}
+      </svg>
+    `;
+  }
+};
+
+const initWaveformSwitcher = () => {
+  const tabs = document.querySelectorAll('.monitor-tab-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const mode = btn.getAttribute('data-mode');
+      if (mode) setWaveformMode(mode);
+    });
+  });
+};
+
+/* =========================================================
+   TERMINAL COMMAND PALETTE (Ctrl+K / Modal)
+   ========================================================= */
+const initCommandPalette = () => {
+  const modal = el('#cmd-palette');
+  const input = el('#cmd-input');
+  const list = el('#cmd-list');
+  const triggerBtn = el('#cmd-palette-btn');
+  const toast = el('#toast-notice');
+
+  if (!modal || !input || !list) return;
+
+  const showToast = (msg) => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 2400);
+  };
+
+  const COMMANDS = [
+    { title: 'Jump to About & Education', shortcut: '#about', action: () => { window.location.hash = 'about'; } },
+    { title: 'Jump to Supervised Research & Drawers', shortcut: '#research', action: () => { window.location.hash = 'research'; } },
+    { title: 'Jump to Open Source & NEORV32 PRs', shortcut: '#opensource', action: () => { window.location.hash = 'opensource'; } },
+    { title: 'Jump to Experience & Teaching', shortcut: '#experience', action: () => { window.location.hash = 'experience'; } },
+    { title: 'Jump to Selected RTL Projects', shortcut: '#projects', action: () => { window.location.hash = 'projects'; } },
+    { title: 'Jump to Engineering Notes', shortcut: '#notes', action: () => { window.location.hash = 'notes'; } },
+    { title: 'Open Full Curriculum Vitae (CV)', shortcut: 'CV PAGE', action: () => { window.location.href = 'pages/cv.html'; } },
+    { title: 'Download CV PDF', shortcut: 'PDF', action: () => {
+      const a = document.createElement('a');
+      a.href = 'assets/Abolfazl_Azad_CV.pdf';
+      a.download = 'Abolfazl_Azad_CV.pdf';
+      a.click();
+      showToast('Downloading Abolfazl_Azad_CV.pdf...');
+    }},
+    { title: 'Copy Email Address (abolfazlazad@ut.ac.ir)', shortcut: 'COPY', action: () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText('abolfazlazad@ut.ac.ir').then(() => {
+          showToast('Email copied to clipboard: abolfazlazad@ut.ac.ir');
+        });
+      }
+    }},
+    { title: 'Waveform Mode: Switch to RTL Bus', shortcut: 'WAVE RTL', action: () => {
+      setWaveformMode('rtl');
+      showToast('Waveform switched to RTL Bus');
+    }},
+    { title: 'Waveform Mode: Switch to RISC-V Pipeline', shortcut: 'WAVE RISCV', action: () => {
+      setWaveformMode('riscv');
+      showToast('Waveform switched to RISC-V Pipeline');
+    }},
+    { title: 'Waveform Mode: Switch to UART Frame', shortcut: 'WAVE UART', action: () => {
+      setWaveformMode('uart');
+      showToast('Waveform switched to UART Frame');
+    }},
+    { title: 'Open GitHub Profile', shortcut: 'GITHUB ↗', action: () => {
+      window.open('https://github.com/Abolfazl-Azad', '_blank');
+    }},
+    { title: 'Open LinkedIn Profile', shortcut: 'LINKEDIN ↗', action: () => {
+      window.open('https://www.linkedin.com/in/abolfazl-azad/', '_blank');
+    }}
+  ];
+
+  let selectedIndex = 0;
+  let filteredCommands = [...COMMANDS];
+
+  const renderList = () => {
+    if (filteredCommands.length === 0) {
+      list.innerHTML = `<li class="cmd-palette-item mono muted" style="cursor: default;">No matching command found</li>`;
+      return;
+    }
+    list.innerHTML = filteredCommands.map((cmd, i) => `
+      <li class="cmd-palette-item ${i === selectedIndex ? 'is-selected' : ''}" data-index="${i}">
+        <span>${cmd.title}</span>
+        <span class="shortcut mono">${cmd.shortcut}</span>
+      </li>
+    `).join('');
+
+    const activeItem = list.children[selectedIndex];
+    if (activeItem) {
+      activeItem.scrollIntoView({ block: 'nearest' });
+    }
+  };
+
+  const openPalette = () => {
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    input.value = '';
+    filteredCommands = [...COMMANDS];
+    selectedIndex = 0;
+    renderList();
+    setTimeout(() => input.focus(), 50);
+  };
+
+  const closePalette = () => {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+  };
+
+  const executeSelected = () => {
+    if (filteredCommands[selectedIndex]) {
+      const cmd = filteredCommands[selectedIndex];
+      closePalette();
+      cmd.action();
+    }
+  };
+
+  // Filter input
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) {
+      filteredCommands = [...COMMANDS];
+    } else {
+      filteredCommands = COMMANDS.filter(c =>
+        c.title.toLowerCase().includes(q) || c.shortcut.toLowerCase().includes(q)
+      );
+    }
+    selectedIndex = 0;
+    renderList();
+  });
+
+  // Keyboard navigation inside input
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (filteredCommands.length > 0) {
+        selectedIndex = (selectedIndex + 1) % filteredCommands.length;
+        renderList();
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (filteredCommands.length > 0) {
+        selectedIndex = (selectedIndex - 1 + filteredCommands.length) % filteredCommands.length;
+        renderList();
+      }
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      executeSelected();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closePalette();
+    }
+  });
+
+  // Click on items
+  list.addEventListener('click', (e) => {
+    const item = e.target.closest('.cmd-palette-item');
+    if (!item) return;
+    const idx = parseInt(item.getAttribute('data-index'), 10);
+    if (!isNaN(idx) && filteredCommands[idx]) {
+      closePalette();
+      filteredCommands[idx].action();
+    }
+  });
+
+  // Click outside to close
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closePalette();
+    }
+  });
+
+  // Launch button
+  if (triggerBtn) {
+    triggerBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPalette();
+    });
+  }
+
+  // Global keybindings (Ctrl+K, Cmd+K, /)
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      if (modal.classList.contains('is-open')) closePalette();
+      else openPalette();
+    } else if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      openPalette();
+    } else if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+      closePalette();
+    }
+  });
+};
+
+initWaveformSwitcher();
+initCommandPalette();
 
 
 /* =========================================================

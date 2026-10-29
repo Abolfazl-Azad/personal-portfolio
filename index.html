@@ -127,6 +127,8 @@
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#notes" class="nav-link">Notes</a>
         <a href="pages/cv.html" class="nav-link">CV</a>
+        <a href="assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf" class="nav-cv-btn mono" title="Download CV PDF">PDF ↓</a>
+        <button id="cmd-palette-btn" class="nav-cmd-btn mono" aria-label="Open Command Palette" title="Command Palette (Ctrl+K)">>_</button>
       </nav>
     </header>
 
@@ -148,13 +150,20 @@
           </div>
           <div class="hero-monitor" aria-hidden="true">
             <div class="monitor-header mono">
-              <span>TIMING MONITOR</span>
+              <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                <span>TIMING MONITOR</span>
+                <div class="monitor-tabs">
+                  <button class="monitor-tab-btn active" data-mode="rtl" type="button">RTL BUS</button>
+                  <button class="monitor-tab-btn" data-mode="riscv" type="button">RISC-V</button>
+                  <button class="monitor-tab-btn" data-mode="uart" type="button">UART</button>
+                </div>
+              </div>
               <div class="monitor-specs">
-                <span>CLK 100 MHz</span>
+                <span id="mon-spec-clk">CLK 100 MHz</span>
                 <span class="sep">/</span>
-                <span>BUS 32 bit</span>
+                <span id="mon-spec-bus">BUS 32 bit</span>
                 <span class="sep">/</span>
-                <span>MODE RTL</span>
+                <span id="mon-spec-mode">MODE RTL</span>
               </div>
             </div>
             
@@ -270,7 +279,16 @@
 
       <section id="projects" class="content-section">
         <div class="section-label reveal">PROJECTS</div>
-        <div class="section-content project-grid" id="project-list"></div>
+        <div class="section-content">
+          <div class="project-filter-bar mono reveal">
+            <button class="filter-chip active" data-filter="all" type="button">ALL (06)</button>
+            <button class="filter-chip" data-filter="arch" type="button">RISC-V &amp; ARCH</button>
+            <button class="filter-chip" data-filter="embedded" type="button">SYSTEMC / HW-SW</button>
+            <button class="filter-chip" data-filter="asic" type="button">ASIC FLOW</button>
+            <button class="filter-chip" data-filter="fpga" type="button">FPGA &amp; DIGITAL</button>
+          </div>
+          <div class="project-grid" id="project-list"></div>
+        </div>
       </section>
 
       <section id="skills" class="content-section">
@@ -360,6 +378,25 @@
   <a href="#top" id="back-to-top" class="back-to-top mono" aria-label="Back to top">
     ↑
   </a>
-  <script type="module" src="js/main.js?v=10"></script>
+
+  <!-- Terminal Command Palette Modal -->
+  <div class="cmd-palette-backdrop" id="cmd-palette" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="cmd-palette-box">
+      <div class="cmd-palette-input-wrap">
+        <span class="cmd-palette-prompt">></span>
+        <input type="text" id="cmd-input" class="cmd-palette-input" placeholder="Type a command or jump to section..." autocomplete="off" spellcheck="false" />
+        <span class="cmd-palette-esc">ESC</span>
+      </div>
+      <ul class="cmd-palette-list" id="cmd-list"></ul>
+      <div class="cmd-palette-footer">
+        <span>Use &uarr; &darr; to navigate &middot; &crarr; to select</span>
+        <span>Press ESC to close</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-notice" id="toast-notice" role="alert"></div>
+
+  <script type="module" src="js/main.js?v=11"></script>
 </body>
 </html>

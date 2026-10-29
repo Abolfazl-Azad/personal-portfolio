@@ -154,7 +154,13 @@ export const research = [
     methodology: "SystemVerilog RTL design, QuestaSim/ModelSim simulation, testbench-based verification.",
     status: "Completed / Active",
     tags: ["SystemVerilog", "RTL Design", "PE Datapath", "Hardware Acceleration", "Simulation"],
-    diagramType: "impac"
+    diagramType: "impac",
+    deepDive: {
+      title: "iMPAC Matrix Accelerator Architecture",
+      architecture: "Processing Element (PE) datapath with dedicated MAC units, local configuration registers, and an integrated control sequencer for systolic matrix streaming.",
+      verification: "SystemVerilog cycle-accurate simulation with randomized operand streams and scoreboard checking in QuestaSim/ModelSim.",
+      toolchain: "SystemVerilog, QuestaSim / ModelSim, RTL Synthesis flow"
+    }
   },
   {
     id: "impac-lowpower",
@@ -167,7 +173,13 @@ export const research = [
     methodology: "Functional simulation, RTL synthesis, and timing/power analysis across architectural variants.",
     status: "Ongoing Work",
     tags: ["Low-Power RTL", "Operand Isolation", "Switching Reduction", "Synthesis", "Timing"],
-    diagramType: "lowpower"
+    diagramType: "lowpower",
+    deepDive: {
+      title: "Operand Isolation & Switching Power Reduction",
+      architecture: "Operation-aware control gating on add/sub datapaths and pre-multiplexer isolation to freeze input operands during dormant cycles.",
+      verification: "Toggle activity analysis across functional simulation benchmarks; evaluating power/area tradeoffs through synthesis in Synopsys Design Compiler.",
+      toolchain: "Synopsys Design Compiler, QuestaSim, Cadence Innovus, Linux/WSL"
+    }
   },
   {
     id: "weight-quant",
@@ -180,7 +192,13 @@ export const research = [
     methodology: "PyTorch-based quantization workflows, clustering algorithms, baseline comparison, and QAT evaluation.",
     status: "Ongoing Work",
     tags: ["3-bit Quantization", "QAT", "Memristor", "PyTorch", "AI Hardware"],
-    diagramType: "quant"
+    diagramType: "quant",
+    deepDive: {
+      title: "3-Bit Hardware-Constrained Weight Mapping",
+      architecture: "Clustering-based non-uniform quantization targeting 8 discrete conductance states in memristor crossbars while minimizing quantization distortion.",
+      verification: "Evaluating fine-tuning and Quantization-Aware Training (QAT) on CIFAR-10 with VGG8 to maintain accuracy under tight 3-bit weight constraints.",
+      toolchain: "PyTorch, Python, NumPy, Memristor Crossbar Simulation models"
+    }
   },
   {
     id: "neurosim-cim",
@@ -193,7 +211,13 @@ export const research = [
     methodology: "NeuroSim simulation framework, 128 × 128 RRAM subarray modeling, 5-bit ADC configuration, VGG8/CIFAR-10 benchmark.",
     status: "Ongoing Work",
     tags: ["NeuroSim", "Compute-in-Memory", "RRAM Crossbar", "VGG8 / CIFAR-10", "Inference Modeling"],
-    diagramType: "cim"
+    diagramType: "cim",
+    deepDive: {
+      title: "NeuroSim RRAM Subarray Inference Profiling",
+      architecture: "128 × 128 RRAM crossbar array with row decoders, sensing lines, and 5-bit column ADCs executing VGG8 layer operations.",
+      verification: "Simulating circuit-level estimates for total macro area (μm²), latency per inference layer (ns), and energy consumption (μJ).",
+      toolchain: "NeuroSim CIM C++ Simulation Platform, Python, MATLAB"
+    }
   }
 ];
 
@@ -206,6 +230,7 @@ export const openSource = [
     url: "https://github.com/stnolting/neorv32/pull/1643",
     description: "Added a repeatable input pattern and masked input checks to processor_check; included in upstream release notes.",
     impact: "Included in upstream release notes",
+    merged: true,
     tags: ["RISC-V", "NEORV32", "SoC Verification", "GPIO", "VHDL"]
   },
   {
@@ -216,6 +241,7 @@ export const openSource = [
     url: "https://github.com/stnolting/neorv32/pull/1644",
     description: "Fixed unreachable special values and signaling-NaN handling in the floating_point_test software test.",
     impact: "Upstream test suite reliability & sNaN compliance",
+    merged: true,
     tags: ["RISC-V", "NEORV32", "FPU Verification", "C", "IEEE-754"]
   }
 ];
@@ -330,6 +356,7 @@ export const languages = [
 export const projects = [
   {
     number: "01",
+    category: "arch",
     type: "COMPUTER ARCHITECTURE",
     title: "5-Stage RISC-V Processor",
     description: "32-bit RV32I processor implementing a five-stage pipeline (IF/ID/EX/MEM/WB) with full data forwarding, load-use hazard stalling, and branch prediction with flushing. Supports the complete RV32I base instruction set including arithmetic, logical, memory, and control-flow instructions.",
@@ -340,6 +367,7 @@ export const projects = [
   },
   {
     number: "02",
+    category: "embedded",
     type: "EMBEDDED SYSTEMS",
     title: "FIR Filter & DMA",
     description: "Hardware/software co-design integrating a 31-tap FIR hardware accelerator with a DMA controller within the SAYAC memory-mapped architecture. The accelerator offloads filter computation from the CPU, while DMA handles autonomous data transfer between memory and the FIR unit.",
@@ -350,6 +378,7 @@ export const projects = [
   },
   {
     number: "03",
+    category: "asic",
     type: "ASIC / RTL",
     title: "Exponential Hardware",
     description: "RTL design, synthesis, and physical implementation of a fixed-point exponential function unit using piecewise polynomial approximation. Complete ASIC flow from RTL through synthesis to place-and-route with timing closure.",
@@ -360,6 +389,7 @@ export const projects = [
   },
   {
     number: "04",
+    category: "asic",
     type: "ASIC / RTL",
     title: "Booth Multiplier",
     description: "Signed hardware multiplier employing Radix-4 Booth encoding to reduce partial product count by 50%. Mapped through the complete ASIC flow including logic synthesis, timing analysis, and place-and-route.",
@@ -370,6 +400,7 @@ export const projects = [
   },
   {
     number: "05",
+    category: "fpga",
     type: "FPGA / DIGITAL DESIGN",
     title: "UART Subsystem",
     description: "Serial communication interface featuring independent TX/RX datapaths with configurable baud rate, mid-bit sampling for noise immunity, and FSM-based protocol control. Verified on FPGA hardware using Quartus and ModelSim.",
@@ -380,6 +411,7 @@ export const projects = [
   },
   {
     number: "06",
+    category: "fpga",
     type: "FPGA / DIGITAL DESIGN",
     title: "Digital Modulation",
     description: "FPGA implementation of multiple digital modulation schemes including Direct Digital Synthesis (DDS), ASK, FSK, and PWM signal generators. Each modulator is parameterized and independently verifiable.",
