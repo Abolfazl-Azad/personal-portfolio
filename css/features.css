@@ -1,0 +1,367 @@
+/* ==========================================================
+   FEATURES v12 — All 10 enhancements
+   ========================================================== */
+
+/* ──────────────────────────────────────────────────────────
+   1. PHOSPHOR THEME SWITCHER
+   ────────────────────────────────────────────────────────── */
+:root {
+  --accent: #38ff8b;
+  --accent-rgb: 56, 255, 139;
+  --glow: rgba(56,255,139,0.35);
+}
+html[data-theme="blue"] {
+  --accent: #38c8ff;
+  --accent-rgb: 56, 200, 255;
+  --glow: rgba(56,200,255,0.35);
+}
+html[data-theme="amber"] {
+  --accent: #ffb347;
+  --accent-rgb: 255, 179, 71;
+  --glow: rgba(255,179,71,0.35);
+}
+
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0 4px;
+}
+.theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 2px 3px;
+  line-height: 1;
+  opacity: 0.3;
+  transition: opacity 0.2s, transform 0.2s;
+  color: var(--accent);
+}
+.theme-btn.active { opacity: 1; transform: scale(1.25); }
+.theme-btn[data-theme="green"] { color: #38ff8b; }
+.theme-btn[data-theme="blue"]  { color: #38c8ff; }
+.theme-btn[data-theme="amber"] { color: #ffb347; }
+
+/* ──────────────────────────────────────────────────────────
+   2. SKILL RADAR CHART
+   ────────────────────────────────────────────────────────── */
+.skill-radar-wrap {
+  margin-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.skill-radar-svg {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  filter: drop-shadow(0 0 18px rgba(var(--accent-rgb), 0.15));
+}
+.radar-axis-label {
+  font-family: "DM Mono", monospace;
+  font-size: 9px;
+  fill: rgba(var(--accent-rgb), 0.65);
+  letter-spacing: 0.06em;
+}
+.radar-polygon {
+  fill: rgba(var(--accent-rgb), 0.12);
+  stroke: rgba(var(--accent-rgb), 0.8);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.4));
+  transition: all 0.6s ease;
+}
+.radar-grid-poly {
+  fill: none;
+  stroke: rgba(var(--accent-rgb), 0.1);
+  stroke-width: 0.8;
+}
+.radar-spoke {
+  stroke: rgba(var(--accent-rgb), 0.1);
+  stroke-width: 0.8;
+}
+.radar-dot {
+  fill: var(--accent);
+  filter: drop-shadow(0 0 4px var(--accent));
+}
+
+/* ──────────────────────────────────────────────────────────
+   3. SIGNAL INSPECTOR TOOLTIP
+   ────────────────────────────────────────────────────────── */
+.signal-tooltip {
+  position: absolute;
+  bottom: 44px;
+  left: 60px;
+  background: rgba(6, 11, 8, 0.96);
+  border: 1px solid rgba(var(--accent-rgb), 0.5);
+  color: var(--accent);
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  padding: 7px 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  z-index: 10;
+  border-radius: 2px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.7), 0 0 12px rgba(var(--accent-rgb), 0.15);
+}
+.signal-tooltip.visible { opacity: 1; }
+.signal-tooltip table { border-collapse: collapse; }
+.signal-tooltip td { padding: 1px 8px 1px 0; opacity: 0.85; }
+.signal-tooltip td:first-child { opacity: 0.5; }
+
+/* ──────────────────────────────────────────────────────────
+   4. RTL CODE PEEK PANEL
+   ────────────────────────────────────────────────────────── */
+.rtl-peek-panel {
+  position: fixed;
+  top: 0;
+  right: -520px;
+  width: min(500px, 92vw);
+  height: 100vh;
+  background: #040a06;
+  border-left: 1px solid rgba(var(--accent-rgb), 0.2);
+  z-index: 800;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: -20px 0 60px rgba(0,0,0,0.8);
+}
+.rtl-peek-panel.is-open { right: 0; }
+.rtl-peek-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(var(--accent-rgb), 0.15);
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  background: rgba(var(--accent-rgb), 0.04);
+  flex-shrink: 0;
+}
+.rtl-peek-close {
+  background: none;
+  border: none;
+  color: var(--accent);
+  cursor: pointer;
+  font-size: 0.7rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.rtl-peek-close:hover { opacity: 1; }
+.rtl-peek-code {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 20px;
+  font-family: "DM Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.65;
+  color: #c9d5cc;
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 2;
+}
+/* Very lightweight syntax highlighting via CSS */
+.rtl-peek-code .kw { color: var(--accent); font-weight: 500; }
+.rtl-peek-code .cm { color: #5a7a60; font-style: italic; }
+.rtl-peek-code .nm { color: #8bc4a8; }
+.rtl-peek-code .nu { color: #ffb347; }
+.rtl-peek-code .st { color: #ff8b8b; }
+
+/* Code peek trigger on project cards */
+.project-card { position: relative; }
+.peek-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 48px;
+  background: rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  color: var(--accent);
+  font-family: "DM Mono", monospace;
+  font-size: 0.62rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 2;
+  border-radius: 2px;
+}
+.project-card:hover .peek-btn { opacity: 1; }
+.peek-btn:hover { background: rgba(var(--accent-rgb), 0.18); }
+
+/* ──────────────────────────────────────────────────────────
+   5. KEYBOARD SHORTCUTS MODAL
+   ────────────────────────────────────────────────────────── */
+.shortcuts-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 3, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.shortcuts-backdrop.is-open {
+  display: flex;
+  animation: fadeIn 0.15s ease-out;
+}
+.shortcuts-box {
+  width: min(440px, calc(100% - 32px));
+  background: #060b08;
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.85), 0 0 30px rgba(var(--accent-rgb), 0.1);
+  border-radius: 4px;
+  padding: 24px 28px;
+  font-family: "DM Mono", monospace;
+}
+.shortcuts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+}
+.shortcuts-header button {
+  background: none;
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  color: rgba(var(--accent-rgb), 0.6);
+  font-family: inherit;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.shortcuts-header button:hover { color: var(--accent); border-color: var(--accent); }
+.shortcuts-grid { display: flex; flex-direction: column; gap: 10px; }
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #b1bdb4;
+}
+.shortcut-row span { margin-left: auto; opacity: 0.7; font-size: 0.73rem; }
+kbd {
+  display: inline-block;
+  background: rgba(var(--accent-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  color: var(--accent);
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 2px;
+  line-height: 1.5;
+}
+
+/* ──────────────────────────────────────────────────────────
+   6. GITHUB ACTIVITY HEATMAP
+   ────────────────────────────────────────────────────────── */
+.gh-activity-wrap {
+  margin-bottom: 40px;
+}
+.gh-activity-grid {
+  display: flex;
+  gap: 3px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.gh-week-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.gh-day {
+  width: 11px;
+  height: 11px;
+  border-radius: 1px;
+  background: rgba(var(--accent-rgb), 0.06);
+  transition: background 0.2s, transform 0.15s;
+  cursor: default;
+}
+.gh-day:hover { transform: scale(1.3); }
+.gh-day.l1 { background: rgba(var(--accent-rgb), 0.18); }
+.gh-day.l2 { background: rgba(var(--accent-rgb), 0.38); }
+.gh-day.l3 { background: rgba(var(--accent-rgb), 0.62); }
+.gh-day.l4 { background: rgba(var(--accent-rgb), 0.88); box-shadow: 0 0 4px rgba(var(--accent-rgb), 0.5); }
+.gh-activity-legend {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  font-size: 0.62rem;
+  color: rgba(var(--accent-rgb), 0.4);
+}
+.gh-l0 { color: rgba(var(--accent-rgb), 0.1); }
+.gh-l1 { color: rgba(var(--accent-rgb), 0.25); }
+.gh-l2 { color: rgba(var(--accent-rgb), 0.5); }
+.gh-l3 { color: rgba(var(--accent-rgb), 0.75); }
+.gh-l4 { color: rgba(var(--accent-rgb), 1.0); }
+
+/* ──────────────────────────────────────────────────────────
+   8. READING TIME + LAST UPDATED on Notes
+   ────────────────────────────────────────────────────────── */
+.note-readtime {
+  font-size: 0.62rem;
+  color: rgba(var(--accent-rgb), 0.5);
+  letter-spacing: 0.08em;
+  margin-left: 8px;
+}
+.note-updated {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.06em;
+}
+
+/* ──────────────────────────────────────────────────────────
+   9. PRINT-READY INDICATOR (cv.html)
+   ────────────────────────────────────────────────────────── */
+.print-ready-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "DM Mono", monospace;
+  font-size: 0.68rem;
+  color: rgba(var(--accent-rgb), 0.6);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  padding: 4px 10px;
+  border-radius: 2px;
+  margin-top: 8px;
+  letter-spacing: 0.08em;
+  cursor: default;
+  transition: color 0.3s, border-color 0.3s;
+}
+.print-ready-badge.is-ready {
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), 0.55);
+  box-shadow: 0 0 8px rgba(var(--accent-rgb), 0.12);
+}
+.print-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(var(--accent-rgb), 0.35);
+  transition: background 0.3s, box-shadow 0.3s;
+}
+.print-ready-badge.is-ready .print-badge-dot {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulseDot 1.5s ease-in-out infinite;
+}
+
+/* ──────────────────────────────────────────────────────────
+   10. MISC ANIMATION HELPERS
+   ────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}

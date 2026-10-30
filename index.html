@@ -32,7 +32,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=10" />
+  <link rel="stylesheet" href="css/styles.css?v=12" />
+  <link rel="stylesheet" href="css/features.css?v=1" />
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -127,7 +128,13 @@
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#notes" class="nav-link">Notes</a>
         <a href="pages/cv.html" class="nav-link">CV</a>
+        <a href="pages/lab.html" class="nav-link" style="color: var(--accent);">Lab 🧪</a>
         <a href="assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf" class="nav-cv-btn mono" title="Download CV PDF">PDF ↓</a>
+        <div class="theme-switcher" title="Phosphor color theme">
+          <button class="theme-btn active" data-theme="green" aria-label="P31 Green">●</button>
+          <button class="theme-btn" data-theme="blue" aria-label="P7 Blue">●</button>
+          <button class="theme-btn" data-theme="amber" aria-label="P3 Amber">●</button>
+        </div>
         <button id="cmd-palette-btn" class="nav-cmd-btn mono" aria-label="Open Command Palette" title="Command Palette (Ctrl+K)">>_</button>
       </nav>
     </header>
@@ -146,6 +153,7 @@
               <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
               <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
               <a href="mailto:abolfazlazad@ut.ac.ir">Email ↗</a>
+              <a href="pages/lab.html" class="mono" style="color: var(--accent); border-bottom: 1px dashed var(--accent);">Silicon Lab 🧪 ↗</a>
             </div>
           </div>
           <div class="hero-monitor" aria-hidden="true">
@@ -210,6 +218,7 @@
               </svg>
             </div>
 
+            <div class="signal-tooltip" id="signal-tooltip" aria-hidden="true"></div>
             <div class="monitor-footer mono">
               <span>STATUS</span>
               <span class="status-indicator"><span class="status-dot"></span> RUNNING</span>
@@ -315,6 +324,12 @@
             </svg>
           </div>
 
+          <!-- Skill Radar Chart -->
+          <div class="skill-radar-wrap reveal" aria-label="Skill proficiency radar chart">
+            <p class="mono muted" style="font-size:0.65rem; letter-spacing:0.1em; margin-bottom:16px;">DOMAIN PROFICIENCY RADAR</p>
+            <svg id="skill-radar-svg" class="skill-radar-svg" viewBox="0 0 360 320" aria-hidden="true"></svg>
+          </div>
+
           <div class="skills-matrix" id="skills-list"></div>
         </div>
       </section>
@@ -329,18 +344,32 @@
 
       <section id="contact" class="content-section">
         <div class="section-label">CONTACT</div>
-        <div class="section-content contact-grid">
-          <div class="contact-item">
-            <span class="mono muted">EMAIL</span>
-            <a href="mailto:abolfazlazad@ut.ac.ir">abolfazlazad@ut.ac.ir ↗</a>
+        <div class="section-content">
+          <!-- GitHub Activity Graph -->
+          <div class="gh-activity-wrap reveal" id="gh-activity-wrap">
+            <p class="mono muted" style="font-size:0.65rem; margin-bottom:10px; letter-spacing:0.1em;">GITHUB CONTRIBUTION GRAPH — <span id="gh-year"></span></p>
+            <div id="gh-activity-grid" class="gh-activity-grid" aria-label="GitHub contribution heatmap"></div>
+            <div class="gh-activity-legend mono">
+              <span>LESS</span>
+              <span class="gh-l0">■</span><span class="gh-l1">■</span><span class="gh-l2">■</span><span class="gh-l3">■</span><span class="gh-l4">■</span>
+              <span>MORE</span>
+            </div>
           </div>
-          <div class="contact-item">
-            <span class="mono muted">GITHUB</span>
-            <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">Abolfazl-Azad ↗</a>
-          </div>
-          <div class="contact-item">
-            <span class="mono muted">LINKEDIN</span>
-            <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">Abolfazl Azad ↗</a>
+
+          <!-- Contact Links -->
+          <div class="contact-grid">
+            <div class="contact-item">
+              <span class="mono muted">EMAIL</span>
+              <a href="mailto:abolfazlazad@ut.ac.ir">abolfazlazad@ut.ac.ir ↗</a>
+            </div>
+            <div class="contact-item">
+              <span class="mono muted">GITHUB</span>
+              <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">Abolfazl-Azad ↗</a>
+            </div>
+            <div class="contact-item">
+              <span class="mono muted">LINKEDIN</span>
+              <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">Abolfazl Azad ↗</a>
+            </div>
           </div>
         </div>
       </section>
@@ -353,6 +382,7 @@
         </div>
         <div style="display: flex; gap: 12px; flex-wrap: wrap;">
           <a class="button-link" href="pages/cv.html">View CV ↗</a>
+          <a class="button-link" href="pages/lab.html" style="background: rgba(56, 255, 139, 0.1);">Silicon Lab 🧪 ↗</a>
           <a class="button-link" href="assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf">Download PDF ↓</a>
         </div>
       </section>
@@ -367,6 +397,7 @@
         <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href="mailto:abolfazlazad@ut.ac.ir">Email</a>
+        <a href="pages/lab.html" style="color: var(--accent);">Silicon Lab</a>
       </div>
       <div class="footer-bottom">
         <span id="copyright-year">© Abolfazl Azad</span>
@@ -397,6 +428,36 @@
 
   <div class="toast-notice" id="toast-notice" role="alert"></div>
 
-  <script type="module" src="js/main.js?v=11"></script>
+  <!-- RTL Code Peek Panel (slides in from right on project hover) -->
+  <div class="rtl-peek-panel" id="rtl-peek-panel" aria-hidden="true">
+    <div class="rtl-peek-header mono">
+      <span id="rtl-peek-title">SYSTEMVERILOG PREVIEW</span>
+      <button class="rtl-peek-close mono" id="rtl-peek-close" aria-label="Close">[X]</button>
+    </div>
+    <pre class="rtl-peek-code" id="rtl-peek-code"></pre>
+  </div>
+
+  <!-- Keyboard Shortcuts Modal (? key) -->
+  <div class="shortcuts-backdrop" id="shortcuts-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Keyboard Shortcuts">
+    <div class="shortcuts-box">
+      <div class="shortcuts-header mono">
+        <span>KEYBOARD SHORTCUTS</span>
+        <button class="mono" id="shortcuts-close" aria-label="Close">ESC</button>
+      </div>
+      <div class="shortcuts-grid mono">
+        <div class="shortcut-row"><kbd>Ctrl</kbd><kbd>K</kbd> / <kbd>/</kbd><span>Open Command Palette</span></div>
+        <div class="shortcut-row"><kbd>?</kbd><span>Show this cheat sheet</span></div>
+        <div class="shortcut-row"><kbd>↑</kbd><kbd>↓</kbd><span>Navigate palette items</span></div>
+        <div class="shortcut-row"><kbd>Enter</kbd><span>Execute selected command</span></div>
+        <div class="shortcut-row"><kbd>ESC</kbd><span>Close any modal</span></div>
+        <div class="shortcut-row"><kbd>G</kbd><span>Green phosphor theme</span></div>
+        <div class="shortcut-row"><kbd>B</kbd><span>Blue phosphor theme</span></div>
+        <div class="shortcut-row"><kbd>A</kbd><span>Amber phosphor theme</span></div>
+      </div>
+      <p class="mono" style="font-size:0.62rem; opacity:0.4; margin-top:16px;">Keys active when no input is focused</p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js?v=12"></script>
 </body>
 </html>

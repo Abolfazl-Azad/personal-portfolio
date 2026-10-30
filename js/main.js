@@ -1,4 +1,5 @@
 import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience } from './data.js?v=11';
+import { initThemeSwitcher, initSkillRadar, initSignalInspector, initRTLCodePeek, initShortcutsModal, initGitHubActivity, NOTE_META } from './features.js?v=1';
 
 const el = (selector) => document.querySelector(selector);
 const safeText = (val) => val ? val : "";
@@ -508,12 +509,16 @@ const getProjectDiagram = (type) => {
 
   const notesList = el('#notes-list');
   if (notesList) {
-    notesList.innerHTML = notes.map((note, idx) => `
+    notesList.innerHTML = notes.map((note, idx) => {
+      const meta = NOTE_META[note.id] || {};
+      return `
       <div class="note-journal-item reveal">
         <div class="note-index mono muted">0${idx + 1}</div>
         <div class="note-content">
           <div class="note-meta mono">
             <span class="note-status ${safeText(note.status).toLowerCase()}">${safeText(note.status)}</span>
+            ${meta.readTime ? `<span class="note-readtime">~${meta.readTime}</span>` : ''}
+            ${meta.updated ? `<span class="note-updated">UPDATED ${meta.updated}</span>` : ''}
           </div>
           <h3>${safeText(note.title)}</h3>
           <p class="note-topic mono">${safeText(note.topic)}</p>
@@ -526,11 +531,21 @@ const getProjectDiagram = (type) => {
         </div>
         ${note.visualType ? `<div class="note-visual" aria-hidden="true">${getProjectDiagram(note.visualType)}</div>` : ''}
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 };
 
 render();
+
+// ── Init all feature modules ──────────────────────────────
+initThemeSwitcher();
+initSkillRadar();
+initSignalInspector();
+initRTLCodePeek();
+initShortcutsModal();
+initGitHubActivity();
+// ─────────────────────────────────────────────────────────
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -884,6 +899,9 @@ const setWaveformMode = (modeKey) => {
   const data = WAVEFORM_MODES[modeKey];
   if (!data) return;
 
+  // Sync signal inspector mode
+  if (typeof window._setSignalMode === 'function') window._setSignalMode(modeKey);
+
   document.querySelectorAll('.monitor-tab-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-mode') === modeKey);
   });
@@ -972,6 +990,7 @@ const initCommandPalette = () => {
     { title: 'Jump to Selected RTL Projects', shortcut: '#projects', action: () => { window.location.hash = 'projects'; } },
     { title: 'Jump to Engineering Notes', shortcut: '#notes', action: () => { window.location.hash = 'notes'; } },
     { title: 'Open Full Curriculum Vitae (CV)', shortcut: 'CV PAGE', action: () => { window.location.href = 'pages/cv.html'; } },
+    { title: 'Open Silicon Lab (Interactive Hardware Workbench)', shortcut: 'LAB 🧪', action: () => { window.location.href = 'pages/lab.html'; } },
     { title: 'Download CV PDF', shortcut: 'PDF', action: () => {
       const a = document.createElement('a');
       a.href = 'assets/Abolfazl_Azad_CV.pdf';
