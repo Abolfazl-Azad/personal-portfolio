@@ -1,4 +1,4 @@
-import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience } from './data.js?v=11';
+import { profile, researchInterests, focusAreas, education, coursework, currentFocus, experience, research, projects, skillGroups, notes, openSource, industryExperience, teachingExperience, featuredProjects, researchCategorized, evidenceSkills, technicalDocuments } from './data.js?v=12';
 import { initThemeSwitcher, initSkillRadar, initSignalInspector, initRTLCodePeek, initShortcutsModal, initGitHubActivity, NOTE_META } from './features.js?v=1';
 
 const el = (selector) => document.querySelector(selector);
@@ -489,6 +489,122 @@ const getProjectDiagram = (type) => {
         });
       });
     }
+  }
+
+  // Featured Research Projects
+  const featuredList = el('#featured-research-list');
+  if (featuredList) {
+    featuredList.innerHTML = featuredProjects.map(item => `
+      <article class="featured-card reveal">
+        <div class="featured-card-top mono">
+          <span class="featured-card-num">${safeText(item.number)} // ${safeText(item.category)}</span>
+          <div class="featured-card-badges">
+            <span class="featured-badge ${item.status.includes('Active') || item.status.includes('Merged') ? 'active' : ''}">${safeText(item.status)}</span>
+          </div>
+        </div>
+        <h3>${safeText(item.title)}</h3>
+        <p class="featured-card-desc">${safeText(item.description)}</p>
+        <div class="featured-contribution-box">
+          <strong>Personal Contribution:</strong> ${safeText(item.contribution)}
+        </div>
+        <div class="featured-metrics-row mono">
+          <span>KEY SPECS: ${safeText(item.metrics)}</span>
+        </div>
+        <div class="hero-tags mono" style="margin-bottom: 20px;">
+          ${item.tags.map(t => `<span>${safeText(t)}</span>`).join('')}
+        </div>
+        <div class="featured-actions-row mono">
+          <a href="${safeText(item.caseStudyUrl)}" class="case-study-btn">
+            READ DETAILED CASE STUDY ↗
+          </a>
+          ${item.github ? `<a href="${safeText(item.github)}" target="_blank" rel="noopener noreferrer" class="case-study-btn-secondary">GITHUB REPO ↗</a>` : ''}
+        </div>
+      </article>
+    `).join('');
+  }
+
+  // Research Experience Taxonomy (Completed, Ongoing, Planned)
+  const researchExpList = el('#research-experience-list');
+  if (researchExpList) {
+    researchExpList.innerHTML = `
+      <div class="taxo-group reveal">
+        <div class="taxo-group-title mono">01 // COMPLETED RESEARCH &amp; VERIFICATION</div>
+        <div class="taxo-grid">
+          ${researchCategorized.completed.map(item => `
+            <div class="taxo-card">
+              <h4>${safeText(item.title)}</h4>
+              <div class="taxo-card-meta mono">${safeText(item.institution)} &middot; ${safeText(item.supervisor)}</div>
+              <p>${safeText(item.description)}</p>
+              ${item.link ? `<a href="${safeText(item.link)}" class="case-study-btn mono" style="font-size:0.72rem; padding: 6px 12px;">Read Case Study ↗</a>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="taxo-group reveal">
+        <div class="taxo-group-title mono">02 // ONGOING SUPERVISED RESEARCH</div>
+        <div class="taxo-grid">
+          ${researchCategorized.ongoing.map(item => `
+            <div class="taxo-card">
+              <h4>${safeText(item.title)}</h4>
+              <div class="taxo-card-meta mono">${safeText(item.institution)} &middot; ${safeText(item.supervisor)}</div>
+              <p>${safeText(item.description)}</p>
+              ${item.link ? `<a href="${safeText(item.link)}" class="case-study-btn mono" style="font-size:0.72rem; padding: 6px 12px;">Read Case Study ↗</a>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="taxo-group reveal">
+        <div class="taxo-group-title mono">03 // PLANNED ARCHITECTURAL WORK</div>
+        <div class="taxo-grid">
+          ${researchCategorized.planned.map(item => `
+            <div class="taxo-card">
+              <h4>${safeText(item.title)}</h4>
+              <div class="taxo-card-meta mono">${safeText(item.institution)} &middot; ${safeText(item.supervisor)}</div>
+              <p>${safeText(item.description)}</p>
+              ${item.link ? `<a href="${safeText(item.link)}" class="case-study-btn mono" style="font-size:0.72rem; padding: 6px 12px;">Case Study Details ↗</a>` : ''}
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Evidence-Based Skills Matrix
+  const evidenceSkillsList = el('#evidence-skills-list');
+  if (evidenceSkillsList) {
+    evidenceSkillsList.innerHTML = evidenceSkills.map(item => `
+      <div class="evidence-skill-card reveal">
+        <div>
+          <div class="evidence-skill-header">
+            <span class="evidence-skill-name">${safeText(item.skill)}</span>
+            <span class="evidence-skill-cat mono">${safeText(item.category)}</span>
+          </div>
+          <p class="evidence-skill-body"><strong>Evidence:</strong> ${safeText(item.evidence)}</p>
+        </div>
+        <a href="${safeText(item.url)}" ${item.url.startsWith('http') ? 'target="_blank" rel="noopener noreferrer"' : ''} class="evidence-skill-link mono">
+          <span>Project: ${safeText(item.project)}</span> ↗
+        </a>
+      </div>
+    `).join('');
+  }
+
+  // Technical Documents Center
+  const techDocsList = el('#technical-docs-list');
+  if (techDocsList) {
+    techDocsList.innerHTML = technicalDocuments.map(doc => `
+      <div class="tech-doc-card reveal">
+        <div>
+          <div class="tech-doc-type mono">${safeText(doc.category)} // ${safeText(doc.type)}</div>
+          <h4>${safeText(doc.title)}</h4>
+          <p>${safeText(doc.description)}</p>
+        </div>
+        <a href="${safeText(doc.url)}" ${doc.url.endsWith('.pdf') ? 'download="Abolfazl_Azad_CV.pdf"' : ''} class="tech-doc-link mono">
+          ${doc.url.endsWith('.pdf') ? 'DOWNLOAD DOCUMENT (PDF) ↓' : 'OPEN TECHNICAL REPORT ↗'}
+        </a>
+      </div>
+    `).join('');
   }
 
   const skillsList = el('#skills-list');
@@ -983,15 +1099,21 @@ const initCommandPalette = () => {
   };
 
   const COMMANDS = [
+    { title: 'Jump to Featured Research Projects (iMPAC, NEORV32, SAYAC, CIM)', shortcut: '#featured-research', action: () => { window.location.hash = 'featured-research'; } },
+    { title: 'Jump to Open Source RISC-V Contributions (PR #1643 & #1644)', shortcut: '#opensource', action: () => { window.location.hash = 'opensource'; } },
+    { title: 'Jump to Research Experience (Completed, Ongoing, Planned)', shortcut: '#research-experience', action: () => { window.location.hash = 'research-experience'; } },
+    { title: 'Jump to Evidence-Based Technical Skills', shortcut: '#skills', action: () => { window.location.hash = 'skills'; } },
+    { title: 'Jump to Technical Documentation Center', shortcut: '#docs', action: () => { window.location.hash = 'docs'; } },
+    { title: 'Jump to Additional Digital Design & FPGA Projects', shortcut: '#projects', action: () => { window.location.hash = 'projects'; } },
     { title: 'Jump to About & Education', shortcut: '#about', action: () => { window.location.hash = 'about'; } },
-    { title: 'Jump to Supervised Research & Drawers', shortcut: '#research', action: () => { window.location.hash = 'research'; } },
-    { title: 'Jump to Open Source & NEORV32 PRs', shortcut: '#opensource', action: () => { window.location.hash = 'opensource'; } },
     { title: 'Jump to Experience & Teaching', shortcut: '#experience', action: () => { window.location.hash = 'experience'; } },
-    { title: 'Jump to Selected RTL Projects', shortcut: '#projects', action: () => { window.location.hash = 'projects'; } },
-    { title: 'Jump to Engineering Notes', shortcut: '#notes', action: () => { window.location.hash = 'notes'; } },
-    { title: 'Open Full Curriculum Vitae (CV)', shortcut: 'CV PAGE', action: () => { window.location.href = 'pages/cv.html'; } },
+    { title: 'Open Case Study: iMPAC Matrix Accelerator (SystemVerilog)', shortcut: 'CASE iMPAC', action: () => { window.location.href = 'projects/impac.html'; } },
+    { title: 'Open Case Study: NEORV32 RISC-V Verification (PRs)', shortcut: 'CASE NEORV32', action: () => { window.location.href = 'projects/neorv32.html'; } },
+    { title: 'Open Case Study: SAYAC FIR Accelerator (SystemC TLM)', shortcut: 'CASE SAYAC', action: () => { window.location.href = 'projects/sayac-fir.html'; } },
+    { title: 'Open Case Study: Memristor CIM Research & NeuroSim', shortcut: 'CASE CIM', action: () => { window.location.href = 'projects/memristor-cim.html'; } },
     { title: 'Open Silicon Lab (Interactive Hardware Workbench)', shortcut: 'LAB 🧪', action: () => { window.location.href = 'pages/lab.html'; } },
-    { title: 'Download CV PDF', shortcut: 'PDF', action: () => {
+    { title: 'Open Full Curriculum Vitae (CV Page)', shortcut: 'CV PAGE', action: () => { window.location.href = 'pages/cv.html'; } },
+    { title: 'Download CV PDF (Abolfazl_Azad_CV.pdf)', shortcut: 'PDF', action: () => {
       const a = document.createElement('a');
       a.href = 'assets/Abolfazl_Azad_CV.pdf';
       a.download = 'Abolfazl_Azad_CV.pdf';

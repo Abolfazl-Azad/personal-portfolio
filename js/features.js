@@ -535,18 +535,36 @@ export function initGitHubActivity() {
   const year = now.getFullYear();
   if (yearEl) yearEl.textContent = year;
 
-  // Try fetching real GitHub data; if CORS blocked, fall back to pattern
-  const GITHUB_USER = 'Abolfazl-Azad';
+  // Set honest loading state
+  grid.innerHTML = '<div class="mono muted" style="font-size:0.75rem; padding: 18px 0; text-align: center;">Connecting to GitHub contribution feed...</div>';
 
-  fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=${year}`)
-    .then(r => r.json())
+  const GITHUB_USER = 'Abolfazl-Azad';
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+  fetch(`https://github-contributions-api.jogruber.de/v4/${GITHUB_USER}?y=${year}`, { signal: controller.signal })
+    .then(r => {
+      clearTimeout(timeoutId);
+      if (!r.ok) throw new Error('Network response not ok');
+      return r.json();
+    })
     .then(data => {
       const contributions = data.contributions || [];
+      if (contributions.length === 0) {
+        throw new Error('Empty contributions data');
+      }
       renderHeatmap(grid, contributions);
     })
     .catch(() => {
-      // Fallback: generate plausible-looking data
-      renderHeatmapFallback(grid, now);
+      // Honest offline/CORS state - NEVER fabricate fake contribution counts
+      grid.innerHTML = `
+        <div class="mono muted" style="font-size:0.75rem; padding: 14px; background: rgba(56, 255, 139, 0.03); border: 1px dashed rgba(56, 255, 139, 0.2); border-radius: 4px; text-align: center; line-height: 1.6;">
+          <span style="color: var(--ink);">GitHub API feed is temporarily unavailable or restricted by browser CORS.</span><br>
+          <a href="https://github.com/${GITHUB_USER}" target="_blank" rel="noopener noreferrer" style="color: var(--accent); text-decoration: underline; margin-top: 6px; display: inline-block;">
+            Inspect verified commit history &amp; repositories on GitHub (github.com/${GITHUB_USER}) ↗
+          </a>
+        </div>
+      `;
     });
 }
 

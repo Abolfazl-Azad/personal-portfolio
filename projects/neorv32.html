@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEORV32 Open-Source RISC-V Contributions | Abolfazl Azad</title>
+  <meta name="description" content="Technical case study of Abolfazl Azad's upstream open-source contributions to the NEORV32 RISC-V SoC (PR #1643 and PR #1644)." />
+  <meta name="author" content="Abolfazl Azad" />
+  
+  <link rel="canonical" href="https://abolfazlazad.ir/projects/neorv32.html" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#050706" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/styles.css?v=12" />
+  <link rel="stylesheet" href="../css/features.css?v=1" />
+  <link rel="stylesheet" href="../css/case-study.css?v=1" />
+</head>
+<body>
+  <script>document.documentElement.classList.add('js-enabled');</script>
+  <div class="page-shell">
+    <header class="site-header no-print" id="main-header">
+      <a class="brand" href="../index.html" aria-label="Abolfazl Azad Home">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="9" y="9" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="13" y1="9" x2="13" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="16" y1="9" x2="16" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="19" y1="9" x2="19" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="13" y1="23" x2="13" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="16" y1="23" x2="16" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="19" y1="23" x2="19" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <polyline points="12,20 16,12 20,20" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <line x1="13.5" y1="17" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+      </a>
+      
+      <button class="mobile-menu-toggle mono" id="mobile-menu-btn" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        MENU
+      </button>
+
+      <nav class="top-nav" id="primary-nav" aria-label="Primary navigation">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#featured-research" class="nav-link">Research</a>
+        <a href="../index.html#opensource" class="nav-link active">Open Source</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../pages/lab.html" class="nav-link" style="color: var(--accent);">Silicon Lab 🧪</a>
+        <a href="../pages/cv.html" class="nav-link">CV</a>
+        <a href="../assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf" class="nav-cv-btn mono" title="Download CV PDF">PDF ↓</a>
+      </nav>
+    </header>
+
+    <main class="case-study-main">
+      <!-- Breadcrumb -->
+      <nav class="case-study-breadcrumb mono" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="../index.html#opensource">Open Source</a>
+        <span class="sep">/</span>
+        <span>NEORV32 Contributions</span>
+      </nav>
+
+      <!-- Hero Header -->
+      <section class="case-study-hero">
+        <span class="mono eyebrow">OPEN-SOURCE RISC-V VERIFICATION // NEORV32</span>
+        <h1>NEORV32: Upstream SoC Verification &amp; Floating-Point Corrections</h1>
+        <p class="case-study-subtitle">Merged pull requests to the upstream NEORV32 processor test framework, improving GPIO loopback verification repeatability and correcting IEEE-754 signaling NaN behavior.</p>
+        
+        <div class="project-meta-grid">
+          <div class="project-meta-item">
+            <div class="meta-label">UPSTREAM PROJECT</div>
+            <div class="meta-val"><a href="https://github.com/stnolting/neorv32" target="_blank" rel="noopener noreferrer">stnolting/neorv32 ↗</a></div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">MAINTAINER</div>
+            <div class="meta-val">Stephan Nolting</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">MY ROLE</div>
+            <div class="meta-val">Open-Source Contributor</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">STATUS</div>
+            <div class="meta-val"><span class="badge-status merged">MERGED UPSTREAM ✓</span></div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">PULL REQUESTS</div>
+            <div class="meta-val">PR #1643 &middot; PR #1644</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="case-study-layout">
+        <!-- Main Content -->
+        <article class="case-study-content">
+          <!-- 1. Overview -->
+          <section id="overview">
+            <h2><span class="sec-num">01</span> Overview</h2>
+            <p><strong>The NEORV32 Processor</strong> is a customizable, open-source 32-bit RISC-V compatible microcontroller and SoC written in platform-independent VHDL. Authored and maintained by <strong>Stephan Nolting</strong>, NEORV32 is widely utilized across both academia and industry for FPGA embedded computing, ASIC prototyping, and research.</p>
+            <div class="tech-callout">
+              <p><strong>Contributor Transparency:</strong> I am an independent open-source contributor to NEORV32. The project is created and maintained by Stephan Nolting. My contributions focused specifically on resolving verification test-suite edge cases and IEEE-754 compliance in merged PRs #1643 and #1644.</p>
+            </div>
+          </section>
+
+          <!-- 2. Problem Statement -->
+          <section id="problem">
+            <h2><span class="sec-num">02</span> Problem Statement</h2>
+            <p>Continuous regression testing in a clean-slate RISC-V core is critical for architectural reliability. Two distinct verification issues were identified in the upstream regression test suite:</p>
+            <ul>
+              <li><strong>Issue A (GPIO Loopback Verification):</strong> In the hardware verification testbench (<code>processor_check</code>), the GPIO input verification lacked a deterministic, repeatable input pattern and masked bit assertions. As a result, spurious bit reflections or uninitialized floating pins could cause false test reporting during automated simulation runs.</li>
+              <li><strong>Issue B (Floating-Point Unit Special-Case Handling):</strong> In the <code>floating_point_test</code> C suite, boundary conditions for floating-point calculations had unreachable code segments and did not correctly evaluate signaling NaN (sNaN) vs. quiet NaN (qNaN) handling under the RISC-V 'F' extension specification.</li>
+            </ul>
+          </section>
+
+          <!-- 3. Research Objective -->
+          <section id="objective">
+            <h2><span class="sec-num">03</span> Technical Objective</h2>
+            <ul>
+              <li>Develop a robust, repeatable test vector pattern for GPIO loopback verification with bitwise masking.</li>
+              <li>Ensure complete test coverage for edge-case floating-point values in accordance with the IEEE-754 standard and RISC-V 'F' ISA specifications.</li>
+              <li>Verify fixes locally across GHDL simulation before opening upstream pull requests.</li>
+            </ul>
+          </section>
+
+          <!-- 4. Architecture -->
+          <section id="architecture">
+            <h2><span class="sec-num">04</span> Verification Framework Architecture</h2>
+            <p>The NEORV32 verification framework couples the VHDL core with software test suites executed on simulated and hardware-mapped peripherals:</p>
+
+            <div class="arch-diagram-box">
+              <svg viewBox="0 0 700 240" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.3" style="color: var(--accent);">
+                <!-- CPU Core -->
+                <rect x="60" y="40" width="160" height="150" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.04)"/>
+                <text x="140" y="65" font-family="monospace" font-size="11" text-anchor="middle" fill="currentColor">NEORV32 CPU CORE</text>
+                <text x="140" y="85" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">RV32I[M][A][C][Zfinx]</text>
+
+                <!-- FPU Extension -->
+                <rect x="80" y="105" width="120" height="35" rx="2" stroke="currentColor" fill="rgba(56, 255, 139, 0.08)"/>
+                <text x="140" y="125" font-family="monospace" font-size="8" text-anchor="middle" fill="var(--accent)">FPU (IEEE-754)</text>
+
+                <!-- System Bus -->
+                <line x1="220" y1="115" x2="330" y2="115" stroke="currentColor" stroke-width="2"/>
+                <text x="275" y="105" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">WISHBONE BUS</text>
+
+                <!-- GPIO Module -->
+                <rect x="330" y="40" width="140" height="70" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.04)"/>
+                <text x="400" y="65" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">GPIO SUBSYSTEM</text>
+                <text x="400" y="85" font-family="monospace" font-size="8" text-anchor="middle" fill="var(--accent)">PR #1643 Fix</text>
+
+                <!-- Test Harness -->
+                <rect x="330" y="130" width="140" height="60" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.04)"/>
+                <text x="400" y="155" font-family="monospace" font-size="10" text-anchor="middle" fill="currentColor">SOFTWARE TESTS</text>
+                <text x="400" y="172" font-family="monospace" font-size="8" text-anchor="middle" fill="var(--accent)">PR #1644 Fix</text>
+
+                <!-- Loopback Wire -->
+                <path d="M 470 75 C 560 75, 560 160, 470 160" stroke="currentColor" stroke-dasharray="3 3"/>
+                <text x="545" y="120" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">LOOPBACK CHECK</text>
+              </svg>
+              <div class="caption">Figure 1: Architectural placement of the verification fixes within the NEORV32 SoC framework.</div>
+            </div>
+          </section>
+
+          <!-- 5. My Contributions -->
+          <section id="contributions">
+            <h2><span class="sec-num">05</span> Detailed Contributions</h2>
+            
+            <h3>Pull Request #1643: GPIO Input Loopback Verification</h3>
+            <p><strong>Repository:</strong> <code>stnolting/neorv32</code> &middot; <strong>Status:</strong> Merged into <code>main</code></p>
+            <p>Enhanced <code>processor_check</code> by implementing a repeatable walking-1s and walking-0s input test vector and masked verification checks. This prevents uninitialized peripheral pin states from corrupting automated testbench passes.</p>
+            <p><a class="sidebar-btn" href="https://github.com/stnolting/neorv32/pull/1643" target="_blank" rel="noopener noreferrer" style="display: inline-flex;">View PR #1643 on GitHub ↗</a></p>
+
+            <h3 style="margin-top: 28px;">Pull Request #1644: Floating-Point Software Test Correction</h3>
+            <p><strong>Repository:</strong> <code>stnolting/neorv32</code> &middot; <strong>Status:</strong> Merged into <code>main</code></p>
+            <p>Corrected unreachable test code segments in <code>floating_point_test.c</code> and corrected the handling of signaling NaN (sNaN) operand verification, ensuring precise compliance with IEEE-754 exception flags.</p>
+            <p><a class="sidebar-btn" href="https://github.com/stnolting/neorv32/pull/1644" target="_blank" rel="noopener noreferrer" style="display: inline-flex;">View PR #1644 on GitHub ↗</a></p>
+          </section>
+
+          <!-- 6. Implementation Details -->
+          <section id="implementation">
+            <h2><span class="sec-num">06</span> Implementation Details</h2>
+            <p>Example of the input validation enhancement integrated into the processor verification test harness:</p>
+
+            <div class="code-block-wrap">
+              <div class="code-block-header">
+                <span>neorv32/sw/example/processor_check/main.c</span>
+                <span>C / RISC-V Test Suite</span>
+              </div>
+              <pre><code>// Enhanced GPIO Loopback Check with Masked Inversion
+uint32_t test_pattern = 0xAA55AA55;
+NEORV32_GPIO->PORT = test_pattern;
+
+// Sample back via loopback register and verify with active mask
+uint32_t sampled_in = NEORV32_GPIO->PORT;
+uint32_t gpio_mask  = 0xFFFFFFFF;
+
+if ((sampled_in & gpio_mask) != (test_pattern & gpio_mask)) {
+  neorv32_uart0_printf("FAIL: GPIO loopback mismatch!\n");
+  neorv32_uart0_printf("Expected: 0x%x, Received: 0x%x\n", test_pattern, sampled_in);
+  return -1;
+}</code></pre>
+            </div>
+          </section>
+
+          <!-- 7. Verification and Testing -->
+          <section id="verification">
+            <h2><span class="sec-num">07</span> Verification and Testing</h2>
+            <p>All contributions were tested and verified prior to upstream submission:</p>
+            <ul>
+              <li><strong>GHDL Simulation:</strong> Ran the full NEORV32 processor testbench under GHDL to ensure zero regression in the existing CI pipeline.</li>
+              <li><strong>Continuous Integration:</strong> Both PRs passed upstream GitHub Actions CI workflows including automated GCC compilation and VHDL simulation.</li>
+              <li><strong>Review &amp; Merge:</strong> Code reviewed and directly merged by project maintainer Stephan Nolting.</li>
+            </ul>
+          </section>
+
+          <!-- 8. Results -->
+          <section id="results">
+            <h2><span class="sec-num">08</span> Results &amp; Impact</h2>
+            <table class="spec-table">
+              <thead>
+                <tr>
+                  <th>PULL REQUEST</th>
+                  <th>TARGET COMPONENT</th>
+                  <th>UPSTREAM STATUS</th>
+                  <th>IMPACT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="k">PR #1643</td>
+                  <td>GPIO Verification / processor_check</td>
+                  <td><span class="badge-status merged">MERGED ✓</span></td>
+                  <td>Included in official release notes</td>
+                </tr>
+                <tr>
+                  <td class="k">PR #1644</td>
+                  <td>FPU Test Suite / floating_point_test</td>
+                  <td><span class="badge-status merged">MERGED ✓</span></td>
+                  <td>IEEE-754 test reliability &amp; sNaN correctness</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 9. Technical Resources -->
+          <section id="resources">
+            <h2><span class="sec-num">09</span> Technical Resources</h2>
+            <ul>
+              <li><a href="https://github.com/stnolting/neorv32" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">NEORV32 GitHub Repository ↗</a></li>
+              <li><a href="https://github.com/stnolting/neorv32/pull/1643" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">PR #1643 Discussion &amp; Commits ↗</a></li>
+              <li><a href="https://github.com/stnolting/neorv32/pull/1644" target="_blank" rel="noopener noreferrer" style="color: var(--accent);">PR #1644 Discussion &amp; Commits ↗</a></li>
+            </ul>
+          </section>
+
+          <!-- 10. References -->
+          <section id="references">
+            <h2><span class="sec-num">10</span> References</h2>
+            <ol style="color: #8ba192; font-size: 0.85rem; line-height: 1.6; padding-left: 20px;">
+              <li>S. Nolting, "The NEORV32 RISC-V Processor," GitHub repository, 2024.</li>
+              <li>RISC-V International, <em>The RISC-V Instruction Set Manual, Volume I: Unprivileged Architecture</em>.</li>
+              <li>IEEE Computer Society, <em>IEEE Standard for Floating-Point Arithmetic (IEEE 754)</em>.</li>
+            </ol>
+          </section>
+        </article>
+
+        <!-- Sidebar / Table of Contents -->
+        <aside class="case-study-sidebar">
+          <div class="toc-title">TABLE OF CONTENTS</div>
+          <ul class="toc-list">
+            <li><a href="#overview">01. Overview</a></li>
+            <li><a href="#problem">02. Problem Statement</a></li>
+            <li><a href="#objective">03. Objective</a></li>
+            <li><a href="#architecture">04. Architecture</a></li>
+            <li><a href="#contributions">05. My Contributions</a></li>
+            <li><a href="#implementation">06. Implementation</a></li>
+            <li><a href="#verification">07. Verification</a></li>
+            <li><a href="#results">08. Results &amp; Impact</a></li>
+            <li><a href="#resources">09. Resources</a></li>
+            <li><a href="#references">10. References</a></li>
+          </ul>
+
+          <div class="sidebar-actions">
+            <a href="https://github.com/stnolting/neorv32" target="_blank" rel="noopener noreferrer" class="sidebar-btn">NEORV32 Repo ↗</a>
+            <a href="../pages/lab.html" class="sidebar-btn secondary">Open Silicon Lab 🧪</a>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Navigation Footer -->
+      <footer class="project-nav-footer">
+        <a href="impac.html" class="project-nav-link">
+          <span class="dir">← PREVIOUS</span>
+          <span class="title">iMPAC Hardware Accelerator</span>
+        </a>
+        <a href="sayac-fir.html" class="project-nav-link" style="text-align: right;">
+          <span class="dir">NEXT PROJECT →</span>
+          <span class="title">SAYAC SystemC FIR Accelerator</span>
+        </a>
+      </footer>
+    </main>
+
+    <footer class="site-footer mono">
+      <div class="footer-brand">
+        <h3>ABOLFAZL AZAD</h3>
+        <p>Electrical Engineering &middot; Digital Systems &middot; RTL &middot; Computer Architecture</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../pages/cv.html">CV</a>
+        <a href="../pages/lab.html">Silicon Lab</a>
+        <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="footer-bottom">
+        <span>© Abolfazl Azad — Project Case Studies</span>
+        <span class="end-trace" aria-hidden="true">END OF TRACE <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor"><path d="M0 5h15l5-5" stroke-width="1.5"/></svg></span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

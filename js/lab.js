@@ -482,13 +482,6 @@ function initTimingSlackAnalyzer() {
     const tskewNs = parseFloat(tskewSlider.value);
     const tholdNs = 0.20; // 200 ps fixed hold requirement
 
-    // Slider value labels
-    document.getElementById('val-fclk').textContent = `${fclkMhz} MHz (${tclkNs.toFixed(2)} ns)`;
-    document.getElementById('val-tcomb').textContent = `${tcombNs.toFixed(2)} ns`;
-    document.getElementById('val-tcq').textContent = `${tcqNs.toFixed(2)} ns`;
-    document.getElementById('val-tsetup').textContent = `${tsetupNs.toFixed(2)} ns`;
-    document.getElementById('val-tskew').textContent = `${tskewNs >= 0 ? '+' : ''}${tskewNs.toFixed(2)} ns`;
-
     // Static Timing Analysis Equations:
     // Arrival Time = T_cq + T_comb
     const arrival = tcqNs + tcombNs;
@@ -498,6 +491,25 @@ function initTimingSlackAnalyzer() {
     const setupSlack = required - arrival;
     // Hold Slack = Arrival - T_hold - T_skew
     const holdSlack = arrival - tholdNs - tskewNs;
+
+    // Update Summary Metric Badges
+    const periodMetric = document.getElementById('timing-metric-period');
+    const critPathMetric = document.getElementById('timing-metric-critpath');
+    const fmaxMetric = document.getElementById('timing-metric-fmax');
+
+    if (periodMetric) periodMetric.textContent = `${tclkNs.toFixed(2)} ns`;
+    if (critPathMetric) critPathMetric.textContent = `${arrival.toFixed(2)} ns`;
+    if (fmaxMetric) {
+      const minPeriodNs = tcqNs + tcombNs + tsetupNs - tskewNs;
+      if (minPeriodNs > 0) {
+        const fmaxMhz = 1000 / minPeriodNs;
+        fmaxMetric.textContent = `${fmaxMhz.toFixed(1)} MHz`;
+        fmaxMetric.style.color = fmaxMhz >= fclkMhz ? 'var(--accent)' : '#ff5f56';
+      } else {
+        fmaxMetric.textContent = 'Infinite (Skew Dominated)';
+        fmaxMetric.style.color = '#fff';
+      }
+    }
 
     if (arrivalEl) arrivalEl.textContent = `${arrival.toFixed(2)} ns`;
     if (requiredEl) requiredEl.textContent = `${required.toFixed(2)} ns`;

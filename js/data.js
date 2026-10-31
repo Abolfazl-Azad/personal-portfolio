@@ -468,3 +468,227 @@ export const notes = [
     visualType: "uart"
   }
 ];
+
+export const featuredProjects = [
+  {
+    id: "impac",
+    number: "01",
+    title: "iMPAC — Programmable Hardware Accelerator",
+    category: "RTL / HARDWARE ACCELERATOR",
+    description: "Systolic array processing-element architecture for matrix multiplication. Features operation-aware operand isolation to reduce redundant switching activity during dormant compute cycles.",
+    tags: ["SystemVerilog", "RTL Design", "PE Datapath", "Operand Isolation", "QuestaSim"],
+    status: "Active Research",
+    contribution: "PE datapath and control sequencer implementation, QuestaSim verification, and low-power operand isolation evaluation under Prof. Zainalabedin Navabi.",
+    caseStudyUrl: "projects/impac.html",
+    github: "https://github.com/Abolfazl-Azad",
+    metrics: "Systolic PE streaming · Dynamic operand isolation · Comprehensive RTL testbench"
+  },
+  {
+    id: "neorv32",
+    number: "02",
+    title: "NEORV32 — RISC-V Open-Source Contributions",
+    category: "RISC-V / OPEN SOURCE",
+    description: "Upstream verification and regression suite enhancements for the community NEORV32 RISC-V processor. Merged PRs #1643 (GPIO loopback) and #1644 (FPU test compliance).",
+    tags: ["RISC-V", "VHDL", "C", "IEEE-754", "processor_check", "Upstream Merged"],
+    status: "Merged Upstream",
+    contribution: "Authored and verified PR #1643 and PR #1644. Discovered and fixed corner cases in processor_check and floating_point_test. Maintainer: Stephan Nolting.",
+    caseStudyUrl: "projects/neorv32.html",
+    github: "https://github.com/stnolting/neorv32",
+    metrics: "2 Merged Upstream PRs (#1643, #1644) · Hardware loopback verification · IEEE-754 sNaN fix"
+  },
+  {
+    id: "sayac-fir",
+    number: "03",
+    title: "SAYAC — SystemC FIR Accelerator & DMA",
+    category: "HW/SW CO-DESIGN / EMBEDDED",
+    description: "System-level co-design integrating a 31-tap transpose FIR digital filter with an autonomous DMA controller inside the SAYAC processor memory-mapped bus architecture.",
+    tags: ["SystemC", "TLM 2.0", "C++", "DMA", "HW/SW Co-Design"],
+    status: "Completed",
+    contribution: "Engineered SystemC TLM 2.0 models, DMA burst transfer controllers, and interrupt service routines offloading filtering tasks from the CPU.",
+    caseStudyUrl: "projects/sayac-fir.html",
+    github: "https://github.com/Abolfazl-Azad/embedded-systems-design",
+    metrics: "31-tap transpose FIR · SystemC TLM 2.0 transaction-level modeling · Autonomous DMA engine"
+  },
+  {
+    id: "memristor-cim",
+    number: "04",
+    title: "Memristor-Based Compute-in-Memory Research",
+    category: "COMPUTE-IN-MEMORY / AI HARDWARE",
+    description: "Hardware-aware neural network quantization and RRAM crossbar inference characterization. Maps deep network weights to discrete 3-bit conductance states with simulated NeuroSim metrics.",
+    tags: ["Compute-in-Memory", "NeuroSim", "PyTorch", "RRAM Crossbar", "3-Bit QAT"],
+    status: "Ongoing Research",
+    contribution: "Implemented PyTorch 3-bit weight clustering and configured 128×128 RRAM subarray inference simulation in NeuroSim under Dr. Shaghayegh Vahdat (simulation estimates, not silicon).",
+    caseStudyUrl: "projects/memristor-cim.html",
+    github: "https://github.com/Abolfazl-Azad",
+    metrics: "128×128 RRAM subarray modeled · 5-bit column SAR ADCs · 3-bit hardware-aware quantization"
+  }
+];
+
+export const researchCategorized = {
+  completed: [
+    {
+      title: "iMPAC Accelerator Core RTL & Verification",
+      institution: "University of Tehran",
+      supervisor: "Prof. Zainalabedin Navabi",
+      status: "COMPLETED",
+      description: "Implemented processing-element datapaths, control sequencers, and cycle-accurate SystemVerilog testbenches in QuestaSim.",
+      link: "projects/impac.html"
+    },
+    {
+      title: "SAYAC FIR Accelerator & DMA HW/SW Co-Design",
+      institution: "University of Tehran",
+      supervisor: "Academic Project",
+      status: "COMPLETED",
+      description: "SystemC TLM 2.0 transaction modeling of 31-tap FIR filter accelerator with memory-mapped DMA offloading.",
+      link: "projects/sayac-fir.html"
+    },
+    {
+      title: "NEORV32 Upstream SoC Verification (PR #1643 & #1644)",
+      institution: "Open-Source Community",
+      supervisor: "Upstream (Maintainer: Stephan Nolting)",
+      status: "MERGED UPSTREAM",
+      description: "Added GPIO input loopback in processor_check and corrected signaling NaN handling in floating_point_test.",
+      link: "projects/neorv32.html"
+    }
+  ],
+  ongoing: [
+    {
+      title: "iMPAC Low-Power RTL & Switching-Activity Reduction",
+      institution: "University of Tehran",
+      supervisor: "Prof. Zainalabedin Navabi",
+      status: "ONGOING RESEARCH",
+      description: "Investigating operation-aware operand isolation on add/sub datapaths and pre-multiplexer gating variants. Evaluating toggle activity and synthesis tradeoffs.",
+      link: "projects/impac.html"
+    },
+    {
+      title: "Memristor 3-Bit Quantization & NeuroSim CIM Modeling",
+      institution: "University of Tehran",
+      supervisor: "Dr. Shaghayegh Vahdat",
+      status: "ONGOING RESEARCH",
+      description: "Hardware-aware 3-bit clustering QAT in PyTorch and RRAM inference characterization using C++ NeuroSim (128×128 subarray, 5-bit ADC).",
+      link: "projects/memristor-cim.html"
+    }
+  ],
+  planned: [
+    {
+      title: "ASIC Standard-Cell Synthesis & P&R of Low-Power PE Variants",
+      institution: "University of Tehran",
+      supervisor: "Prof. Zainalabedin Navabi",
+      status: "PLANNED",
+      description: "Planned gate-level timing and power signoff across operand isolation architectures using Synopsys Design Compiler and Cadence Innovus.",
+      link: "projects/impac.html"
+    },
+    {
+      title: "Non-Uniform Quantization & Conductance Drift Mitigation",
+      institution: "University of Tehran",
+      supervisor: "Dr. Shaghayegh Vahdat",
+      status: "PLANNED",
+      description: "Extending CIM neural network mapping to handle RRAM device non-idealities, conductance variation, and deeper vision models.",
+      link: "projects/memristor-cim.html"
+    }
+  ]
+};
+
+export const evidenceSkills = [
+  {
+    skill: "SystemVerilog",
+    category: "HDL & RTL",
+    evidence: "iMPAC matrix accelerator processing element datapath, control sequencer, and cycle-accurate randomized testbenches in QuestaSim.",
+    project: "iMPAC Case Study",
+    url: "projects/impac.html"
+  },
+  {
+    skill: "VHDL",
+    category: "HDL & RTL",
+    evidence: "NEORV32 open-source processor_check GPIO loopback verification and FPGA hardware implementations.",
+    project: "NEORV32 Upstream PRs",
+    url: "projects/neorv32.html"
+  },
+  {
+    skill: "SystemC & TLM 2.0",
+    category: "Systems & Co-Design",
+    evidence: "SAYAC memory-mapped bus integration, 31-tap FIR hardware accelerator, and autonomous DMA controller modeling.",
+    project: "SAYAC Case Study",
+    url: "projects/sayac-fir.html"
+  },
+  {
+    skill: "Python / PyTorch",
+    category: "AI & CIM Research",
+    evidence: "Memristor 3-bit weight clustering, Quantization-Aware Training (QAT) algorithms, and NeuroSim automation scripts.",
+    project: "Memristor CIM Case Study",
+    url: "projects/memristor-cim.html"
+  },
+  {
+    skill: "RISC-V Microarchitecture",
+    category: "Computer Architecture",
+    evidence: "32-bit RV32I 5-stage pipeline design with forwarding & hazard unit; upstream verification in NEORV32 SoC.",
+    project: "Silicon Lab / RV32I",
+    url: "pages/lab.html"
+  },
+  {
+    skill: "Synopsys Design Compiler",
+    category: "ASIC & Synthesis",
+    evidence: "RTL logic synthesis, timing constraints, area optimization, and netlist generation for fixed-point math units.",
+    project: "ASIC Design Suite",
+    url: "https://github.com/Abolfazl-Azad/ASIC-Design-Projects"
+  },
+  {
+    skill: "Cadence Innovus",
+    category: "Physical Design",
+    evidence: "Full RTL-to-GDS flow: floorplanning, power planning, placement, CTS, routing, and timing closure for piecewise polynomial accelerators.",
+    project: "ASIC Design Suite",
+    url: "https://github.com/Abolfazl-Azad/ASIC-Design-Projects"
+  },
+  {
+    skill: "QuestaSim / ModelSim",
+    category: "Verification & Simulation",
+    evidence: "Comprehensive functional simulation, toggle-rate extraction for power estimation, and waveform debugging.",
+    project: "iMPAC Case Study",
+    url: "projects/impac.html"
+  },
+  {
+    skill: "FPGA & Quartus",
+    category: "Hardware Prototyping",
+    evidence: "Hardware synthesis, pin assignment, and on-chip verification of UART subsystems and digital modulators on Altera Cyclone FPGAs.",
+    project: "UART Subsystem",
+    url: "https://github.com/Abolfazl-Azad/DLD_LAB_UART"
+  }
+];
+
+export const technicalDocuments = [
+  {
+    title: "iMPAC Hardware Accelerator Architecture & Low-Power Report",
+    category: "Architecture Specification",
+    type: "Case Study / Spec",
+    url: "projects/impac.html",
+    description: "Detailed architecture specification of the systolic array processing elements and operation-aware operand isolation."
+  },
+  {
+    title: "NEORV32 Upstream SoC Verification & Compliance Case Study",
+    category: "Verification Report",
+    type: "Case Study / Report",
+    url: "projects/neorv32.html",
+    description: "Technical review of upstream PR #1643 (GPIO loopback) and PR #1644 (floating-point test compliance) in NEORV32."
+  },
+  {
+    title: "SAYAC FIR Accelerator & DMA Hardware/Software Co-Design",
+    category: "Co-Design Specification",
+    type: "Case Study / TLM Spec",
+    url: "projects/sayac-fir.html",
+    description: "Transaction-level modeling, register map, and DMA transaction flow for the 31-tap transpose FIR filter."
+  },
+  {
+    title: "Memristor CIM 3-Bit Quantization & NeuroSim Modeling Methodology",
+    category: "Research Methodology",
+    type: "Case Study / Whitepaper",
+    url: "projects/memristor-cim.html",
+    description: "Mathematical formulation of 3-bit clustering QAT and simulation parameters for the 128×128 RRAM crossbar."
+  },
+  {
+    title: "Curriculum Vitae — Abolfazl Azad (PDF)",
+    category: "Academic CV",
+    type: "PDF Document",
+    url: "assets/Abolfazl_Azad_CV.pdf",
+    description: "Complete academic and research record, coursework, TA appointments, technical skills, and publications/contributions."
+  }
+];

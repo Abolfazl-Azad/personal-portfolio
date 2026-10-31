@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memristor CIM &amp; 3-Bit Quantization | Abolfazl Azad</title>
+  <meta name="description" content="Research case study on hardware-aware 3-bit weight quantization and NeuroSim-based Compute-in-Memory (CIM) RRAM inference modeling." />
+  <meta name="author" content="Abolfazl Azad" />
+  
+  <link rel="canonical" href="https://abolfazlazad.ir/projects/memristor-cim.html" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#050706" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../css/styles.css?v=12" />
+  <link rel="stylesheet" href="../css/features.css?v=1" />
+  <link rel="stylesheet" href="../css/case-study.css?v=1" />
+</head>
+<body>
+  <script>document.documentElement.classList.add('js-enabled');</script>
+  <div class="page-shell">
+    <header class="site-header no-print" id="main-header">
+      <a class="brand" href="../index.html" aria-label="Abolfazl Azad Home">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="9" y="9" width="14" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="13" y1="9" x2="13" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="16" y1="9" x2="16" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="19" y1="9" x2="19" y2="5" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="13" y1="23" x2="13" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="16" y1="23" x2="16" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <line x1="19" y1="23" x2="19" y2="27" stroke="currentColor" stroke-width="1.2"/>
+          <polyline points="12,20 16,12 20,20" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <line x1="13.5" y1="17" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.2"/>
+        </svg>
+      </a>
+      
+      <button class="mobile-menu-toggle mono" id="mobile-menu-btn" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        MENU
+      </button>
+
+      <nav class="top-nav" id="primary-nav" aria-label="Primary navigation">
+        <a href="../index.html" class="nav-link">Home</a>
+        <a href="../index.html#featured-research" class="nav-link active">Research</a>
+        <a href="../index.html#opensource" class="nav-link">Open Source</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
+        <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="../pages/lab.html" class="nav-link" style="color: var(--accent);">Silicon Lab 🧪</a>
+        <a href="../pages/cv.html" class="nav-link">CV</a>
+        <a href="../assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf" class="nav-cv-btn mono" title="Download CV PDF">PDF ↓</a>
+      </nav>
+    </header>
+
+    <main class="case-study-main">
+      <!-- Breadcrumb -->
+      <nav class="case-study-breadcrumb mono" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="../index.html#featured-research">Research</a>
+        <span class="sep">/</span>
+        <span>Memristor CIM Research</span>
+      </nav>
+
+      <!-- Hero Header -->
+      <section class="case-study-hero">
+        <span class="mono eyebrow">SUPERVISED RESEARCH // COMPUTE-IN-MEMORY</span>
+        <h1>Memristor CIM &amp; Hardware-Aware 3-Bit Quantization</h1>
+        <p class="case-study-subtitle">Hardware-constrained weight quantization targeting 8 discrete conductance levels and NeuroSim-based 128×128 RRAM subarray inference characterization.</p>
+        
+        <div class="project-meta-grid">
+          <div class="project-meta-item">
+            <div class="meta-label">SUPERVISOR</div>
+            <div class="meta-val">Dr. Shaghayegh Vahdat</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">INSTITUTION</div>
+            <div class="meta-val">University of Tehran</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">MY ROLE</div>
+            <div class="meta-val">Undergraduate Researcher</div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">STATUS</div>
+            <div class="meta-val"><span class="badge-status ongoing">ONGOING RESEARCH</span></div>
+          </div>
+          <div class="project-meta-item">
+            <div class="meta-label">SIMULATION PLATFORM</div>
+            <div class="meta-val">NeuroSim C++, PyTorch, Python</div>
+          </div>
+        </div>
+      </section>
+
+      <div class="case-study-layout">
+        <!-- Main Content -->
+        <article class="case-study-content">
+          <!-- 1. Overview -->
+          <section id="overview">
+            <h2><span class="sec-num">01</span> Overview</h2>
+            <p>Under the supervision of <strong>Dr. Shaghayegh Vahdat</strong> at the University of Tehran, this research investigates energy-efficient AI hardware through <strong>Compute-in-Memory (CIM)</strong> paradigms using emerging Resistive RAM (RRAM / memristor) crossbars. By executing vector-matrix multiplications directly inside the memory array via Ohm's Law and Kirchhoff's Current Law, CIM eliminates the classical von Neumann memory wall.</p>
+            <p>Our focus is twofold: developing hardware-aware <strong>3-bit weight quantization</strong> strategies (mapping continuous weights to 8 physical conductance states), and evaluating subarray-level macro metrics (area, latency, and energy per MAC) using the <strong>NeuroSim</strong> C++ simulation framework.</p>
+          </section>
+
+          <!-- 2. Problem Statement -->
+          <section id="problem">
+            <h2><span class="sec-num">02</span> Problem Statement</h2>
+            <p>In deep learning accelerators, over 70–90% of total inference energy is consumed simply shuttling millions of weights from DRAM into arithmetic register files. While analog RRAM crossbars promise massive $O(1)$ computational efficiency, physical devices suffer from fundamental non-idealities:</p>
+            <ul>
+              <li><strong>Limited Precision:</strong> Real memristive devices cannot reliably sustain high-precision (e.g. 16-bit or 8-bit) continuous analog states due to device-to-device variability and conductance drift. Practical commercial RRAM cells reliably support only 2 to 4 bits of discrete conductance.</li>
+              <li><strong>ADC Energy Dominance:</strong> Analog column currents must be converted back to digital domain via column ADCs. At high resolutions (e.g., >8 bits), ADCs consume up to 80% of total macro area and power.</li>
+            </ul>
+            <p>Thus, neural network weights must be aggressively quantized down to fixed <strong>3-bit discrete representations (8 conductance states)</strong> with minimal loss in model classification accuracy.</p>
+          </section>
+
+          <!-- 3. Research Objective -->
+          <section id="objective">
+            <h2><span class="sec-num">03</span> Research Objective</h2>
+            <ul>
+              <li>Formulate and evaluate a hardware-aware weight clustering and quantization pipeline targeting exactly 8 discrete conductance states ($G_0$ to $G_7$).</li>
+              <li>Quantize baseline convolutional architectures (VGG8 on CIFAR-10) using PyTorch, exploring post-training quantization and Quantization-Aware Training (QAT).</li>
+              <li>Set up an inference simulation path in <strong>NeuroSim</strong> with a 128 × 128 RRAM subarray, 5-bit column ADCs, and 32nm CMOS technology parameters to estimate area, latency, and dynamic energy.</li>
+            </ul>
+          </section>
+
+          <!-- 4. Architecture & Methodology -->
+          <section id="architecture">
+            <h2><span class="sec-num">04</span> Architecture &amp; Methodology</h2>
+            <div class="tech-callout note">
+              <p><strong>Configuration Clarification:</strong> Note the distinction between configurations: our <a href="../pages/lab.html#station-cim" style="color: var(--accent);">Silicon Lab sandbox</a> provides an interactive 4×4 toy grid for educational exploration, whereas the research benchmarks modeled in NeuroSim utilize a full <strong>128 × 128 RRAM subarray</strong> with 5-bit Successive Approximation Register (SAR) ADCs.</p>
+            </div>
+
+            <div class="arch-diagram-box">
+              <svg viewBox="0 0 700 250" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" stroke-width="1.3" style="color: var(--accent);">
+                <!-- Wordline Drivers -->
+                <rect x="50" y="40" width="90" height="140" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.04)"/>
+                <text x="95" y="105" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor">WORDLINE</text>
+                <text x="95" y="120" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor">DRIVERS</text>
+                <text x="95" y="140" font-family="monospace" font-size="7" text-anchor="middle" fill="#8ba192">V_in [128]</text>
+
+                <!-- 128x128 RRAM Subarray -->
+                <rect x="180" y="40" width="220" height="140" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.08)"/>
+                <text x="290" y="70" font-family="monospace" font-size="11" text-anchor="middle" fill="currentColor">128 × 128 RRAM SUBARRAY</text>
+                
+                <!-- Crossbar Grid Lines -->
+                <path d="M 210 95 H 370 M 210 115 H 370 M 210 135 H 370 M 210 155 H 370" stroke="currentColor" stroke-dasharray="2 3" opacity="0.5"/>
+                <path d="M 230 80 V 165 M 270 80 V 165 M 310 80 V 165 M 350 80 V 165" stroke="currentColor" stroke-dasharray="2 3" opacity="0.5"/>
+                
+                <!-- Memristor Dots -->
+                <circle cx="230" cy="95" r="3" fill="var(--accent)"/>
+                <circle cx="270" cy="115" r="3" fill="var(--accent)"/>
+                <circle cx="310" cy="135" r="3" fill="var(--accent)"/>
+                <circle cx="350" cy="155" r="3" fill="var(--accent)"/>
+
+                <text x="290" y="172" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">3-Bit Conductance (G0 - G7)</text>
+
+                <!-- Current Lines Down -->
+                <line x1="290" y1="180" x2="290" y2="200" stroke="currentColor" stroke-width="2"/>
+                <text x="290" y="195" font-family="monospace" font-size="8" text-anchor="end" fill="#8ba192">I_col = ∑ V_i · G_ij</text>
+
+                <!-- 5-Bit ADC Row -->
+                <rect x="180" y="200" width="220" height="35" rx="2" stroke="currentColor" fill="rgba(56, 255, 139, 0.04)"/>
+                <text x="290" y="222" font-family="monospace" font-size="9" text-anchor="middle" fill="var(--accent)">COLUMN 5-BIT SAR ADCs</text>
+
+                <!-- Digital Output -->
+                <path d="M 400 217 L 500 217 M 490 213 L 500 217 L 490 221" stroke="currentColor"/>
+                <text x="450" y="210" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">DIGITAL OUT</text>
+
+                <!-- Digital Accumulator -->
+                <rect x="500" y="175" width="140" height="60" rx="3" stroke="currentColor" fill="rgba(56, 255, 139, 0.06)"/>
+                <text x="570" y="202" font-family="monospace" font-size="9" text-anchor="middle" fill="currentColor">DIGITAL ACCUMULATOR</text>
+                <text x="570" y="218" font-family="monospace" font-size="8" text-anchor="middle" fill="#8ba192">&amp; ACTIVATION (ReLU)</text>
+              </svg>
+              <div class="caption">Figure 1: NeuroSim macro-architecture for 128×128 RRAM subarray with 5-bit column ADCs.</div>
+            </div>
+          </section>
+
+          <!-- 5. My Contributions -->
+          <section id="contributions">
+            <h2><span class="sec-num">05</span> My Contributions</h2>
+            <ul>
+              <li><strong>PyTorch Quantization Pipeline:</strong> Built a Python/PyTorch workflow to quantize convolutional and dense weights into 8 non-uniform cluster levels corresponding to physical memristor states.</li>
+              <li><strong>Clustering Evaluation:</strong> Assessed k-means and linear quantization baselines to minimize distortion and protect accuracy on CIFAR-10 with VGG8.</li>
+              <li><strong>NeuroSim Framework Setup:</strong> Configured NeuroSim parameters (128×128 crossbar array, 5-bit ADC, 32nm transistor node, 1.0V supply) to simulate VGG8 layer-by-layer inference.</li>
+              <li><strong>Metrics Extraction:</strong> Extracted modeled macro area ($\mu\text{m}^2$), read latency ($\text{ns}$), and dynamic energy per MAC ($\text{fJ}$) to evaluate the impact of quantization choices.</li>
+            </ul>
+          </section>
+
+          <!-- 6. Implementation Details -->
+          <section id="implementation">
+            <h2><span class="sec-num">06</span> Implementation Details</h2>
+            <p>Example of the hardware-constrained clustering and quantization routine:</p>
+
+            <div class="code-block-wrap">
+              <div class="code-block-header">
+                <span>quantize_3bit_rram.py (PyTorch / Python)</span>
+                <span>Clustering Pipeline</span>
+              </div>
+              <pre><code>import torch
+import numpy as np
+from sklearn.cluster import KMeans
+
+def quantize_weights_3bit(weight_tensor):
+    """
+    Quantizes a floating-point PyTorch weight tensor into 8 discrete
+    conductance states (3-bit) via non-uniform k-means clustering.
+    """
+    flat_weights = weight_tensor.detach().cpu().numpy().reshape(-1, 1)
+    
+    # Fit 8 clusters corresponding to states G0 .. G7
+    kmeans = KMeans(n_clusters=8, n_init=10, random_state=42).fit(flat_weights)
+    cluster_centers = np.sort(kmeans.cluster_centers_.flatten())
+    
+    # Map weights to nearest discrete center
+    q_weights = cluster_centers[kmeans.labels_].reshape(weight_tensor.shape)
+    return torch.from_numpy(q_weights).to(weight_tensor.device)</code></pre>
+            </div>
+          </section>
+
+          <!-- 7. Verification and Testing -->
+          <section id="verification">
+            <h2><span class="sec-num">07</span> Verification and Benchmarking</h2>
+            <ul>
+              <li><strong>Floating-Point Baseline:</strong> Evaluated FP32 unquantized VGG8 model accuracy on CIFAR-10 (~90% test set baseline).</li>
+              <li><strong>Direct 3-Bit Quantization:</strong> Observed initial accuracy drop under naive uniform quantization, demonstrating the necessity of non-uniform clustering and Quantization-Aware Training (QAT).</li>
+              <li><strong>NeuroSim Sanity Checks:</strong> Verified that total column currents stayed within ADC full-scale saturation limits to avoid signal clipping in the analog domain.</li>
+            </ul>
+          </section>
+
+          <!-- 8. Results -->
+          <section id="results">
+            <h2><span class="sec-num">08</span> Results &amp; Simulation Estimates</h2>
+            <div class="tech-callout note">
+              <p><strong>Crucial Academic Distinction:</strong> The quantitative performance metrics below are <strong>simulation estimates derived from the NeuroSim C++ model</strong> under standard 32nm CMOS assumptions, NOT physical silicon chip measurements. This is ongoing research at the University of Tehran.</p>
+            </div>
+
+            <table class="spec-table">
+              <thead>
+                <tr>
+                  <th>METRIC</th>
+                  <th>NEUROSIM SIMULATION ESTIMATE</th>
+                  <th>NOTE / ASSUMPTION</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="k">Subarray Dimensions</td>
+                  <td>128 × 128 Cells</td>
+                  <td>Modeled in NeuroSim</td>
+                </tr>
+                <tr>
+                  <td class="k">Weight Precision</td>
+                  <td>3-bit (8 Discrete Levels: G0 to G7)</td>
+                  <td>Hardware-aware quantization</td>
+                </tr>
+                <tr>
+                  <td class="k">Column ADC</td>
+                  <td>5-bit Successive Approximation (SAR)</td>
+                  <td>Per-column shared architecture</td>
+                </tr>
+                <tr>
+                  <td class="k">Technology Node</td>
+                  <td>32 nm CMOS Baseline</td>
+                  <td>Standard cell library assumption</td>
+                </tr>
+                <tr>
+                  <td class="k">Dynamic Energy</td>
+                  <td>~12.8 fJ per MAC operation (estimated)</td>
+                  <td>Simulation model, not physical silicon</td>
+                </tr>
+                <tr>
+                  <td class="k">Subarray Read Latency</td>
+                  <td>~4.2 ns per cycle (estimated)</td>
+                  <td>Simulation model</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 9. Technical Resources -->
+          <section id="resources">
+            <h2><span class="sec-num">09</span> Technical Resources</h2>
+            <ul>
+              <li><a href="../pages/lab.html#station-cim" style="color: var(--accent);">Interactive Silicon Lab: 4×4 Memristor Sandbox 🧪</a></li>
+              <li><a href="../pages/cv.html" style="color: var(--accent);">Online CV &amp; Supervisor Information</a></li>
+            </ul>
+          </section>
+
+          <!-- 10. References -->
+          <section id="references">
+            <h2><span class="sec-num">10</span> References</h2>
+            <ol style="color: #8ba192; font-size: 0.85rem; line-height: 1.6; padding-left: 20px;">
+              <li>P.-Y. Chen, X. Peng, and S. Yu, "NeuroSim+: An integrated device-to-algorithm framework for benchmarking synaptic devices and array architectures," <em>IEEE Trans. CAD of Integrated Circuits and Systems</em>, 2018.</li>
+              <li>A. Sebastian, M. Le Gallo, R. Khaddam-Aljameh, and E. Eleftheriou, "Memory devices and applications for in-memory computing," <em>Nature Nanotechnology</em>, vol. 15, 2020.</li>
+              <li>M. Courbariaux et al., "Binarized Neural Networks: Training Deep Neural Networks with Weights and Activations Constrained to +1 or -1," <em>arXiv:1602.02830</em>.</li>
+            </ol>
+          </section>
+        </article>
+
+        <!-- Sidebar / Table of Contents -->
+        <aside class="case-study-sidebar">
+          <div class="toc-title">TABLE OF CONTENTS</div>
+          <ul class="toc-list">
+            <li><a href="#overview">01. Overview</a></li>
+            <li><a href="#problem">02. Problem Statement</a></li>
+            <li><a href="#objective">03. Research Objective</a></li>
+            <li><a href="#architecture">04. Architecture</a></li>
+            <li><a href="#contributions">05. My Contributions</a></li>
+            <li><a href="#implementation">06. Implementation</a></li>
+            <li><a href="#verification">07. Verification</a></li>
+            <li><a href="#results">08. Results &amp; Estimates</a></li>
+            <li><a href="#resources">09. Resources</a></li>
+            <li><a href="#references">10. References</a></li>
+          </ul>
+
+          <div class="sidebar-actions">
+            <a href="../pages/lab.html" class="sidebar-btn">Open Silicon Lab 🧪</a>
+            <a href="../pages/cv.html" class="sidebar-btn secondary">View CV &middot; Resume</a>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Navigation Footer -->
+      <footer class="project-nav-footer">
+        <a href="sayac-fir.html" class="project-nav-link">
+          <span class="dir">← PREVIOUS</span>
+          <span class="title">SAYAC FIR Accelerator</span>
+        </a>
+        <a href="impac.html" class="project-nav-link" style="text-align: right;">
+          <span class="dir">NEXT PROJECT →</span>
+          <span class="title">iMPAC Hardware Accelerator</span>
+        </a>
+      </footer>
+    </main>
+
+    <footer class="site-footer mono">
+      <div class="footer-brand">
+        <h3>ABOLFAZL AZAD</h3>
+        <p>Electrical Engineering &middot; Digital Systems &middot; RTL &middot; Computer Architecture</p>
+      </div>
+      <div class="footer-links">
+        <a href="../index.html">Home</a>
+        <a href="../pages/cv.html">CV</a>
+        <a href="../pages/lab.html">Silicon Lab</a>
+        <a href="https://github.com/Abolfazl-Azad" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/abolfazl-azad/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+      <div class="footer-bottom">
+        <span>© Abolfazl Azad — Project Case Studies</span>
+        <span class="end-trace" aria-hidden="true">END OF TRACE <svg width="20" height="10" viewBox="0 0 20 10" fill="none" stroke="currentColor"><path d="M0 5h15l5-5" stroke-width="1.5"/></svg></span>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -50,10 +50,12 @@
 
       <nav class="top-nav" id="primary-nav" aria-label="Primary navigation">
         <a href="../index.html" class="nav-link">Home</a>
-        <a href="../index.html#research" class="nav-link">Research</a>
+        <a href="../index.html#featured-research" class="nav-link">Research</a>
+        <a href="../index.html#opensource" class="nav-link">Open Source</a>
+        <a href="../index.html#skills" class="nav-link">Skills</a>
         <a href="../index.html#projects" class="nav-link">Projects</a>
+        <a href="lab.html" class="nav-link active" style="color: var(--accent);">Silicon Lab 🧪</a>
         <a href="cv.html" class="nav-link">CV</a>
-        <a href="lab.html" class="nav-link active" style="color: var(--accent);">Lab 🧪</a>
         <a href="../assets/Abolfazl_Azad_CV.pdf" download="Abolfazl_Azad_CV.pdf" class="nav-cv-btn mono" title="Download CV PDF">PDF ↓</a>
         <div class="theme-switcher" title="Phosphor color theme">
           <button class="theme-btn active" data-theme="green" aria-label="P31 Green">●</button>
@@ -226,6 +228,13 @@
           <p>Analog in-memory Vector-Matrix Multiplication ($I_j = \sum V_i \cdot G_{ij}$) modeled on <strong>3-bit quantized RRAM conductance states</strong> ($G_0 \dots G_7$) with simulated column 5-bit ADCs and energy profiling based on research with Dr. Vahdat.</p>
         </div>
 
+        <!-- Educational Distinction Alert -->
+        <div class="mono" style="padding: 14px 18px; background: rgba(56, 255, 139, 0.04); border-left: 3px solid var(--accent); margin-bottom: 24px; font-size: 0.78rem; line-height: 1.6; border-radius: 2px;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 4px;">EDUCATIONAL 4×4 DEMO VS. 128×128 NEUROSIM RESEARCH CONFIGURATION:</strong>
+          <span><strong>4×4 Educational Crossbar:</strong> An interactive workbench to demonstrate analog Vector-Matrix Multiplication ($I_j = \sum V_i \cdot G_{ij}$) and 3-bit discrete conductance states ($G_0 \dots G_7$).</span><br>
+          <span><strong>128×128 NeuroSim Subarray:</strong> The research configuration modeled under Dr. Shaghayegh Vahdat for VGG8 on CIFAR-10, utilizing 5-bit column successive-approximation ADCs. All displayed metrics are simulation estimates from the C++ NeuroSim framework, not physical silicon measurements.</span>
+        </div>
+
         <div class="cim-layout-grid">
           <!-- Crossbar Matrix -->
           <div class="crossbar-workbench">
@@ -339,6 +348,28 @@
           <p>Interactive register-to-register timing verification modeled on Synopsys Design Compiler and PrimeTime flows. Test how clock frequency, combinational logic delay, and clock skew impact <strong>Setup &amp; Hold Timing Slack</strong>.</p>
         </div>
 
+        <!-- Educational STA Disclaimer -->
+        <div class="mono" style="padding: 14px 18px; background: rgba(56, 255, 139, 0.04); border-left: 3px solid var(--accent); margin-bottom: 24px; font-size: 0.78rem; line-height: 1.6; border-radius: 2px;">
+          <strong style="color: var(--accent); display: block; margin-bottom: 4px;">EDUCATIONAL STA SIMULATOR DISCLAIMER:</strong>
+          <span>This educational calculator implements standard textbook static timing equations ($T_{arrival} = T_{cq} + T_{comb}$, $T_{required} = T_{clk} - T_{setup} + T_{skew}$, $Slack_{setup} = T_{required} - T_{arrival}$). Real industrial ASIC signoff (e.g. Synopsys PrimeTime or Cadence Tempus) incorporates multi-corner PVT analysis, On-Chip Variation (OCV/AOCV), transition slew degradation, and interconnect cross-talk noise.</span>
+        </div>
+
+        <!-- STA Key Metrics Summary Bar -->
+        <div class="mono" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); padding: 12px; border-radius: 3px;">
+            <span style="font-size: 0.68rem; color: var(--muted); display: block;">CLOCK PERIOD (T_clk):</span>
+            <strong id="timing-metric-period" style="font-size: 1.1rem; color: var(--ink);">5.00 ns</strong>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); padding: 12px; border-radius: 3px;">
+            <span style="font-size: 0.68rem; color: var(--muted); display: block;">CRITICAL PATH (T_cq + T_comb):</span>
+            <strong id="timing-metric-critpath" style="font-size: 1.1rem; color: var(--accent);">2.80 ns</strong>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); padding: 12px; border-radius: 3px;">
+            <span style="font-size: 0.68rem; color: var(--muted); display: block;">MAX OPERATING FREQ (F_max):</span>
+            <strong id="timing-metric-fmax" style="font-size: 1.1rem; color: #fff;">333.3 MHz</strong>
+          </div>
+        </div>
+
         <div class="workbench-card">
           <!-- Interactive Schematic -->
           <div class="timing-diagram-box">
@@ -379,7 +410,7 @@
             </div>
           </div>
 
-          <!-- Parameter Sliders -->
+          <!-- Parameter Sliders with Explanations -->
           <div class="timing-sliders-grid mono">
             <div class="slider-group">
               <div class="slider-label-row">
@@ -387,6 +418,7 @@
                 <span id="val-fclk">200 MHz (5.00 ns)</span>
               </div>
               <input type="range" id="slider-fclk" class="timing-slider" min="50" max="600" step="25" value="200" />
+              <div style="font-size: 0.65rem; color: #8ba192; margin-top: 4px;">Period T_clk = 1 / F_clk. Dictates total time budget for register-to-register transfer.</div>
             </div>
 
             <div class="slider-group">
@@ -395,6 +427,7 @@
                 <span id="val-tcomb">2.40 ns</span>
               </div>
               <input type="range" id="slider-tcomb" class="timing-slider" min="0.5" max="8.0" step="0.1" value="2.4" />
+              <div style="font-size: 0.65rem; color: #8ba192; margin-top: 4px;">Propagation delay through combinational gates and interconnect wires between flip-flops.</div>
             </div>
 
             <div class="slider-group">
@@ -403,6 +436,7 @@
                 <span id="val-tcq">0.40 ns</span>
               </div>
               <input type="range" id="slider-tcq" class="timing-slider" min="0.1" max="1.5" step="0.05" value="0.4" />
+              <div style="font-size: 0.65rem; color: #8ba192; margin-top: 4px;">Time required for launch flip-flop output Q to stabilize after positive clock edge.</div>
             </div>
 
             <div class="slider-group">
@@ -411,6 +445,7 @@
                 <span id="val-tsetup">0.30 ns</span>
               </div>
               <input type="range" id="slider-tsetup" class="timing-slider" min="0.1" max="1.5" step="0.05" value="0.3" />
+              <div style="font-size: 0.65rem; color: #8ba192; margin-top: 4px;">Minimum duration input data must remain stable BEFORE capture clock edge arrives.</div>
             </div>
 
             <div class="slider-group">
@@ -419,6 +454,7 @@
                 <span id="val-tskew">+0.10 ns</span>
               </div>
               <input type="range" id="slider-tskew" class="timing-slider" min="-1.5" max="1.5" step="0.05" value="0.1" />
+              <div style="font-size: 0.65rem; color: #8ba192; margin-top: 4px;">Clock arrival offset: positive skew relaxes setup but tightens hold slack.</div>
             </div>
           </div>
 
